@@ -1,8 +1,7 @@
 #ifndef MGL_ENTRY_H
 #define MGL_ENTRY_H
 
-#include <mgl/api_utils.h>
-#include <mgl/type.h>
+#include <mgl/error.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,8 +10,13 @@ extern "C" {
 	/// <summary>
 	///		Initializes the Magma Game Library.
 	/// </summary>
-	/// <returns></returns>
-	void MGL_API mgl_init(void);
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_init(void);
+
+	/// <summary>
+	///		Terminates the Magma Game Library.
+	/// </summary>
+	void MGL_API mgl_terminate(void);
 
 #ifdef __cplusplus
 }

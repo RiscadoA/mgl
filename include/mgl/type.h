@@ -22,8 +22,8 @@ extern "C" {
 	typedef uintptr_t mgl_uptr_t;
 	typedef mgl_i32_t mgl_enum_t;
 	typedef mgl_i8_t mgl_bool_t;
-	typedef char mgl_uchr8_t;
-	typedef char32_t mgl_uchr32_t;
+	typedef char mgl_chr8_t;
+	typedef char32_t mgl_chr32_t;
 
 #define MGL_I8_MAX		INT8_MAX
 #define MGL_I16_MAX		INT16_MAX

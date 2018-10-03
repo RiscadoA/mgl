@@ -25,7 +25,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="error">Error code</param>
 	/// <returns>UTF-8 string that represents the error</returns>
-	MGL_API const mgl_uchr8_t* mgl_get_error_string(mgl_error_t error);
+	MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error);
 
 	/// <summary>
 	///		Makes sure an expression evaluates to true.
