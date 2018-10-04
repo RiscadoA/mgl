@@ -73,10 +73,13 @@ MGL_API mgl_f32v4_t mgl_f32v4_rcp(mgl_f32v4_t v)
 
 MGL_API mgl_f32v4_t mgl_f32v4_cross(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
 {
-	// TO DO
+	return _mm_sub_ps(
+		_mm_mul_ps(_mm_shuffle_ps(lhs, lhs, _MM_SHUFFLE(3, 0, 2, 1)), _mm_shuffle_ps(rhs, rhs, _MM_SHUFFLE(3, 1, 0, 2))),
+		_mm_mul_ps(_mm_shuffle_ps(lhs, lhs, _MM_SHUFFLE(3, 1, 0, 2)), _mm_shuffle_ps(rhs, rhs, _MM_SHUFFLE(3, 0, 2, 1)))
+	);
 }
 
 MGL_API mgl_f32_t mgl_f32v4_dot(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
 {
-	// TO DO
+	return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0x71));
 }
