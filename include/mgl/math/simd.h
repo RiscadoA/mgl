@@ -9,15 +9,16 @@
 #include <emmintrin.h>
 #include <smmintrin.h>
 
-#define MGL_SIMD_SHUFFLE(fp3, fp2, fp1, fp0) _MM_SHUFFLE(fp3, fp2, fp1, fp0)
+#define MGL_SIMD_SHUFFLE(fp3, fp2, fp1, fp0) (_MM_SHUFFLE(fp3, fp2, fp1, fp0))
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
 	typedef __m128	mgl_f128_t;
-	typedef __m128i	mgl_i128_t;
-	typedef __m128i	mgl_u128_t;
+	// TO IMPLEMENT:
+	// typedef __m128i	mgl_i128_t;
+	// typedef __m128i	mgl_u128_t;
 
 	/// <summary>
 	///		Loads 4 mgl_f32_t's into a mgl_f128_t (unaligned).
@@ -71,6 +72,15 @@ extern "C" {
 	{
 		return _mm_setr_ps(x, y, z, w);
 	}
+
+	/// <summary>
+	///		Shuffles two mgl_f128_t and returns the result.
+	/// </summary>
+	/// <param name="lhs">Left mgl_f128_t</param>
+	/// <param name="rhs">Right mgl_f128_t</param>
+	/// <param name="shuffle">Value returned by MGL_SIMD_SHUFFLE</param>
+	/// <returns>Result mgl_f128_t</returns>
+#define mgl_f128_shuffle(lhs, rhs, shuffle) _mm_shuffle_ps(lhs, rhs, shuffle)
 
 	/// <summary>
 	///		Adds two mgl_f128_t and returns the result (component-wise).

@@ -40,6 +40,15 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_PASS(mgl_f128_equal(v1, v2));
 	}
 
+	// Test mgl_f128_shuffle
+	{
+		mgl_f128_t v1 = mgl_f128_set(2.0f, 2.0f, 4.0f, 8.0f);
+		mgl_f128_t v2 = mgl_f128_set(1.0f, 2.0f, 4.0f, 5.0f);
+		v2 = mgl_f128_shuffle(v1, v2, MGL_SIMD_SHUFFLE(3, 3, 0, 0));
+		mgl_f128_t v3 = mgl_f128_set(2.0f, 2.0f, 5.0f, 5.0f);
+		TEST_REQUIRE_PASS(mgl_f128_equal(v2, v3));
+	}
+
 	// Test mgl_f128_add
 	{
 		mgl_f128_t v1 = mgl_f128_set(1.0f, 2.0f, 3.0f, 4.0f);
