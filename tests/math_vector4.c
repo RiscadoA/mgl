@@ -1,5 +1,5 @@
 #include <mgl/entry.h>
-#include <mgl/math/vector.h>
+#include <mgl/math/vector4.h>
 #include "test.h"
 
 int main(int argc, char** argv)

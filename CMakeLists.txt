@@ -19,7 +19,8 @@ set(MGL_INCLUDE
 	"include/mgl/error.h"
 	"include/mgl/type.h"
 	"include/mgl/math/simd.h"
-	"include/mgl/math/vector.h"
+	"include/mgl/math/vector4.h"
+	"include/mgl/math/matrix4x4.h"
 )
 
 #####################################################
