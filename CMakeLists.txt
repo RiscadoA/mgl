@@ -18,16 +18,18 @@ set(MGL_INCLUDE
 	"include/mgl/entry.h"
 	"include/mgl/error.h"
 	"include/mgl/type.h"
+	"include/mgl/math/simd.h"
 	"include/mgl/math/vector.h"
 )
 
 #####################################################
 # Set options
 option(MGL_BUILD_SHARED OFF)
+option(MGL_BUILD_SSE OFF)
+option(MGL_MATH_USE_SIMD OFF)
 
 #####################################################
 # Create MGL target and set its properties
-
 
 if(MGL_BUILD_SHARED)
 	add_library(mgl SHARED ${MGL_SOURCE} ${MGL_INCLUDE})
@@ -46,6 +48,7 @@ target_include_directories(mgl
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
 target_compile_options(mgl PRIVATE -WX -W3)
 target_compile_definitions(mgl
 	PUBLIC
@@ -56,6 +59,13 @@ target_compile_definitions(mgl
 	PRIVATE
 		MGL_API_EXPORT
 )
+
+if (MGL_BUILD_SSE)
+	target_compile_definitions(mgl PUBLIC MGL_BUILD_SSE)
+endif()
+if (MGL_MATH_USE_SIMD)
+	target_compile_definitions(mgl PUBLIC MGL_MATH_USE_SIMD)
+endif()
 
 # Add file filters
 foreach(_source IN ITEMS ${MGL_SOURCE} ${MGL_INCLUDE})

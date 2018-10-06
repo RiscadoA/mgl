@@ -1,241 +1,297 @@
 #ifndef MGL_MATH_VECTOR_H
 #define MGL_MATH_VECTOR_H
 
-#include <mgl/error.h>
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <smmintrin.h>
+#ifdef MGL_MATH_USE_SIMD
+#include <mgl/math/simd.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-	typedef __m128	mgl_f32v4_t;
-	typedef __m128i	mgl_i32v4_t;
-	typedef __m128i	mgl_u32v4_t;
+	typedef struct
+	{
+		union
+		{
+			struct { mgl_f32_t x, y, z, w; };
+			mgl_f32_t data[4];
+		};
+	} mgl_f32v4_t;
 
 	/// <summary>
-	///		Loads 4 mgl_f32_t's into a mgl_f32v4_t (unaligned).
+	///		Adds two vectors (only the first three components, the fourth component is set to 1.0f, always).
 	/// </summary>
-	/// <param name="value">Value</param>
-	/// <returns>mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_load(const mgl_f32_t value[4])
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_add3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		return _mm_loadu_ps(value);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_add(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+		r->w = 1.0f;
+#else
+		r->x = lhs->x + rhs->x;
+		r->y = lhs->y + rhs->y;
+		r->z = lhs->z + rhs->z;
+		r->w = 1.0f;
+#endif
 	}
 
 	/// <summary>
-	///		Loads 4 mgl_f32_t's into a mgl_f32v4_t (aligned to 16 bytes).
+	///		Adds two vectors (all components).
 	/// </summary>
-	/// <param name="value">Value</param>
-	/// <returns>mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_load_aligned(const mgl_f32_t value[4])
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_add4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		return _mm_load_ps(value);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_add(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+#else
+		r->x = lhs->x + rhs->x;
+		r->y = lhs->y + rhs->y;
+		r->z = lhs->z + rhs->z;
+		r->w = lhs->w + rhs->w;
+#endif
 	}
 
 	/// <summary>
-	///		Stores the values in a mgl_f32v4_t into 4 mgl_f32_t's.
+	///		Subtracts two vectors (only the first three components, the fourth component is set to 0.0f, always).
 	/// </summary>
-	/// <param name="v">mgl_f32v4_t</param>
-	/// <param name="value">Out values</param>
-	inline void mgl_f32v4_store(const mgl_f32v4_t* v, mgl_f32_t value[4])
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_sub3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		_mm_storeu_ps(value, *v);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_sub(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+		r->w = 0.0f;
+#else
+		r->x = lhs->x - rhs->x;
+		r->y = lhs->y - rhs->y;
+		r->z = lhs->z - rhs->z;
+		r->w = 0.0f;
+#endif
 	}
 
 	/// <summary>
-	///		Stores the values in a mgl_f32v4_t into 4 mgl_f32_t's (aligned to 16 bytes).
+	///		Subtracts two vectors (all components).
 	/// </summary>
-	/// <param name="v">mgl_f32v4_t</param>
-	/// <param name="value">Out values</param>
-	inline void mgl_f32v4_store_aligned(const mgl_f32v4_t* v, mgl_f32_t value[4])
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_sub4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		_mm_store_ps(value, *v);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_sub(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+#else
+		r->x = lhs->x - rhs->x;
+		r->y = lhs->y - rhs->y;
+		r->z = lhs->z - rhs->z;
+		r->w = lhs->w - rhs->w;
+#endif
 	}
 
 	/// <summary>
-	///		Loads 4 separate mgl_f32_t into a mgl_f32v4_t.
+	///		Multiplies two vectors (all components).
 	/// </summary>
-	/// <param name="x">X component</param>
-	/// <param name="y">Y component</param>
-	/// <param name="z">Z component</param>
-	/// <param name="w">W component</param>
-	/// <returns>mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_set(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32_t w)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_mul(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		return _mm_setr_ps(x, y, z, w);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_mul(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+#else
+		r->x = lhs->x * rhs->x;
+		r->y = lhs->y * rhs->y;
+		r->z = lhs->z * rhs->z;
+		r->w = lhs->w * rhs->w;
+#endif
 	}
 
 	/// <summary>
-	///		Adds two mgl_f32v4_t and returns the result (component-wise).
+	///		Divides two vectors (all components).
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_add(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_div(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		return _mm_add_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_div(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+#else
+		r->x = lhs->x / rhs->x;
+		r->y = lhs->y / rhs->y;
+		r->z = lhs->z / rhs->z;
+		r->w = lhs->w / rhs->w;
+#endif
 	}
 
 	/// <summary>
-	///		Subtracts two mgl_f32v4_t and returns the result (component-wise).
+	///		Checks if two vectors are equal to each other.
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_sub(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32v4_equal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
-		return _mm_sub_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		return mgl_f128_equal(lhs_128, rhs_128);
+#else
+		if (lhs->x != rhs->x)
+			return MGL_FALSE;
+		if (lhs->y != rhs->y)
+			return MGL_FALSE;
+		if (lhs->z != rhs->z)
+			return MGL_FALSE;
+		if (lhs->w != rhs->w)
+			return MGL_FALSE;
+		return MGL_TRUE;
+#endif
 	}
 
 	/// <summary>
-	///		Multiplies two mgl_f32v4_t and returns the result (component-wise).
+	///		Checks if two vectors are different from each other.
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_mul(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32v4_nequal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
-		return _mm_mul_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		return mgl_f128_nequal(lhs_128, rhs_128);
+#else
+		if (lhs->x != rhs->x)
+			return MGL_TRUE;
+		if (lhs->y != rhs->y)
+			return MGL_TRUE;
+		if (lhs->z != rhs->z)
+			return MGL_TRUE;
+		if (lhs->w != rhs->w)
+			return MGL_TRUE;
+		return MGL_FALSE;
+#endif
 	}
 
 	/// <summary>
-	///		Divides two mgl_f32v4_t and returns the result (component-wise).
+	///		Checks if two vectors are equal to each other (roughly).
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_div(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="epsilon">Maximum difference</param>
+	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32v4_equal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
-		return _mm_div_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
+#else
+		mgl_f32_t dif = lhs->x - rhs->x;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_FALSE;
+		dif = lhs->y - rhs->y;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_FALSE;
+		dif = lhs->z - rhs->z;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_FALSE;
+		dif = lhs->w - rhs->w;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_FALSE;
+		return MGL_TRUE;
+#endif
 	}
 
 	/// <summary>
-	///		Returns the mgl_f32v4_t with the lowest value (compoonent-wise).
+	///		Checks if two vectors are different from each other (roughly).
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_min(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="epsilon">Maximum difference</param>
+	/// <returns>Returns MGL_FALSE if the vectors are equal, otherwise returns MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32v4_nequal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
-		return _mm_min_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
+#else
+		mgl_f32_t dif = lhs->x - rhs->x;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_TRUE;
+		dif = lhs->y - rhs->y;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_TRUE;
+		dif = lhs->z - rhs->z;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_TRUE;
+		dif = lhs->w - rhs->w;
+		if (dif < -epsilon || dif > epsilon)
+			return MGL_TRUE;
+		return MGL_FALSE;
+#endif
 	}
 
 	/// <summary>
-	///		Returns the mgl_f32v4_t with the lowest value (compoonent-wise).
+	///		Calculates the cross product between two vectors.
 	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_max(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_cross(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
-		return _mm_max_ps(lhs, rhs);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		lhs_128 = mgl_f128_cross(lhs_128, rhs_128);
+		mgl_f128_store(lhs_128, r->data);
+#else
+		r->x = lhs->y * rhs->z - lhs->z * rhs->y;
+		r->y = lhs->z * rhs->x - lhs->x * rhs->z;
+		r->z = lhs->x * rhs->y - lhs->y * rhs->x;
+		r->w = 0.0f;
+#endif
 	}
 
 	/// <summary>
-	///		Calculates the square root of a mgl_f32v4_t (compoonent-wise).
+	///		Calculates the dot product between two vectors.
 	/// </summary>
-	/// <param name="v">mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_sqrt(mgl_f32v4_t v)
-	{
-		return _mm_sqrt_ps(v);
-	}
-
-	/// <summary>
-	///		Calculates the reciprocal square root of a mgl_f32v4_t (compoonent-wise).
-	/// </summary>
-	/// <param name="v">mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_rsqrt(mgl_f32v4_t v)
-	{
-		return _mm_rsqrt_ps(v);
-	}
-
-	/// <summary>
-	///		Calculates the reciprocal of a mgl_f32v4_t (compoonent-wise).
-	/// </summary>
-	/// <param name="v">mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_rcp(mgl_f32v4_t v)
-	{
-		return _mm_rcp_ps(v);
-	}
-
-	/// <summary>
-	///		Calculates the cross product between two mgl_f32v4_t.
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>Result mgl_f32v4_t</returns>
-	inline mgl_f32v4_t mgl_f32v4_cross(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
-	{
-		return _mm_sub_ps(
-			_mm_mul_ps(_mm_shuffle_ps(lhs, lhs, _MM_SHUFFLE(3, 0, 2, 1)), _mm_shuffle_ps(rhs, rhs, _MM_SHUFFLE(3, 1, 0, 2))),
-			_mm_mul_ps(_mm_shuffle_ps(lhs, lhs, _MM_SHUFFLE(3, 1, 0, 2)), _mm_shuffle_ps(rhs, rhs, _MM_SHUFFLE(3, 0, 2, 1)))
-		);
-	}
-
-	/// <summary>
-	///		Calculates the dot product between two mgl_f32v4_t.
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
+	/// <param name="lhs">First vector</param>
+	/// <param name="rhs">Second vector</param>
 	/// <returns>Result</returns>
-	inline mgl_f32_t mgl_f32v4_dot(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
+	inline mgl_f32_t mgl_f32v4_dot(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
-		return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0x71));
-	}
-
-	/// <summary>
-	///		Checks if two mgl_f32v4_t are equal.
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>MGL_FALSE if different, otherwise equal</returns>
-	inline mgl_bool_t mgl_f32v4_equal(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
-	{
-		return _mm_movemask_ps(_mm_cmpeq_ps(lhs, rhs)) == 0xF;
-	}
-
-	/// <summary>
-	///		Checks if two mgl_f32v4_t are different.
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <returns>MGL_FALSE if equal, otherwise equal</returns>
-	inline mgl_bool_t mgl_f32v4_nequal(mgl_f32v4_t lhs, mgl_f32v4_t rhs)
-	{
-		return _mm_movemask_ps(_mm_cmpeq_ps(lhs, rhs)) != 0xF;
-	}
-
-	/// <summary>
-	///		Checks if two mgl_f32v4_t are equal (roughly).
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <param name="epsilon">Maximum difference</param>
-	/// <returns>MGL_FALSE if different, otherwise equal</returns>
-	inline mgl_bool_t mgl_f32v4_equal_e(mgl_f32v4_t lhs, mgl_f32v4_t rhs, mgl_f32_t epsilon)
-	{
-		mgl_f32v4_t eps = _mm_set1_ps(epsilon);
-		mgl_f32v4_t abd = _mm_andnot_ps(_mm_set1_ps(-0.0f), _mm_sub_ps(lhs, rhs));
-		return _mm_movemask_ps(_mm_cmplt_ps(abd, eps)) == 0xF;
-	}
-
-	/// <summary>
-	///		Checks if two mgl_f32v4_t are different (roughly).
-	/// </summary>
-	/// <param name="lhs">Left mgl_f32v4_t</param>
-	/// <param name="rhs">Right mgl_f32v4_t</param>
-	/// <param name="epsilon">Maximum difference</param>
-	/// <returns>MGL_FALSE if equal, otherwise equal</returns>
-	inline mgl_bool_t mgl_f32v4_nequal_e(mgl_f32v4_t lhs, mgl_f32v4_t rhs, mgl_f32_t epsilon)
-	{
-		mgl_f32v4_t eps = _mm_set1_ps(epsilon);
-		mgl_f32v4_t abd = _mm_andnot_ps(_mm_set1_ps(-0.0f), _mm_sub_ps(lhs, rhs));
-		return _mm_movemask_ps(_mm_cmplt_ps(abd, eps)) != 0xF;
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		return mgl_f128_dot(lhs_128, rhs_128);
+#else
+		return lhs->x * rhs->x + lhs->y * rhs->y + lhs->z * rhs->z;
+#endif
 	}
 
 #ifdef __cplusplus
