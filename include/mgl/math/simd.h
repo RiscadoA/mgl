@@ -4,7 +4,7 @@
 // SSE
 #ifdef MGL_BUILD_SSE
 
-#include <mgl/type.h>
+#include <mgl/error.h>
 #include <xmmintrin.h>
 #include <emmintrin.h>
 #include <smmintrin.h>
@@ -27,6 +27,7 @@ extern "C" {
 	/// <returns>mgl_f128_t</returns>
 	inline mgl_f128_t mgl_f128_load(const mgl_f32_t value[4])
 	{
+		MGL_DEBUG_ASSERT(value != NULL);
 		return _mm_loadu_ps(value);
 	}
 
@@ -37,6 +38,7 @@ extern "C" {
 	/// <returns>mgl_f128_t</returns>
 	inline mgl_f128_t mgl_f128_load_aligned(const mgl_f32_t value[4])
 	{
+		MGL_DEBUG_ASSERT(value != NULL);
 		return _mm_load_ps(value);
 	}
 
@@ -47,6 +49,7 @@ extern "C" {
 	/// <param name="value">Out values</param>
 	inline void mgl_f128_store(mgl_f128_t v, mgl_f32_t value[4])
 	{
+		MGL_DEBUG_ASSERT(value != NULL);
 		_mm_storeu_ps(value, v);
 	}
 
@@ -57,6 +60,7 @@ extern "C" {
 	/// <param name="value">Out values</param>
 	inline void mgl_f128_store_aligned(mgl_f128_t v, mgl_f32_t value[4])
 	{
+		MGL_DEBUG_ASSERT(value != NULL);
 		_mm_store_ps(value, v);
 	}
 

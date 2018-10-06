@@ -26,6 +26,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_add3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -48,6 +49,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_add4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -69,6 +71,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_sub3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -91,6 +94,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_sub4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -112,6 +116,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_mul(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -133,6 +138,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_div(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -154,6 +160,7 @@ extern "C" {
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
 	inline mgl_bool_t mgl_f32v4_equal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -179,6 +186,7 @@ extern "C" {
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
 	inline mgl_bool_t mgl_f32v4_nequal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -205,6 +213,7 @@ extern "C" {
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
 	inline mgl_bool_t mgl_f32v4_equal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -235,6 +244,7 @@ extern "C" {
 	/// <returns>Returns MGL_FALSE if the vectors are equal, otherwise returns MGL_TRUE</returns>
 	inline mgl_bool_t mgl_f32v4_nequal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -264,6 +274,7 @@ extern "C" {
 	/// <param name="r">Out result vector</param>
 	inline void mgl_f32v4_cross(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -285,6 +296,7 @@ extern "C" {
 	/// <returns>Result</returns>
 	inline mgl_f32_t mgl_f32v4_dot(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
