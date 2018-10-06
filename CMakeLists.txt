@@ -11,7 +11,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(MGL_SOURCE
 	"src/mgl/entry.c"
 	"src/mgl/error.c"
-	"src/mgl/math/vector.c"
 )
 
 set(MGL_INCLUDE
