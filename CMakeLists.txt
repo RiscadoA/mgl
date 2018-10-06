@@ -1,5 +1,5 @@
 # ./CMakeLists.txt
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.11)
 project(libmgl VERSION 0.1.0 LANGUAGES C)
 include(CTest)
 include(GenerateExportHeader)
