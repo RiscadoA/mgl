@@ -54,6 +54,43 @@ extern "C" {
 	inline void mgl_f32m4x4_mulmat(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
+
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t rhs_0 = mgl_f128_load(rhs->rows[0]);
+		mgl_f128_t rhs_1 = mgl_f128_load(rhs->rows[1]);
+		mgl_f128_t rhs_2 = mgl_f128_load(rhs->rows[2]);
+		mgl_f128_t rhs_3 = mgl_f128_load(rhs->rows[3]);
+
+		for (mgl_u32_t i = 0; i < 4; ++i)
+		{
+			mgl_f128_t lhs_0 = mgl_f128_load(lhs->rows[i]);
+			mgl_f128_t lhs_1 = lhs_0;
+			mgl_f128_t lhs_2 = lhs_0;
+			mgl_f128_t lhs_3 = lhs_0;
+
+			lhs_0 = mgl_f128_shuffle(lhs_0, lhs_0, MGL_SIMD_SHUFFLE(0, 0, 0, 0));
+			lhs_1 = mgl_f128_shuffle(lhs_1, lhs_1, MGL_SIMD_SHUFFLE(1, 1, 1, 1));
+			lhs_2 = mgl_f128_shuffle(lhs_2, lhs_2, MGL_SIMD_SHUFFLE(2, 2, 2, 2));
+			lhs_3 = mgl_f128_shuffle(lhs_3, lhs_3, MGL_SIMD_SHUFFLE(3, 3, 3, 3));
+
+			mgl_f128_t row = mgl_f128_add(
+				mgl_f128_add(mgl_f128_mul(lhs_0, rhs_0),
+							 mgl_f128_mul(lhs_1, rhs_1)),
+				mgl_f128_add(mgl_f128_mul(lhs_2, rhs_2),
+							 mgl_f128_mul(lhs_3, rhs_3))
+			);
+
+			mgl_f128_store(row, r->rows[i]);
+		}
+#else
+		for (mgl_u32_t i = 0; i < 4; ++i)
+			for (mgl_u32_t j = 0; j < 4; ++j)
+			{
+				r->rows[i][j] = 0.0f;
+				for (mgl_u32_t n = 0; n < 4; ++n)
+					r->rows[i][j] += lhs->rows[i][n] * rhs->rows[n][j];
+			}
+#endif
 	}
 
 	/// <summary>
