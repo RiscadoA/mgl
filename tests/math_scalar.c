@@ -1,5 +1,5 @@
 #include <mgl/entry.h>
-#include <mgl/math/math.h>
+#include <mgl/math/scalar.h>
 #include "test.h"
 
 int main(int argc, char** argv)

@@ -143,6 +143,21 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// Test mgl_f128_set_scalar and mgl_f128_to_f32
+	{
+		mgl_f128_t v1 = mgl_f128_set_scalar(1.0f);
+		mgl_f32_t f1 = mgl_f128_to_f32(v1);
+		TEST_REQUIRE_PASS(f1 == 1.0f);
+
+		v1 = mgl_f128_set_scalar(4.0f);
+		f1 = mgl_f128_to_f32(v1);
+		TEST_REQUIRE_PASS(f1 == 4.0f);
+
+		v1 = mgl_f128_set_scalar(-94.0f);
+		f1 = mgl_f128_to_f32(v1);
+		TEST_REQUIRE_PASS(f1 == -94.0f);
+	}
+
 #endif
 
 	mgl_terminate();

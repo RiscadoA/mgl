@@ -9,12 +9,15 @@
 #include <emmintrin.h>
 #include <smmintrin.h>
 
+/// <summary>
+///		Creates a mask used to pass into mgl_f128_shuffle param 'shuffle'.
+/// </summary>
+/// <param name="fp3">Index of the component (0-3) from the left vector that will be placed on the first component</param>
+/// <param name="fp2">Index of the component (0-3) from the left vector that will be placed on the second component</param>
+/// <param name="fp1">Index of the component (0-3) from the right vector that will be placed on the third component</param>
+/// <param name="fp0">Index of the component (0-3) from the right vector that will be placed on the fourth component</param>
+/// <returns>Shuffle mask to pass to mgl_f128_shuffle param 'shuffle'</returns>
 #define MGL_SIMD_SHUFFLE(fp3, fp2, fp1, fp0) (_MM_SHUFFLE(fp3, fp2, fp1, fp0))
-
-// (A3, A2, A1, A0) hadd (B3, B2, B1, B0)
-// (B3 + B2, B1 + B0, A3 + A2, A1 + A0)
-// (B3 + B2, B1 + B0, A3 + A2, A1 + A0) hadd (B3 + B2, B1 + B0, A3 + A2, A1 + A0)
-// (B3 + B2 + B1 + B0, A3 + A2 + A1 + A0, B3 + B2 + B2 + B0, A3 + A2 + A1 + A0)
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,6 +83,16 @@ extern "C" {
 	inline mgl_f128_t mgl_f128_set(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32_t w)
 	{
 		return _mm_setr_ps(x, y, z, w);
+	}
+
+	/// <summary>
+	///		Loads a mgl_f32_t into a mgl_f128_t (scalar).
+	/// </summary>
+	/// <param name="v">Scalar value</param>
+	/// <returns>mgl_f128_t</returns>
+	inline mgl_f128_t mgl_f128_set_scalar(mgl_f32_t v)
+	{
+		return _mm_set1_ps(v);
 	}
 
 	/// <summary>
@@ -273,6 +286,16 @@ extern "C" {
 		mgl_f128_t eps = _mm_set1_ps(epsilon);
 		mgl_f128_t abd = _mm_andnot_ps(_mm_set1_ps(-0.0f), _mm_sub_ps(lhs, rhs));
 		return _mm_movemask_ps(_mm_cmplt_ps(abd, eps)) != 0xF;
+	}
+
+	/// <summary>
+	///		Converts a scalar mgl_f128_t to a mgl_f32_t
+	/// </summary>
+	/// <param name="v">Scalar mgl_f128_t</param>
+	/// <returns>mgl_f32_t</returns>
+	inline mgl_f32_t mgl_f128_to_f32(mgl_f128_t v)
+	{
+		return _mm_cvtss_f32(v);
 	}
 
 #ifdef __cplusplus

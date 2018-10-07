@@ -3,7 +3,7 @@
 
 #include <mgl/math/matrix4x4.h>
 #include <mgl/math/vector4.h>
-#include <mgl/math/math.h>
+#include <mgl/math/scalar.h>
 
 #ifdef __cplusplus
 extern "C" {
