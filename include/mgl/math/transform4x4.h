@@ -42,6 +42,64 @@ extern "C" {
 #endif
 	}
 
+	/// <summary>
+	///		Generates a 4x4 matrix that scales a vector.
+	/// </summary>
+	/// <param name="x">X scale</param>
+	/// <param name="y">Y scale</param>
+	/// <param name="z">Z scale</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_scale(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(r != NULL);
+		
+		r->cols[0][0] = x;
+		r->cols[0][1] = 0.0f;
+		r->cols[0][2] = 0.0f;
+		r->cols[0][3] = 0.0f;
+		r->cols[1][0] = 0.0f;
+		r->cols[1][1] = y;
+		r->cols[1][2] = 0.0f;
+		r->cols[1][3] = 0.0f;
+		r->cols[2][0] = 0.0f;
+		r->cols[2][1] = 0.0f;
+		r->cols[2][2] = z;
+		r->cols[2][3] = 0.0f;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
+	}
+
+	/// <summary>
+	///		Generates a 4x4 matrix that translates a vector.
+	/// </summary>
+	/// <param name="x">X translation</param>
+	/// <param name="y">Y translation</param>
+	/// <param name="z">Z translation</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_translate(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(r != NULL);
+		
+		r->cols[0][0] = 1.0f;
+		r->cols[0][1] = 0.0f;
+		r->cols[0][2] = 0.0f;
+		r->cols[0][3] = x;
+		r->cols[1][0] = 0.0f;
+		r->cols[1][1] = 1.0f;
+		r->cols[1][2] = 0.0f;
+		r->cols[1][3] = y;
+		r->cols[2][0] = 0.0f;
+		r->cols[2][1] = 0.0f;
+		r->cols[2][2] = 1.0f;
+		r->cols[2][3] = z;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
+	}
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
