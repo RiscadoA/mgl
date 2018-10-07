@@ -15,7 +15,7 @@ extern "C" {
 	{
 		union
 		{
-			struct { mgl_f32_t s, x, y, z; };
+			struct { mgl_f32_t x, y, z, s; };
 			mgl_f32_t data[4];
 		};
 	} mgl_f32q4_t;
@@ -142,6 +142,8 @@ extern "C" {
 	/// <param name="r">Out result quaternion</param>
 	inline mgl_f32q4_t mgl_f32q4_add(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
+
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -163,6 +165,8 @@ extern "C" {
 	/// <param name="r">Out result quaternion</param>
 	inline mgl_f32q4_t mgl_f32q4_sub(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
+
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
@@ -184,14 +188,42 @@ extern "C" {
 	/// <param name="r">Out result quaternion</param>
 	inline mgl_f32q4_t mgl_f32q4_mul(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
+		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
+
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t xyzw = mgl_f128_load(lhs->data);
+		mgl_f128_t abcd = mgl_f128_load(rhs->data);
+		mgl_f128_t wzyx = mgl_f128_shuffle(xyzw, xyzw, MGL_SIMD_SHUFFLE(0, 1, 2, 3));
+		mgl_f128_t baba = mgl_f128_shuffle(abcd, abcd, MGL_SIMD_SHUFFLE(0, 1, 0, 1));
+		mgl_f128_t dcdc = mgl_f128_shuffle(abcd, abcd, MGL_SIMD_SHUFFLE(2, 3, 2, 3));
 
-		// TO DO
+		mgl_f128_t ZnXWY = mgl_f128_hsub(mgl_f128_mul(xyzw, baba), mgl_f128_mul(wzyx, dcdc));
+		mgl_f128_t XZYnW = mgl_f128_hadd(mgl_f128_mul(xyzw, dcdc), mgl_f128_mul(wzyx, baba));
+		mgl_f128_t XZWY = mgl_f128_addsub(mgl_f128_shuffle(XZYnW, ZnXWY, MGL_SIMD_SHUFFLE(3, 2, 1, 0)),
+										  mgl_f128_shuffle(ZnXWY, XZYnW, MGL_SIMD_SHUFFLE(2, 3, 0, 1)));
+
+		mgl_f128_t rv = mgl_f128_shuffle(XZWY, XZWY, MGL_SIMD_SHUFFLE(2, 1, 3, 0));
+		mgl_f128_store(rv, r->data);
 #else
-
+		r->s = lhs->s * rhs->s - lhs->x * rhs->x - lhs->y * rhs->y - lhs->z * rhs->z;
+		r->x = lhs->s * rhs->x + lhs->x * rhs->s + lhs->y * rhs->z - lhs->z * rhs->y;
+		r->y = lhs->s * rhs->y - lhs->x * rhs->z + lhs->y * rhs->s + lhs->z * rhs->x;
+		r->z = lhs->s * rhs->z + lhs->x * rhs->y - lhs->y * rhs->x + lhs->z * rhs->s;
 #endif
+	}
+
+	/// <summary>
+	///		Gets the conjugate of a quaternion.
+	/// </summary>
+	/// <param name="q">Quaternion</param>
+	/// <param name="r">Out result quaternion</param>
+	inline mgl_f32q4_t mgl_f32q4_conjugate(const mgl_f32q4_t* q, mgl_f32q4_t* r)
+	{
+		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
+		r->x = -q->x;
+		r->y = -q->y;
+		r->z = -q->z;
+		r->s = q->s;
 	}
 
 #ifdef __cplusplus

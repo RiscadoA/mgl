@@ -12,10 +12,10 @@
 /// <summary>
 ///		Creates a mask used to pass into mgl_f128_shuffle param 'shuffle'.
 /// </summary>
-/// <param name="fp3">Index of the component (0-3) from the left vector that will be placed on the first component</param>
-/// <param name="fp2">Index of the component (0-3) from the left vector that will be placed on the second component</param>
-/// <param name="fp1">Index of the component (0-3) from the right vector that will be placed on the third component</param>
-/// <param name="fp0">Index of the component (0-3) from the right vector that will be placed on the fourth component</param>
+/// <param name="fp3">Index of the component (0-3) from the left vector that will be placed on the fourth component</param>
+/// <param name="fp2">Index of the component (0-3) from the left vector that will be placed on the third component</param>
+/// <param name="fp1">Index of the component (0-3) from the right vector that will be placed on the second component</param>
+/// <param name="fp0">Index of the component (0-3) from the right vector that will be placed on the first component</param>
 /// <returns>Shuffle mask to pass to mgl_f128_shuffle param 'shuffle'</returns>
 #define MGL_SIMD_SHUFFLE(fp3, fp2, fp1, fp0) (_MM_SHUFFLE(fp3, fp2, fp1, fp0))
 
@@ -115,6 +115,32 @@ extern "C" {
 	inline mgl_f128_t mgl_f128_hadd(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_hadd_ps(lhs, rhs);
+	}
+
+	/// <summary>
+	///		Performs an horizontal subtraction between two mgl_f128_t and returns the result (component-wise).
+	///		(A0, A1, A2, A3) hsub (B0, B1, B2, B3) =
+	///		(B0 - B1, B2 - B3, A0 - A1, A2 - A3)
+	/// </summary>
+	/// <param name="lhs">Left mgl_f128_t</param>
+	/// <param name="rhs">Right mgl_f128_t</param>
+	/// <returns>Result mgl_f128_t</returns>
+	inline mgl_f128_t mgl_f128_hsub(mgl_f128_t lhs, mgl_f128_t rhs)
+	{
+		return _mm_hsub_ps(lhs, rhs);
+	}
+
+	/// <summary>
+	///		Performs an addition on components 1 and 3 and a subtraction on components 0 and 2 between two mgl_f128_t and returns the result (component-wise).
+	///		(A0, A1, A2, A3) addsub (B0, B1, B2, B3) =
+	///		(A0 - B0, A1 + B1, A2 - B2, A3 + B3)
+	/// </summary>
+	/// <param name="lhs">Left mgl_f128_t</param>
+	/// <param name="rhs">Right mgl_f128_t</param>
+	/// <returns>Result mgl_f128_t</returns>
+	inline mgl_f128_t mgl_f128_addsub(mgl_f128_t lhs, mgl_f128_t rhs)
+	{
+		return _mm_addsub_ps(lhs, rhs);
 	}
 
 	/// <summary>
