@@ -3,6 +3,7 @@
 
 #include <mgl/math/matrix4x4.h>
 #include <mgl/math/vector4.h>
+#include <mgl/math/math.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -94,6 +95,87 @@ extern "C" {
 		r->cols[2][1] = 0.0f;
 		r->cols[2][2] = 1.0f;
 		r->cols[2][3] = z;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
+	}
+
+	/// <summary>
+	///		Generates a 4x4 matrix that rotates a vector in the X axis (YZ plane).
+	/// </summary>
+	/// <param name="angle">Rotation angle in radians</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_rotate_x(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(r != NULL);
+
+		r->cols[0][0] = 1.0f;
+		r->cols[0][1] = 0.0f;
+		r->cols[0][2] = 0.0f;
+		r->cols[0][3] = 0.0f;
+		r->cols[1][0] = 0.0f;
+		r->cols[1][1] = mgl_f32_cos(angle);
+		r->cols[1][2] = mgl_f32_sin(angle);
+		r->cols[1][3] = 0.0f;
+		r->cols[2][0] = 0.0f;
+		r->cols[2][1] = -mgl_f32_sin(angle);
+		r->cols[2][2] = mgl_f32_cos(angle);
+		r->cols[2][3] = 0.0f;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
+	}
+
+	/// <summary>
+	///		Generates a 4x4 matrix that rotates a vector in the Y axis (XZ plane).
+	/// </summary>
+	/// <param name="angle">Rotation angle in radians</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_rotate_y(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(r != NULL);
+
+		r->cols[0][0] = mgl_f32_cos(angle);
+		r->cols[0][1] = 0.0f;
+		r->cols[0][2] = -mgl_f32_sin(angle);
+		r->cols[0][3] = 0.0f;
+		r->cols[1][0] = 0.0f;
+		r->cols[1][1] = 1.0f;
+		r->cols[1][2] = 0.0f;
+		r->cols[1][3] = 0.0f;
+		r->cols[2][0] = mgl_f32_sin(angle);
+		r->cols[2][1] = 0.0f;
+		r->cols[2][2] = mgl_f32_cos(angle);
+		r->cols[2][3] = 0.0f;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
+	}
+
+	/// <summary>
+	///		Generates a 4x4 matrix that rotates a vector in the Z axis (XY plane).
+	/// </summary>
+	/// <param name="angle">Rotation angle in radians</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_rotate_z(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(r != NULL);
+
+		r->cols[0][0] = mgl_f32_cos(angle);
+		r->cols[0][1] = mgl_f32_sin(angle);
+		r->cols[0][2] = 0.0f;
+		r->cols[0][3] = 0.0f;
+		r->cols[1][0] = -mgl_f32_sin(angle);
+		r->cols[1][1] = mgl_f32_cos(angle);
+		r->cols[1][2] = 0.0f;
+		r->cols[1][3] = 0.0f;
+		r->cols[2][0] = 0.0f;
+		r->cols[2][1] = 0.0f;
+		r->cols[2][2] = 1.0f;
+		r->cols[2][3] = 0.0f;
 		r->cols[3][0] = 0.0f;
 		r->cols[3][1] = 0.0f;
 		r->cols[3][2] = 0.0f;

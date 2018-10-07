@@ -4,9 +4,31 @@
 #include <mgl/type.h>
 #include <math.h>
 
+#define MGL_PI 3.14159265359
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+	/// <summary>
+	///		Converts degrees into radians.
+	/// </summary>
+	/// <param name="degrees">Angle in degrees</param>
+	/// <returns>Angle in radians</returns>
+	inline mgl_f32_t mgl_f32_deg_to_rad(mgl_f32_t degrees)
+	{
+		return degrees * (MGL_PI / 180.0f);
+	}
+
+	/// <summary>
+	///		Converts radians into degrees.
+	/// </summary>
+	/// <param name="radians">Angle in radians</param>
+	/// <returns>Angle in degrees</returns>
+	inline mgl_f32_t mgl_f32_rad_to_deg(mgl_f32_t radians)
+	{
+		return (180 * radians) / MGL_PI;
+	}
 
 	/// <summary>
 	///		Calculates the cosine of an angle in radians.
