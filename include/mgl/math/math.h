@@ -11,6 +11,42 @@ extern "C" {
 #endif // __cplusplus
 
 	/// <summary>
+	///		Calculates the absolute of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Absolute value</returns>
+	inline mgl_f32_t mgl_f32_abs(mgl_f32_t x)
+	{
+		return fabsf(x);
+	}
+
+	/// <summary>
+	///		Checks if two values are equal (roughly).
+	/// </summary>
+	/// <param name="x">X value</param>
+	/// <param name="y">Y value</param>
+	/// <param name="epsilon">Maximum diference</param>
+	/// <returns>MGL_FALSE if they are different, otherwise MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32_equal_e(mgl_f32_t x, mgl_f32_t y, mgl_f32_t epsilon)
+	{
+		mgl_f32_t dif = y - x;
+		return (dif >= -epsilon && dif <= epsilon);
+	}
+
+	/// <summary>
+	///		Checks if two values are different (roughly).
+	/// </summary>
+	/// <param name="x">X value</param>
+	/// <param name="y">Y value</param>
+	/// <param name="epsilon">Maximum diference</param>
+	/// <returns>MGL_FALSE if they are equal, otherwise MGL_TRUE</returns>
+	inline mgl_bool_t mgl_f32_nequal_e(mgl_f32_t x, mgl_f32_t y, mgl_f32_t epsilon)
+	{
+		mgl_f32_t dif = y - x;
+		return dif < -epsilon || dif > epsilon;
+	}
+
+	/// <summary>
 	///		Converts degrees into radians.
 	/// </summary>
 	/// <param name="degrees">Angle in degrees</param>
@@ -158,6 +194,56 @@ extern "C" {
 	inline mgl_f32_t mgl_f32_distance_3d(mgl_f32_t x0, mgl_f32_t y0, mgl_f32_t z0, mgl_f32_t x1, mgl_f32_t y1, mgl_f32_t z1)
 	{
 		return mgl_f32_square(x1 - x0) + mgl_f32_square(y1 - y0) + mgl_f32_square(z1 - z0);
+	}
+
+	/// <summary>
+	///		Gets the natural logarithm of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Value natural logarithm</returns>
+	inline mgl_f32_t mgl_f32_log(mgl_f32_t x)
+	{
+		return logf(x);
+	}
+
+	/// <summary>
+	///		Gets the base 2 logarithm of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Value base 2 logarithm</returns>
+	inline mgl_f32_t mgl_f32_log2(mgl_f32_t x)
+	{
+		return log2f(x);
+	}
+
+	/// <summary>
+	///		Gets the base 10 logarithm of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Value base 10 logarithm</returns>
+	inline mgl_f32_t mgl_f32_log10(mgl_f32_t x)
+	{
+		return log10f(x);
+	}
+
+	/// <summary>
+	///		Gets the natural exponent of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Value natural exponent</returns>
+	inline mgl_f32_t mgl_f32_exp(mgl_f32_t x)
+	{
+		return expf(x);
+	}
+
+	/// <summary>
+	///		Gets the base 2 exponent of a value.
+	/// </summary>
+	/// <param name="x">Value</param>
+	/// <returns>Value base 2 logarithm</returns>
+	inline mgl_f32_t mgl_f32_exp2(mgl_f32_t x)
+	{
+		return exp2f(x);
 	}
 
 #ifdef __cplusplus
