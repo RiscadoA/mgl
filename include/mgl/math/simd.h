@@ -11,6 +11,11 @@
 
 #define MGL_SIMD_SHUFFLE(fp3, fp2, fp1, fp0) (_MM_SHUFFLE(fp3, fp2, fp1, fp0))
 
+// (A3, A2, A1, A0) hadd (B3, B2, B1, B0)
+// (B3 + B2, B1 + B0, A3 + A2, A1 + A0)
+// (B3 + B2, B1 + B0, A3 + A2, A1 + A0) hadd (B3 + B2, B1 + B0, A3 + A2, A1 + A0)
+// (B3 + B2 + B1 + B0, A3 + A2 + A1 + A0, B3 + B2 + B2 + B0, A3 + A2 + A1 + A0)
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -85,6 +90,19 @@ extern "C" {
 	/// <param name="shuffle">Value returned by MGL_SIMD_SHUFFLE</param>
 	/// <returns>Result mgl_f128_t</returns>
 #define mgl_f128_shuffle(lhs, rhs, shuffle) _mm_shuffle_ps(lhs, rhs, shuffle)
+
+	/// <summary>
+	///		Performs an horizontal addition between two mgl_f128_t and returns the result (component-wise).
+	///		(A0, A1, A2, A3) hadd (B0, B1, B2, B3) =
+	///		(B0 + B1, B2 + B3, A0 + A1, A2 + A3)
+	/// </summary>
+	/// <param name="lhs">Left mgl_f128_t</param>
+	/// <param name="rhs">Right mgl_f128_t</param>
+	/// <returns>Result mgl_f128_t</returns>
+	inline mgl_f128_t mgl_f128_hadd(mgl_f128_t lhs, mgl_f128_t rhs)
+	{
+		return _mm_hadd_ps(lhs, rhs);
+	}
 
 	/// <summary>
 	///		Adds two mgl_f128_t and returns the result (component-wise).

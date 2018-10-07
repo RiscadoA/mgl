@@ -13,8 +13,8 @@ extern "C" {
 	{
 		union
 		{
-			struct { mgl_f32_t x0, y0, z0, w0, x1, y1, z1, w1, x2, y2, z2, w2, x3, y3, z3, w3; };
-			mgl_f32_t rows[4][4];
+			struct { mgl_f32_t x0, x1, x2, x3, y0, y1, y2, y3, z0, z1, z2, z3, w0, w1, w2, w3; };
+			mgl_f32_t cols[4][4];
 			mgl_f32_t data[16];
 		};
 	} mgl_f32m4x4_t;
@@ -27,22 +27,22 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
-		r->rows[0][0] = 1.0f;
-		r->rows[0][1] = 0.0f;
-		r->rows[0][2] = 0.0f;
-		r->rows[0][3] = 0.0f;
-		r->rows[1][0] = 0.0f;
-		r->rows[1][1] = 1.0f;
-		r->rows[1][2] = 0.0f;
-		r->rows[1][3] = 0.0f;
-		r->rows[2][0] = 0.0f;
-		r->rows[2][1] = 0.0f;
-		r->rows[2][2] = 1.0f;
-		r->rows[2][3] = 0.0f;
-		r->rows[3][0] = 0.0f;
-		r->rows[3][1] = 0.0f;
-		r->rows[3][2] = 0.0f;
-		r->rows[3][3] = 1.0f;
+		r->cols[0][0] = 1.0f;
+		r->cols[0][1] = 0.0f;
+		r->cols[0][2] = 0.0f;
+		r->cols[0][3] = 0.0f;
+		r->cols[1][0] = 0.0f;
+		r->cols[1][1] = 1.0f;
+		r->cols[1][2] = 0.0f;
+		r->cols[1][3] = 0.0f;
+		r->cols[2][0] = 0.0f;
+		r->cols[2][1] = 0.0f;
+		r->cols[2][2] = 1.0f;
+		r->cols[2][3] = 0.0f;
+		r->cols[3][0] = 0.0f;
+		r->cols[3][1] = 0.0f;
+		r->cols[3][2] = 0.0f;
+		r->cols[3][3] = 1.0f;
 	}
 
 	/// <summary>
@@ -56,14 +56,14 @@ extern "C" {
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t rhs_0 = mgl_f128_load(rhs->rows[0]);
-		mgl_f128_t rhs_1 = mgl_f128_load(rhs->rows[1]);
-		mgl_f128_t rhs_2 = mgl_f128_load(rhs->rows[2]);
-		mgl_f128_t rhs_3 = mgl_f128_load(rhs->rows[3]);
+		mgl_f128_t rhs_0 = mgl_f128_load(rhs->cols[0]);
+		mgl_f128_t rhs_1 = mgl_f128_load(rhs->cols[1]);
+		mgl_f128_t rhs_2 = mgl_f128_load(rhs->cols[2]);
+		mgl_f128_t rhs_3 = mgl_f128_load(rhs->cols[3]);
 
 		for (mgl_u32_t i = 0; i < 4; ++i)
 		{
-			mgl_f128_t lhs_0 = mgl_f128_load(lhs->rows[i]);
+			mgl_f128_t lhs_0 = mgl_f128_load(lhs->cols[i]);
 			mgl_f128_t lhs_1 = lhs_0;
 			mgl_f128_t lhs_2 = lhs_0;
 			mgl_f128_t lhs_3 = lhs_0;
@@ -80,15 +80,15 @@ extern "C" {
 							 mgl_f128_mul(lhs_3, rhs_3))
 			);
 
-			mgl_f128_store(row, r->rows[i]);
+			mgl_f128_store(row, r->cols[i]);
 		}
 #else
 		for (mgl_u32_t i = 0; i < 4; ++i)
 			for (mgl_u32_t j = 0; j < 4; ++j)
 			{
-				r->rows[i][j] = 0.0f;
+				r->cols[i][j] = 0.0f;
 				for (mgl_u32_t n = 0; n < 4; ++n)
-					r->rows[i][j] += lhs->rows[i][n] * rhs->rows[n][j];
+					r->cols[i][j] += lhs->cols[i][n] * rhs->cols[n][j];
 			}
 #endif
 	}
@@ -103,20 +103,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->rows[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->rows[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[1]);
-		rhs_128 = mgl_f128_load(rhs->rows[1]);
+		lhs_128 = mgl_f128_load(lhs->cols[1]);
+		rhs_128 = mgl_f128_load(rhs->cols[1]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[2]);
-		rhs_128 = mgl_f128_load(rhs->rows[2]);
+		lhs_128 = mgl_f128_load(lhs->cols[2]);
+		rhs_128 = mgl_f128_load(rhs->cols[2]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[3]);
-		rhs_128 = mgl_f128_load(rhs->rows[3]);
+		lhs_128 = mgl_f128_load(lhs->cols[3]);
+		rhs_128 = mgl_f128_load(rhs->cols[3]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
 		return MGL_TRUE;
@@ -167,20 +167,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->rows[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->rows[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[1]);
-		rhs_128 = mgl_f128_load(rhs->rows[1]);
+		lhs_128 = mgl_f128_load(lhs->cols[1]);
+		rhs_128 = mgl_f128_load(rhs->cols[1]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[2]);
-		rhs_128 = mgl_f128_load(rhs->rows[2]);
+		lhs_128 = mgl_f128_load(lhs->cols[2]);
+		rhs_128 = mgl_f128_load(rhs->cols[2]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[3]);
-		rhs_128 = mgl_f128_load(rhs->rows[3]);
+		lhs_128 = mgl_f128_load(lhs->cols[3]);
+		rhs_128 = mgl_f128_load(rhs->cols[3]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
 		return MGL_FALSE;
@@ -232,20 +232,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->rows[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->rows[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[1]);
-		rhs_128 = mgl_f128_load(rhs->rows[1]);
+		lhs_128 = mgl_f128_load(lhs->cols[1]);
+		rhs_128 = mgl_f128_load(rhs->cols[1]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[2]);
-		rhs_128 = mgl_f128_load(rhs->rows[2]);
+		lhs_128 = mgl_f128_load(lhs->cols[2]);
+		rhs_128 = mgl_f128_load(rhs->cols[2]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->rows[3]);
-		rhs_128 = mgl_f128_load(rhs->rows[3]);
+		lhs_128 = mgl_f128_load(lhs->cols[3]);
+		rhs_128 = mgl_f128_load(rhs->cols[3]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
 		return MGL_TRUE;
@@ -281,20 +281,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->rows[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->rows[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[1]);
-		rhs_128 = mgl_f128_load(rhs->rows[1]);
+		lhs_128 = mgl_f128_load(lhs->cols[1]);
+		rhs_128 = mgl_f128_load(rhs->cols[1]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[2]);
-		rhs_128 = mgl_f128_load(rhs->rows[2]);
+		lhs_128 = mgl_f128_load(lhs->cols[2]);
+		rhs_128 = mgl_f128_load(rhs->cols[2]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->rows[3]);
-		rhs_128 = mgl_f128_load(rhs->rows[3]);
+		lhs_128 = mgl_f128_load(lhs->cols[3]);
+		rhs_128 = mgl_f128_load(rhs->cols[3]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
 		return MGL_FALSE;

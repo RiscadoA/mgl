@@ -114,6 +114,21 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_FAIL(mgl_f32m4x4_nequal_e(&m1, &m2, 0.1f));
 	}
 
+	// Test mgl_f32m4x4_identity
+	{
+		mgl_f32m4x4_t m1 = {
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f,
+		};
+
+		mgl_f32m4x4_t m2;
+
+		mgl_f32m4x4_identity(&m2);
+		TEST_REQUIRE_PASS(mgl_f32m4x4_equal(&m1, &m2));
+	}
+
 	// Test mgl_f32m4x4_mulmat
 	{
 		mgl_f32m4x4_t m1 = {
