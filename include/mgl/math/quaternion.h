@@ -217,13 +217,54 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline mgl_f32q4_t mgl_f32q4_conjugate(const mgl_f32q4_t* q, mgl_f32q4_t* r)
+	inline void mgl_f32q4_conjugate(const mgl_f32q4_t* q, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
 		r->x = -q->x;
 		r->y = -q->y;
 		r->z = -q->z;
 		r->s = q->s;
+	}
+
+	/// <summary>
+	///		Gets the norm squared of a quaternion.
+	/// </summary>
+	/// <param name="q">Quaternion</param>
+	/// <returns>Norm squared</returns>
+	inline mgl_f32_t mgl_f32q4_norm_squared(const mgl_f32q4_t* q)
+	{
+		MGL_DEBUG_ASSERT(q != NULL);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t xyzs = mgl_f128_load(q->data);
+		return mgl_f128_dot(xyzs, xyzs);
+#else
+		return mgl_f32_square(q->x) + mgl_f32_square(q->y) + mgl_f32_square(q->z) + mgl_f32_square(q->s);
+#endif
+	}
+
+	/// <summary>
+	///		Gets the norm of a quaternion.
+	/// </summary>
+	/// <param name="q">Quaternion</param>
+	/// <returns>Norm</returns>
+	inline mgl_f32_t mgl_f32q4_norm(const mgl_f32q4_t* q)
+	{
+		MGL_DEBUG_ASSERT(q != NULL);
+		return mgl_f32_sqrt(mgl_f32q4_norm_squared(q));
+	}
+
+	/// <summary>
+	///		Normalizes a quaternion,
+	/// </summary>
+	/// <param name="q">Quaternion</param>
+	/// <param name="r">Out result quaternion</param>
+	inline void mgl_f32q4_normalize(const mgl_f32q4_t* q, mgl_f32q4_t* r)
+	{
+		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
+		mgl_f128_t xyzs = mgl_f128_load(q->data);
+		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32_sqrt(mgl_f32q4_norm_squared(q)));
+		xyzs = mgl_f128_div(xyzs, nnnn);
+		mgl_f128_store(xyzs, r->data);
 	}
 
 #ifdef __cplusplus

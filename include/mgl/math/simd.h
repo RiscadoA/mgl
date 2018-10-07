@@ -261,7 +261,7 @@ extern "C" {
 	/// <returns>Result</returns>
 	inline mgl_f32_t mgl_f128_dot(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
-		return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0x71));
+		return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0xFF));
 	}
 
 	/// <summary>

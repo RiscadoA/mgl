@@ -87,6 +87,27 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_PASS(mgl_f32q4_equal_e(&q3, &q4, 0.001f));
 	}
 
+	// Test mgl_f32q4_norm_squared
+	{
+		mgl_f32q4_t q1 = { 1.0f, 0.0f, 1.0f, 2.0f };
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(6.0f, mgl_f32q4_norm_squared(&q1), 0.001f));
+	}
+
+	// Test mgl_f32q4_norm
+	{
+		mgl_f32q4_t q1 = { 0.0f, 0.0f, 0.0f, 4.0f };
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(4.0f, mgl_f32q4_norm(&q1), 0.001f));
+	}
+
+	// Test mgl_f32q4_normalize
+	{
+		mgl_f32q4_t q1 = { 0.0f, 0.0f, 0.0f, 4.0f };
+		mgl_f32q4_t q2;
+		mgl_f32q4_t q3 = { 0.0f, 0.0f, 0.0f, 1.0f };
+		mgl_f32q4_normalize(&q1, &q2);
+		TEST_REQUIRE_PASS(mgl_f32q4_equal_e(&q2, &q3, 0.001f));
+	}
+
 	mgl_terminate();
 	EXIT_PASS();
 }
