@@ -1,5 +1,5 @@
 #include <mgl/entry.h>
-#include <mgl/math/transform4x4.h>
+#include <mgl/math/transform_matrix4x4.h>
 #include "test.h"
 
 int main(int argc, char** argv)

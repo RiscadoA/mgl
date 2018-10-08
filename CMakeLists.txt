@@ -23,7 +23,8 @@ set(MGL_INCLUDE
 	"include/mgl/math/vector4.h"
 	"include/mgl/math/matrix4x4.h"
 	"include/mgl/math/quaternion.h"
-	"include/mgl/math/transform4x4.h"
+	"include/mgl/math/transform_matrix4x4.h"
+	"include/mgl/math/transform_quaternion.h"
 )
 
 #####################################################
