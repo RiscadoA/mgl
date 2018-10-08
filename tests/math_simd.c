@@ -126,19 +126,19 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_PASS(mgl_f128_equal(v3, mgl_f128_set(0.0f, 0.0f, 1.0f, 0.0f)));
 	}
 
-	// Test mgl_f128_dot
+	// Test mgl_f128_dot_scalar
 	{
 		{
 			mgl_f128_t v1 = mgl_f128_set(1.0f, 0.0f, 0.0f, 0.0f);
 			mgl_f128_t v2 = mgl_f128_set(0.0f, 1.0f, 0.0f, 0.0f);
-			mgl_f32_t f1 = mgl_f128_dot(v1, v2);
+			mgl_f32_t f1 = mgl_f128_dot_scalar(v1, v2);
 			TEST_REQUIRE_PASS(f1 == 0.0f);
 		}
 
 		{
 			mgl_f128_t v1 = mgl_f128_set(0.0f, 1.0f, 0.0f, 0.0f);
 			mgl_f128_t v2 = mgl_f128_set(0.0f, 1.0f, 0.0f, 0.0f);
-			mgl_f32_t f1 = mgl_f128_dot(v1, v2);
+			mgl_f32_t f1 = mgl_f128_dot_scalar(v1, v2);
 			TEST_REQUIRE_PASS(f1 == 1.0f);
 		}
 	}

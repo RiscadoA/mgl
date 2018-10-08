@@ -259,7 +259,18 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result</returns>
-	inline mgl_f32_t mgl_f128_dot(mgl_f128_t lhs, mgl_f128_t rhs)
+	inline mgl_f128_t mgl_f128_dot(mgl_f128_t lhs, mgl_f128_t rhs)
+	{
+		return _mm_dp_ps(lhs, rhs, 0xFF);
+	}
+
+	/// <summary>
+	///		Calculates the dot product between two mgl_f128_t.
+	/// </summary>
+	/// <param name="lhs">Left mgl_f128_t</param>
+	/// <param name="rhs">Right mgl_f128_t</param>
+	/// <returns>Result</returns>
+	inline mgl_f32_t mgl_f128_dot_scalar(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0xFF));
 	}

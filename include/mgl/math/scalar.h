@@ -5,6 +5,7 @@
 #include <math.h>
 
 #define MGL_PI 3.14159265359
+#define MGL_PI_F32 3.14159265359f
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +54,7 @@ extern "C" {
 	/// <returns>Angle in radians</returns>
 	inline mgl_f32_t mgl_f32_deg_to_rad(mgl_f32_t degrees)
 	{
-		return degrees * (MGL_PI / 180.0f);
+		return degrees * (MGL_PI_F32 / 180.0f);
 	}
 
 	/// <summary>
@@ -63,7 +64,7 @@ extern "C" {
 	/// <returns>Angle in degrees</returns>
 	inline mgl_f32_t mgl_f32_rad_to_deg(mgl_f32_t radians)
 	{
-		return (180 * radians) / MGL_PI;
+		return (180.0f * radians) / MGL_PI_F32;
 	}
 
 	/// <summary>

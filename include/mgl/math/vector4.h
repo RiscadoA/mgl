@@ -302,7 +302,7 @@ extern "C" {
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
 		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
-		return mgl_f128_dot(lhs_128, rhs_128);
+		return mgl_f128_dot_scalar(lhs_128, rhs_128);
 #else
 		return lhs->x * rhs->x + lhs->y * rhs->y + lhs->z * rhs->z;
 #endif

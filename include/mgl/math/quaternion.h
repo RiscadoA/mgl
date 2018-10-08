@@ -5,6 +5,7 @@
 #include <mgl/math/simd.h>
 #endif
 
+#include <mgl/math/scalar.h>
 #include <mgl/type.h>
 
 #ifdef __cplusplus
@@ -236,7 +237,7 @@ extern "C" {
 		MGL_DEBUG_ASSERT(q != NULL);
 #ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t xyzs = mgl_f128_load(q->data);
-		return mgl_f128_dot(xyzs, xyzs);
+		return mgl_f128_dot_scalar(xyzs, xyzs);
 #else
 		return mgl_f32_square(q->x) + mgl_f32_square(q->y) + mgl_f32_square(q->z) + mgl_f32_square(q->s);
 #endif
@@ -250,7 +251,8 @@ extern "C" {
 	inline mgl_f32_t mgl_f32q4_norm(const mgl_f32q4_t* q)
 	{
 		MGL_DEBUG_ASSERT(q != NULL);
-		return mgl_f32_sqrt(mgl_f32q4_norm_squared(q));
+		mgl_f32_t ns = mgl_f32q4_norm_squared(q);
+		return mgl_f32_sqrt(ns);
 	}
 
 	/// <summary>
