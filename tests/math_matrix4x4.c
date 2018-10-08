@@ -129,7 +129,7 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_PASS(mgl_f32m4x4_equal(&m1, &m2));
 	}
 
-	// Test mgl_f32m4x4_mulmat
+	// Test mgl_f32m4x4_mul
 	{
 		mgl_f32m4x4_t m1 = {
 			1.0f, 0.0f, 0.0f, 0.0f,
@@ -147,7 +147,7 @@ int main(int argc, char** argv)
 
 		mgl_f32m4x4_t m3;
 
-		mgl_f32m4x4_mulmat(&m1, &m2, &m3);
+		mgl_f32m4x4_mul(&m1, &m2, &m3);
 		TEST_REQUIRE_PASS(mgl_f32m4x4_equal(&m2, &m3));
 	}
 

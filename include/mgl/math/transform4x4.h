@@ -15,7 +15,7 @@ extern "C" {
 	/// <param name="lhs">Matrix</param>
 	/// <param name="rhs">Vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32m4x4_mulvec(const mgl_f32m4x4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	inline void mgl_f32m4x4_mul_v4(const mgl_f32m4x4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 

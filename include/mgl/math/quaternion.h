@@ -251,8 +251,7 @@ extern "C" {
 	inline mgl_f32_t mgl_f32q4_norm(const mgl_f32q4_t* q)
 	{
 		MGL_DEBUG_ASSERT(q != NULL);
-		mgl_f32_t ns = mgl_f32q4_norm_squared(q);
-		return mgl_f32_sqrt(ns);
+		return mgl_f32_sqrt(mgl_f32q4_norm_squared(q));
 	}
 
 	/// <summary>
@@ -263,10 +262,18 @@ extern "C" {
 	inline void mgl_f32q4_normalize(const mgl_f32q4_t* q, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
+#ifdef MGL_MATH_USE_SIMD
 		mgl_f128_t xyzs = mgl_f128_load(q->data);
-		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32_sqrt(mgl_f32q4_norm_squared(q)));
+		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32q4_norm(q));
 		xyzs = mgl_f128_div(xyzs, nnnn);
 		mgl_f128_store(xyzs, r->data);
+#else
+		mgl_f32_t n = mgl_f32q4_norm(q);
+		r->x = q->x / n;
+		r->y = q->y / n;
+		r->z = q->z / n;
+		r->s = q->s / n;
+#endif
 	}
 
 #ifdef __cplusplus

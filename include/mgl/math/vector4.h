@@ -5,6 +5,7 @@
 #include <mgl/math/simd.h>
 #endif
 
+#include <mgl/math/scalar.h>
 #include <mgl/type.h>
 
 #ifdef __cplusplus
@@ -305,6 +306,55 @@ extern "C" {
 		return mgl_f128_dot_scalar(lhs_128, rhs_128);
 #else
 		return lhs->x * rhs->x + lhs->y * rhs->y + lhs->z * rhs->z;
+#endif
+	}
+
+	/// <summary>
+	///		Gets the norm squared of a vector.
+	/// </summary>
+	/// <param name="v">Vector</param>
+	/// <returns>Norm squared</returns>
+	inline mgl_f32_t mgl_f32v4_norm_squared(const mgl_f32v4_t* v)
+	{
+		MGL_DEBUG_ASSERT(v != NULL);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t xyzw = mgl_f128_load(v->data);
+		return mgl_f128_dot_scalar(xyzw, xyzw);
+#else
+		return mgl_f32_square(v->x) + mgl_f32_square(v->y) + mgl_f32_square(v->z) + mgl_f32_square(v->w);
+#endif
+	}
+
+	/// <summary>
+	///		Gets the norm of a vector.
+	/// </summary>
+	/// <param name="v">Vector</param>
+	/// <returns>Norm</returns>
+	inline mgl_f32_t mgl_f32v4_norm(const mgl_f32v4_t* v)
+	{
+		MGL_DEBUG_ASSERT(v != NULL);
+		return mgl_f32_sqrt(mgl_f32v4_norm_squared(v));
+	}
+
+	/// <summary>
+	///		Normalizes a vector,
+	/// </summary>
+	/// <param name="v">Vector</param>
+	/// <param name="r">Out result vector</param>
+	inline void mgl_f32v4_normalize(const mgl_f32v4_t* v, mgl_f32v4_t* r)
+	{
+		MGL_DEBUG_ASSERT(v != NULL && r != NULL);
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t xyzw = mgl_f128_load(v->data);
+		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32v4_norm(v));
+		xyzw = mgl_f128_div(xyzw, nnnn);
+		mgl_f128_store(xyzw, r->data);
+#else
+		mgl_f32_t n = mgl_f32v4_norm(v);
+		r->x = v->x / n;
+		r->y = v->y / n;
+		r->z = v->z / n;
+		r->w = v->w / n;
 #endif
 	}
 

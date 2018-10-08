@@ -53,7 +53,7 @@ extern "C" {
 	/// <param name="lhs">First matrix</param>
 	/// <param name="rhs">Second matrix</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_mulmat(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32m4x4_t* r)
+	inline void mgl_f32m4x4_mul(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
