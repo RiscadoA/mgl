@@ -61,6 +61,15 @@ int main(int argc, char** argv)
 		TEST_REQUIRE_PASS(mgl_f32q4_equal(&q3, &q4));
 	}
 
+	// Test mgl_f32q4_scale
+	{
+		mgl_f32q4_t q1 = { 1.0f, 2.0f, 3.0f, 4.0f };
+		mgl_f32q4_t q2 = { 2.0f, 4.0f, 6.0f, 8.0f };
+		mgl_f32q4_t q3;
+		mgl_f32q4_scale(&q1, 2.0f, &q3);
+		TEST_REQUIRE_PASS(mgl_f32q4_equal(&q2, &q3));
+	}
+
 	// Test mgl_f32q4_conjugate
 	{
 		mgl_f32q4_t q1 = { -1.0f, -1.0f, -1.0f, 1.0f };

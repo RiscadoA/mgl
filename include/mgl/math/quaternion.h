@@ -214,6 +214,29 @@ extern "C" {
 	}
 
 	/// <summary>
+	///		Mutliplies a quaternion by a scalar.
+	/// </summary>
+	/// <param name="lhs">Quaternion</param>
+	/// <param name="rhs">Scalar</param>
+	/// <param name="r">Out result quaternion</param>
+	inline mgl_f32q4_t mgl_f32q4_scale(const mgl_f32q4_t* lhs, mgl_f32_t rhs, mgl_f32q4_t* r)
+	{
+		MGL_DEBUG_ASSERT(lhs != NULL && r != NULL);
+
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t xyzw = mgl_f128_load(lhs->data);
+		mgl_f128_t ssss = mgl_f128_set_scalar(rhs);
+		xyzw = mgl_f128_mul(xyzw, ssss);
+		mgl_f128_store(xyzw, r->data);
+#else
+		r->x = lhs->x * rhs;
+		r->y = lhs->y * rhs;
+		r->z = lhs->z * rhs;
+		r->s = lhs->s * rhs;
+#endif
+	}
+
+	/// <summary>
 	///		Gets the conjugate of a quaternion.
 	/// </summary>
 	/// <param name="q">Quaternion</param>
