@@ -206,10 +206,12 @@ extern "C" {
 		mgl_f128_t rv = mgl_f128_shuffle(XZWY, XZWY, MGL_SIMD_SHUFFLE(2, 1, 3, 0));
 		mgl_f128_store(rv, r->data);
 #else
-		r->s = lhs->s * rhs->s - lhs->x * rhs->x - lhs->y * rhs->y - lhs->z * rhs->z;
-		r->x = lhs->s * rhs->x + lhs->x * rhs->s + lhs->y * rhs->z - lhs->z * rhs->y;
-		r->y = lhs->s * rhs->y - lhs->x * rhs->z + lhs->y * rhs->s + lhs->z * rhs->x;
-		r->z = lhs->s * rhs->z + lhs->x * rhs->y - lhs->y * rhs->x + lhs->z * rhs->s;
+		mgl_f32q4_t t;
+		t.s = lhs->s * rhs->s - lhs->x * rhs->x - lhs->y * rhs->y - lhs->z * rhs->z;
+		t.x = lhs->s * rhs->x + lhs->x * rhs->s + lhs->y * rhs->z - lhs->z * rhs->y;
+		t.y = lhs->s * rhs->y - lhs->x * rhs->z + lhs->y * rhs->s + lhs->z * rhs->x;
+		t.z = lhs->s * rhs->z + lhs->x * rhs->y - lhs->y * rhs->x + lhs->z * rhs->s;
+		*r = t;
 #endif
 	}
 
