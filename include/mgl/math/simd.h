@@ -105,6 +105,15 @@ extern "C" {
 #define mgl_f128_shuffle(lhs, rhs, shuffle) _mm_shuffle_ps(lhs, rhs, shuffle)
 
 	/// <summary>
+	///		Transposes a 4x4 matrix stored in 4 mgl_f128_t's.
+	/// </summary>
+	/// <param name="col0">Column 0</param>
+	/// <param name="col1">Column 1</param>
+	/// <param name="col2">Column 2</param>
+	/// <param name="col3">Column 3</param>
+#define mgl_f128m4x4_transpose(col0, col1, col2, col3) _MM_TRANSPOSE4_PS(col0, col1, col2, col3)
+
+	/// <summary>
 	///		Performs an horizontal addition between two mgl_f128_t and returns the result (component-wise).
 	///		(A0, A1, A2, A3) hadd (B0, B1, B2, B3) =
 	///		(B0 + B1, B2 + B3, A0 + A1, A2 + A3)

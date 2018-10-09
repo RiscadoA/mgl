@@ -48,6 +48,54 @@ extern "C" {
 	}
 
 	/// <summary>
+	///		Transposes a 4x4 matrix.
+	/// </summary>
+	/// <param name="m">Matrix</param>
+	/// <param name="r">Out result matrix</param>
+	inline void mgl_f32m4x4_transpose(const mgl_f32m4x4_t* m, mgl_f32m4x4_t* r)
+	{
+		MGL_DEBUG_ASSERT(m != NULL && r != NULL);
+
+#ifdef MGL_MATH_USE_SIMD
+		mgl_f128_t m_0 = mgl_f128_load(m->cols[0]);
+		mgl_f128_t m_1 = mgl_f128_load(m->cols[1]);
+		mgl_f128_t m_2 = mgl_f128_load(m->cols[2]);
+		mgl_f128_t m_3 = mgl_f128_load(m->cols[3]);
+		
+		mgl_f128m4x4_transpose(m_0, m_1, m_2, m_3);
+
+		mgl_f128_store(m_0, r->cols[0]);
+		mgl_f128_store(m_1, r->cols[1]);
+		mgl_f128_store(m_2, r->cols[2]);
+		mgl_f128_store(m_3, r->cols[3]);
+#else
+		mgl_f32m4x4_t t = *m;
+
+		t.x0 = m->x0;
+		t.y0 = m->x1;
+		t.z0 = m->x2;
+		t.w0 = m->x3;
+
+		t.x1 = m->y0;
+		t.y1 = m->y1;
+		t.z1 = m->y2;
+		t.w1 = m->y3;
+
+		t.x2 = m->z0;
+		t.y2 = m->z1;
+		t.z2 = m->z2;
+		t.w2 = m->z3;
+
+		t.x3 = m->w0;
+		t.y3 = m->w1;
+		t.z3 = m->w2;
+		t.w3 = m->w3;
+
+		*r = t;
+#endif
+	}
+
+	/// <summary>
 	///		Muliplies two 4x4 matrices.
 	/// </summary>
 	/// <param name="lhs">First matrix</param>
