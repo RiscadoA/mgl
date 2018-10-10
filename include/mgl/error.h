@@ -10,7 +10,8 @@ extern "C" {
 
 	enum
 	{
-		MGL_ERROR_NONE = 0x00000000,
+		MGL_ERROR_NONE				= 0x00000000,
+		MGL_ERROR_EXTERNAL			= 0x00000001,
 	};
 
 	typedef mgl_enum_t mgl_error_t;

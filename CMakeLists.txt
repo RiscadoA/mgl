@@ -11,6 +11,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(MGL_SOURCE
 	"src/mgl/entry.c"
 	"src/mgl/error.c"
+	"src/mgl/memory/allocator.c"
 )
 
 set(MGL_INCLUDE
@@ -26,6 +27,7 @@ set(MGL_INCLUDE
 	"include/mgl/math/quaternion_matrix4x4.h"
 	"include/mgl/math/transform_matrix4x4.h"
 	"include/mgl/math/transform_quaternion.h"
+	"include/mgl/memory/allocator.h"
 )
 
 #####################################################
