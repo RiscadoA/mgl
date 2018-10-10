@@ -8,22 +8,22 @@ extern "C" {
 #include <float.h>
 #include <uchar.h>
 
-	typedef int8_t mgl_i8_t;
-	typedef int16_t mgl_i16_t;
-	typedef int32_t mgl_i32_t;
-	typedef int64_t mgl_i64_t;
-	typedef uint8_t mgl_u8_t;
-	typedef uint16_t mgl_u16_t;
-	typedef uint32_t mgl_u32_t;
-	typedef uint64_t mgl_u64_t;
-	typedef float mgl_f32_t;
-	typedef double mgl_f64_t;
-	typedef intptr_t mgl_iptr_t;
-	typedef uintptr_t mgl_uptr_t;
-	typedef mgl_i32_t mgl_enum_t;
-	typedef mgl_i8_t mgl_bool_t;
-	typedef char mgl_chr8_t;
-	typedef char32_t mgl_chr32_t;
+	typedef int8_t		mgl_i8_t;
+	typedef int16_t		mgl_i16_t;
+	typedef int32_t		mgl_i32_t;
+	typedef int64_t		mgl_i64_t;
+	typedef uint8_t		mgl_u8_t;
+	typedef uint16_t	mgl_u16_t;
+	typedef uint32_t	mgl_u32_t;
+	typedef uint64_t	mgl_u64_t;
+	typedef float		mgl_f32_t;
+	typedef double		mgl_f64_t;
+	typedef intptr_t	mgl_iptr_t;
+	typedef uintptr_t	mgl_uptr_t;
+	typedef mgl_i32_t	mgl_enum_t;
+	typedef mgl_i8_t	mgl_bool_t;
+	typedef char		mgl_chr8_t;
+	typedef char32_t	mgl_chr32_t;
 
 #define MGL_I8_MAX		INT8_MAX
 #define MGL_I16_MAX		INT16_MAX
@@ -47,8 +47,24 @@ extern "C" {
 #define MGL_IPTR_MIN	INTPTR_MIN
 #define MGL_UPTR_MAX	UINTPTR_MAX
 
-#define MGL_TRUE	(1)
-#define MGL_FALSE	(0)
+#define MGL_TRUE		(1)
+#define MGL_FALSE		(0)
+
+#if defined(_MSC_VER)
+#define MGL_ALIGNED(x) __declspec(align(x))
+#elif defined(__GNUC__)
+#define MGL_ALIGNED(x) __attribute__ ((aligned(x)))
+#endif
+
+#define MGL_ALIGNED_TYPE(t,x) typedef t MGL_ALIGNED(x)
+
+#ifdef __GNUC__
+#	define MGL_ALIGN_OF(x) __alignof__(x)
+#elif defined(_MSC_VER)
+#	define MGL_ALIGN_OF(x) __alignof(x)
+#else
+#	error Unsupported compiler, can't define MGL_ALIGN_OF
+#endif
 
 #ifdef __cplusplus
 }
