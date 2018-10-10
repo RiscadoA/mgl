@@ -12,7 +12,7 @@
 extern "C" {
 #endif // __cplusplus
 
-	typedef struct
+	typedef struct MGL_ALIGNED(16)
 	{
 		union
 		{
@@ -31,8 +31,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal(lhs_128, rhs_128);
 #else
 		if (lhs->x != rhs->x)
@@ -57,8 +57,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_nequal(lhs_128, rhs_128);
 #else
 		if (lhs->x != rhs->x)
@@ -84,8 +84,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
 #else
 		mgl_f32_t dif = lhs->x - rhs->x;
@@ -115,8 +115,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
 #else
 		mgl_f32_t dif = lhs->x - rhs->x;
@@ -141,13 +141,13 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline mgl_f32q4_t mgl_f32q4_add(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	inline void mgl_f32q4_add(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_add(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -164,13 +164,13 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline mgl_f32q4_t mgl_f32q4_sub(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	inline void mgl_f32q4_sub(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_sub(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -187,13 +187,13 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline mgl_f32q4_t mgl_f32q4_mul(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	inline void mgl_f32q4_mul(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzw = mgl_f128_load(lhs->data);
-		mgl_f128_t abcd = mgl_f128_load(rhs->data);
+		mgl_f128_t xyzw = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t abcd = mgl_f128_load_aligned(rhs->data);
 		mgl_f128_t wzyx = mgl_f128_shuffle(xyzw, xyzw, MGL_SIMD_SHUFFLE(0, 1, 2, 3));
 		mgl_f128_t baba = mgl_f128_shuffle(abcd, abcd, MGL_SIMD_SHUFFLE(0, 1, 0, 1));
 		mgl_f128_t dcdc = mgl_f128_shuffle(abcd, abcd, MGL_SIMD_SHUFFLE(2, 3, 2, 3));
@@ -221,12 +221,12 @@ extern "C" {
 	/// <param name="lhs">Quaternion</param>
 	/// <param name="rhs">Scalar</param>
 	/// <param name="r">Out result quaternion</param>
-	inline mgl_f32q4_t mgl_f32q4_scale(const mgl_f32q4_t* lhs, mgl_f32_t rhs, mgl_f32q4_t* r)
+	inline void mgl_f32q4_scale(const mgl_f32q4_t* lhs, mgl_f32_t rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzw = mgl_f128_load(lhs->data);
+		mgl_f128_t xyzw = mgl_f128_load_aligned(lhs->data);
 		mgl_f128_t ssss = mgl_f128_set_scalar(rhs);
 		xyzw = mgl_f128_mul(xyzw, ssss);
 		mgl_f128_store(xyzw, r->data);
@@ -261,7 +261,7 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(q != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzs = mgl_f128_load(q->data);
+		mgl_f128_t xyzs = mgl_f128_load_aligned(q->data);
 		return mgl_f128_dot_scalar(xyzs, xyzs);
 #else
 		return mgl_f32_square(q->x) + mgl_f32_square(q->y) + mgl_f32_square(q->z) + mgl_f32_square(q->s);
@@ -288,7 +288,7 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzs = mgl_f128_load(q->data);
+		mgl_f128_t xyzs = mgl_f128_load_aligned(q->data);
 		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32q4_norm(q));
 		xyzs = mgl_f128_div(xyzs, nnnn);
 		mgl_f128_store(xyzs, r->data);

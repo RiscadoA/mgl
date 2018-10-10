@@ -50,6 +50,22 @@ extern "C" {
 #define MGL_TRUE		(1)
 #define MGL_FALSE		(0)
 
+#if defined(_MSC_VER)
+#define MGL_ALIGNED(x) __declspec(align(x))
+#elif defined(__GNUC__)
+#define MGL_ALIGNED(x) __attribute__ ((aligned(x)))
+#endif
+
+#define MGL_ALIGNED_TYPE(t,x) typedef t MGL_ALIGNED(x)
+
+#ifdef __GNUC__
+#	define MGL_ALIGN_OF(x) __alignof__(x)
+#elif defined(_MSC_VER)
+#	define MGL_ALIGN_OF(x) __alignof(x)
+#else
+#	error Unsupported compiler, can't define MGL_ALIGN_OF
+#endif
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

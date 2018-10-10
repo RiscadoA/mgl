@@ -32,69 +32,69 @@ int main(int argc, char** argv)
 
 	// Test mgl_f32_deg_to_rad
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(360.0f), MGL_PI * 2.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(180.0f), MGL_PI, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(-90.0f), -MGL_PI / 2.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(90.0f), MGL_PI / 2.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(45.0f), MGL_PI / 4.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(360.0f), MGL_PI_F32 * 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(180.0f), MGL_PI_F32, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(-90.0f), -MGL_PI_F32 / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(90.0f), MGL_PI_F32 / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(45.0f), MGL_PI_F32 / 4.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_deg_to_rad(0.0f), 0.0f, 0.001f));
 	}
 
 	// Test mgl_f32_rad_to_deg
 	{
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(0.0f), 0.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI * 2), 360.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI * 2), -360.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI), 180.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI), -180.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI / 2), 90.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI / 2), -90.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI / 4), 45.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI / 4), -45.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI_F32 * 2), 360.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI_F32 * 2), -360.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI_F32), 180.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI_F32), -180.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI_F32 / 2), 90.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI_F32 / 2), -90.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(MGL_PI_F32 / 4), 45.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_rad_to_deg(-MGL_PI_F32 / 4), -45.0f, 0.001f));
 	}
 
 	// Test mgl_f32_cos
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI), -1.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI_F32), -1.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(0.0f), 1.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI / 2.0f), 0.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(-MGL_PI / 2.0f), 0.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI / 4.0f), mgl_f32_sqrt(2.0f)/2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI_F32 / 2.0f), 0.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(-MGL_PI_F32 / 2.0f), 0.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_cos(MGL_PI_F32 / 4.0f), mgl_f32_sqrt(2.0f)/2.0f, 0.001f));
 	}
 
 	// Test mgl_f32_sin
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI), 0.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI_F32), 0.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(0.0f), 0.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI / 2.0f), 1.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(-MGL_PI / 2.0f), -1.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI / 4.0f), mgl_f32_sqrt(2.0f) / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI_F32 / 2.0f), 1.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(-MGL_PI_F32 / 2.0f), -1.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_sin(MGL_PI_F32 / 4.0f), mgl_f32_sqrt(2.0f) / 2.0f, 0.001f));
 	}
 
 	// Test mgl_f32_tan
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_tan(MGL_PI), 0.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_tan(MGL_PI_F32), 0.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_tan(0.0f), 0.0f, 0.001f));
 	}
 
 	// Test mgl_f32_acos
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_acos(mgl_f32_cos(MGL_PI)), MGL_PI, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_acos(mgl_f32_cos(MGL_PI / 2.0f)), MGL_PI / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_acos(mgl_f32_cos(MGL_PI_F32)), MGL_PI_F32, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_acos(mgl_f32_cos(MGL_PI_F32 / 2.0f)), MGL_PI_F32 / 2.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_acos(mgl_f32_cos(0.0f)), 0.0f, 0.001f));
 	}
 
 	// Test mgl_f32_asin
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_asin(mgl_f32_sin(-MGL_PI / 2.0f)), -MGL_PI / 2.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_asin(mgl_f32_sin(MGL_PI / 2.0f)), MGL_PI / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_asin(mgl_f32_sin(-MGL_PI_F32 / 2.0f)), -MGL_PI_F32 / 2.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_asin(mgl_f32_sin(MGL_PI_F32 / 2.0f)), MGL_PI_F32 / 2.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_asin(mgl_f32_sin(0.0f)), 0.0f, 0.001f));
 	}
 
 	// Test mgl_f32_atan
 	{
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_atan(mgl_f32_tan(MGL_PI / 4.0f)), MGL_PI / 4.0f, 0.001f));
-		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_atan(mgl_f32_tan(-MGL_PI / 4.0f)), -MGL_PI / 4.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_atan(mgl_f32_tan(MGL_PI_F32 / 4.0f)), MGL_PI_F32 / 4.0f, 0.001f));
+		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_atan(mgl_f32_tan(-MGL_PI_F32 / 4.0f)), -MGL_PI_F32 / 4.0f, 0.001f));
 		TEST_REQUIRE_PASS(mgl_f32_equal_e(mgl_f32_atan(mgl_f32_tan(0.0f)), 0.0f, 0.001f));
 	}
 

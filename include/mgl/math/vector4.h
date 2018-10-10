@@ -12,7 +12,7 @@
 extern "C" {
 #endif // __cplusplus
 
-	typedef struct
+	typedef struct MGL_ALIGNED(16)
 	{
 		union
 		{
@@ -31,8 +31,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_add(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 		r->w = 1.0f;
@@ -54,8 +54,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_add(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -76,8 +76,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_sub(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 		r->w = 0.0f;
@@ -99,8 +99,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_sub(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -121,8 +121,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_mul(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -143,8 +143,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_div(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -165,8 +165,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal(lhs_128, rhs_128);
 #else
 		if (lhs->x != rhs->x)
@@ -191,8 +191,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_nequal(lhs_128, rhs_128);
 #else
 		if (lhs->x != rhs->x)
@@ -218,8 +218,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
 #else
 		mgl_f32_t dif = lhs->x - rhs->x;
@@ -249,8 +249,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_equal_e(lhs_128, rhs_128, epsilon);
 #else
 		mgl_f32_t dif = lhs->x - rhs->x;
@@ -279,8 +279,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		lhs_128 = mgl_f128_cross(lhs_128, rhs_128);
 		mgl_f128_store(lhs_128, r->data);
 #else
@@ -301,8 +301,8 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->data);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->data);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->data);
 		return mgl_f128_dot_scalar(lhs_128, rhs_128);
 #else
 		return lhs->x * rhs->x + lhs->y * rhs->y + lhs->z * rhs->z;
@@ -318,7 +318,7 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(v != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzw = mgl_f128_load(v->data);
+		mgl_f128_t xyzw = mgl_f128_load_aligned(v->data);
 		return mgl_f128_dot_scalar(xyzw, xyzw);
 #else
 		return mgl_f32_square(v->x) + mgl_f32_square(v->y) + mgl_f32_square(v->z) + mgl_f32_square(v->w);
@@ -345,7 +345,7 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(v != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t xyzw = mgl_f128_load(v->data);
+		mgl_f128_t xyzw = mgl_f128_load_aligned(v->data);
 		mgl_f128_t nnnn = mgl_f128_set_scalar(mgl_f32v4_norm(v));
 		xyzw = mgl_f128_div(xyzw, nnnn);
 		mgl_f128_store(xyzw, r->data);

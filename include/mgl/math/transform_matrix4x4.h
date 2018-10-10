@@ -20,11 +20,11 @@ extern "C" {
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_0 = mgl_f128_load(lhs->cols[0]);
-		mgl_f128_t lhs_1 = mgl_f128_load(lhs->cols[1]);
-		mgl_f128_t lhs_2 = mgl_f128_load(lhs->cols[2]);
-		mgl_f128_t lhs_3 = mgl_f128_load(lhs->cols[3]);
-		mgl_f128_t rhs_0 = mgl_f128_load(rhs->data);
+		mgl_f128_t lhs_0 = mgl_f128_load_aligned(lhs->cols[0]);
+		mgl_f128_t lhs_1 = mgl_f128_load_aligned(lhs->cols[1]);
+		mgl_f128_t lhs_2 = mgl_f128_load_aligned(lhs->cols[2]);
+		mgl_f128_t lhs_3 = mgl_f128_load_aligned(lhs->cols[3]);
+		mgl_f128_t rhs_0 = mgl_f128_load_aligned(rhs->data);
 
 		lhs_0 = mgl_f128_mul(lhs_0, rhs_0);
 		lhs_1 = mgl_f128_mul(lhs_1, rhs_0);

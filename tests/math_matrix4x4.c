@@ -6,6 +6,9 @@ int main(int argc, char** argv)
 {
 	TEST_REQUIRE_PASS(mgl_init() == MGL_ERROR_NONE);
 
+	// Check alignment
+	TEST_REQUIRE_PASS(MGL_ALIGN_OF(mgl_f32m4x4_t) == 16);
+
 	// Test mgl_f32m4x4_equal
 	{
 		mgl_f32m4x4_t m1 = { 

@@ -11,7 +11,7 @@
 extern "C" {
 #endif // __cplusplus
 
-	typedef struct
+	typedef struct MGL_ALIGNED(16)
 	{
 		union
 		{
@@ -57,10 +57,10 @@ extern "C" {
 		MGL_DEBUG_ASSERT(m != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t m_0 = mgl_f128_load(m->cols[0]);
-		mgl_f128_t m_1 = mgl_f128_load(m->cols[1]);
-		mgl_f128_t m_2 = mgl_f128_load(m->cols[2]);
-		mgl_f128_t m_3 = mgl_f128_load(m->cols[3]);
+		mgl_f128_t m_0 = mgl_f128_load_aligned(m->cols[0]);
+		mgl_f128_t m_1 = mgl_f128_load_aligned(m->cols[1]);
+		mgl_f128_t m_2 = mgl_f128_load_aligned(m->cols[2]);
+		mgl_f128_t m_3 = mgl_f128_load_aligned(m->cols[3]);
 		
 		mgl_f128m4x4_transpose(m_0, m_1, m_2, m_3);
 
@@ -106,14 +106,14 @@ extern "C" {
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t rhs_0 = mgl_f128_load(rhs->cols[0]);
-		mgl_f128_t rhs_1 = mgl_f128_load(rhs->cols[1]);
-		mgl_f128_t rhs_2 = mgl_f128_load(rhs->cols[2]);
-		mgl_f128_t rhs_3 = mgl_f128_load(rhs->cols[3]);
+		mgl_f128_t rhs_0 = mgl_f128_load_aligned(rhs->cols[0]);
+		mgl_f128_t rhs_1 = mgl_f128_load_aligned(rhs->cols[1]);
+		mgl_f128_t rhs_2 = mgl_f128_load_aligned(rhs->cols[2]);
+		mgl_f128_t rhs_3 = mgl_f128_load_aligned(rhs->cols[3]);
 
 		for (mgl_u32_t i = 0; i < 4; ++i)
 		{
-			mgl_f128_t lhs_0 = mgl_f128_load(lhs->cols[i]);
+			mgl_f128_t lhs_0 = mgl_f128_load_aligned(lhs->cols[i]);
 			mgl_f128_t lhs_1 = lhs_0;
 			mgl_f128_t lhs_2 = lhs_0;
 			mgl_f128_t lhs_3 = lhs_0;
@@ -153,20 +153,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->cols[0]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[1]);
-		rhs_128 = mgl_f128_load(rhs->cols[1]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[1]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[1]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[2]);
-		rhs_128 = mgl_f128_load(rhs->cols[2]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[2]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[2]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[3]);
-		rhs_128 = mgl_f128_load(rhs->cols[3]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[3]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[3]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_FALSE;
 		return MGL_TRUE;
@@ -217,20 +217,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->cols[0]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[1]);
-		rhs_128 = mgl_f128_load(rhs->cols[1]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[1]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[1]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[2]);
-		rhs_128 = mgl_f128_load(rhs->cols[2]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[2]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[2]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[3]);
-		rhs_128 = mgl_f128_load(rhs->cols[3]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[3]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[3]);
 		if (mgl_f128_nequal(lhs_128, rhs_128))
 			return MGL_TRUE;
 		return MGL_FALSE;
@@ -282,20 +282,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->cols[0]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[1]);
-		rhs_128 = mgl_f128_load(rhs->cols[1]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[1]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[1]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[2]);
-		rhs_128 = mgl_f128_load(rhs->cols[2]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[2]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[2]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
-		lhs_128 = mgl_f128_load(lhs->cols[3]);
-		rhs_128 = mgl_f128_load(rhs->cols[3]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[3]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[3]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_FALSE;
 		return MGL_TRUE;
@@ -331,20 +331,20 @@ extern "C" {
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
-		mgl_f128_t lhs_128 = mgl_f128_load(lhs->cols[0]);
-		mgl_f128_t rhs_128 = mgl_f128_load(rhs->cols[0]);
+		mgl_f128_t lhs_128 = mgl_f128_load_aligned(lhs->cols[0]);
+		mgl_f128_t rhs_128 = mgl_f128_load_aligned(rhs->cols[0]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[1]);
-		rhs_128 = mgl_f128_load(rhs->cols[1]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[1]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[1]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[2]);
-		rhs_128 = mgl_f128_load(rhs->cols[2]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[2]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[2]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
-		lhs_128 = mgl_f128_load(lhs->cols[3]);
-		rhs_128 = mgl_f128_load(rhs->cols[3]);
+		lhs_128 = mgl_f128_load_aligned(lhs->cols[3]);
+		rhs_128 = mgl_f128_load_aligned(rhs->cols[3]);
 		if (mgl_f128_nequal_e(lhs_128, rhs_128, epsilon))
 			return MGL_TRUE;
 		return MGL_FALSE;
