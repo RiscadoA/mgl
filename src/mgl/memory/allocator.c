@@ -15,7 +15,7 @@ static mgl_error_t mgl_standard_allocator_allocate(mgl_allocator_t* allocator, m
 
 static mgl_error_t mgl_standard_allocator_reallocate(mgl_allocator_t* allocator, void* ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void** out_ptr)
 {
-	MGL_DEBUG_ASSERT(allocator != NULL && ptr == NULL && out_ptr != NULL);
+	MGL_DEBUG_ASSERT(allocator != NULL && ptr != NULL && out_ptr != NULL);
 	*out_ptr = realloc(ptr, new_size);
 	if (*out_ptr == NULL)
 		return MGL_ERROR_EXTERNAL;
@@ -24,7 +24,7 @@ static mgl_error_t mgl_standard_allocator_reallocate(mgl_allocator_t* allocator,
 
 static mgl_error_t mgl_standard_allocator_deallocate(mgl_allocator_t* allocator, void* ptr)
 {
-	MGL_DEBUG_ASSERT(allocator != NULL && ptr == NULL);
+	MGL_DEBUG_ASSERT(allocator != NULL && ptr != NULL);
 	free(ptr);
 	return MGL_ERROR_NONE;
 }
