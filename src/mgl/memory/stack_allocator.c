@@ -6,7 +6,7 @@ static mgl_error_t mgl_stack_allocator_allocate(mgl_allocator_t* allocator, mgl_
 	
 	mgl_stack_allocator_t* stack = (mgl_stack_allocator_t*)allocator;
 	if (stack->head + size > stack->end)
-		return MGL_ERROR_STACK_OVERFLOW;
+		return MGL_ERROR_OVERFLOW;
 	*out_ptr = (void*)stack->head;
 	stack->head += size;
 	return MGL_ERROR_NONE;
@@ -20,9 +20,9 @@ static mgl_error_t mgl_stack_allocator_reallocate(mgl_allocator_t* allocator, vo
 	if (stack->head - prev_size == (mgl_uptr_t)ptr)
 	{
 		if (stack->head - prev_size < stack->begin)
-			return MGL_ERROR_STACK_UNDERFLOW;
+			return MGL_ERROR_UNDERFLOW;
 		if (stack->head - prev_size + new_size > stack->end)
-			return MGL_ERROR_STACK_OVERFLOW;
+			return MGL_ERROR_OVERFLOW;
 		stack->head -= prev_size;
 		stack->head += new_size;
 		*out_ptr = ptr;
