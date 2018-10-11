@@ -45,7 +45,7 @@ static mgl_allocator_functions_t mgl_stack_allocator_functions =
 	NULL,
 };
 
-void mgl_init_stack_allocator(mgl_stack_allocator_t * allocator, void * memory, mgl_u64_t memory_size)
+void MGL_API mgl_init_stack_allocator(mgl_stack_allocator_t * allocator, void * memory, mgl_u64_t memory_size)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && memory != NULL && memory_size != 0);
 
@@ -55,13 +55,13 @@ void mgl_init_stack_allocator(mgl_stack_allocator_t * allocator, void * memory, 
 	allocator->head = allocator->begin;
 }
 
-mgl_uptr_t mgl_get_stack_allocator_head(mgl_stack_allocator_t * allocator)
+mgl_uptr_t MGL_API mgl_get_stack_allocator_head(mgl_stack_allocator_t * allocator)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	return allocator->head;
 }
 
-void mgl_set_stack_allocator_head(mgl_stack_allocator_t * allocator, mgl_uptr_t head)
+void MGL_API mgl_set_stack_allocator_head(mgl_stack_allocator_t * allocator, mgl_uptr_t head)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	MGL_ASSERT(head >= allocator->begin && head <= allocator->end);

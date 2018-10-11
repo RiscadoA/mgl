@@ -1,7 +1,7 @@
 #include <mgl/memory/allocator.h>
 #include <malloc.h>
 
-mgl_allocator_t* mgl_standard_allocator = NULL;
+MGL_API mgl_allocator_t* mgl_standard_allocator = NULL;
 static mgl_allocator_t mgl_standard_allocator_s;
 
 static mgl_error_t mgl_standard_allocator_allocate(mgl_allocator_t* allocator, mgl_u64_t size, void** out_ptr)
@@ -38,13 +38,13 @@ mgl_allocator_functions_t mgl_standard_allocator_functions =
 	NULL
 };
 
-mgl_error_t mgl_allocate(mgl_allocator_t * allocator, mgl_u64_t size, void ** out_ptr)
+mgl_error_t MGL_API mgl_allocate(mgl_allocator_t * allocator, mgl_u64_t size, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	return allocator->functions->allocate(allocator, size, out_ptr);
 }
 
-mgl_error_t mgl_reallocate(mgl_allocator_t * allocator, void * ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void ** out_ptr)
+mgl_error_t MGL_API mgl_reallocate(mgl_allocator_t * allocator, void * ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	if (ptr == NULL)
@@ -52,13 +52,13 @@ mgl_error_t mgl_reallocate(mgl_allocator_t * allocator, void * ptr, mgl_u64_t pr
 	return allocator->functions->reallocate(allocator, ptr, prev_size, new_size, out_ptr);
 }
 
-mgl_error_t mgl_deallocate(mgl_allocator_t * allocator, void * ptr)
+mgl_error_t MGL_API mgl_deallocate(mgl_allocator_t * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	return allocator->functions->deallocate(allocator, ptr);
 }
 
-mgl_error_t mgl_allocate_aligned(mgl_allocator_t * allocator, mgl_u64_t size, mgl_u64_t alignment, void ** out_ptr)
+mgl_error_t MGL_API mgl_allocate_aligned(mgl_allocator_t * allocator, mgl_u64_t size, mgl_u64_t alignment, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	if (allocator->functions->allocate_aligned == NULL)
@@ -81,7 +81,7 @@ mgl_error_t mgl_allocate_aligned(mgl_allocator_t * allocator, mgl_u64_t size, mg
 	else return allocator->functions->allocate_aligned(allocator, size, alignment, out_ptr);
 }
 
-mgl_error_t mgl_deallocate_aligned(mgl_allocator_t * allocator, void * ptr)
+mgl_error_t MGL_API mgl_deallocate_aligned(mgl_allocator_t * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && ptr != NULL);
 	if (allocator->functions->deallocate_aligned == NULL)
