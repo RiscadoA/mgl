@@ -8,5 +8,15 @@ MGL_API void mgl_abort(void)
 
 MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 {
-	return u8"???: Unknown error";
+	switch (error)
+	{
+		case MGL_ERROR_NONE: return u8"MGL_ERROR_NONE: No error";
+		case MGL_ERROR_EXTERNAL: return u8"MGL_ERROR_EXTERNAL: External error";
+		case MGL_ERROR_OVERFLOW: return u8"MGL_ERROR_OVERFLOW: Overflow detected";
+		case MGL_ERROR_UNDERFLOW: return u8"MGL_ERROR_UNDERFLOW: Underflow detected";
+		case MGL_ERROR_TOO_BIG: return u8"MGL_ERROR_TOO_BIG: Too big";
+		case MGL_ERROR_OUT_OF_BOUNDS: return u8"MGL_ERROR_TOO_BIG: Out of bounds";
+		case MGL_ERROR_UNSUPPORTED: return u8"MGL_ERROR_UNSUPPORTED: Unsupported feature";
+		default: return u8"???: Unknown error";
+	}
 }
