@@ -45,7 +45,7 @@ static mgl_allocator_functions_t mgl_linear_allocator_functions =
 	NULL,
 };
 
-void mgl_init_linear_allocator(mgl_linear_allocator_t * allocator, void * memory, mgl_u64_t memory_size)
+void MGL_API mgl_init_linear_allocator(mgl_linear_allocator_t * allocator, void * memory, mgl_u64_t memory_size)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && memory != NULL && memory_size != 0);
 
@@ -55,7 +55,7 @@ void mgl_init_linear_allocator(mgl_linear_allocator_t * allocator, void * memory
 	allocator->head = allocator->begin;
 }
 
-void mgl_clear_linear_allocator(mgl_linear_allocator_t * allocator)
+void MGL_API mgl_clear_linear_allocator(mgl_linear_allocator_t * allocator)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	allocator->head = allocator->begin;

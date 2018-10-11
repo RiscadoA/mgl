@@ -26,7 +26,7 @@ extern "C" {
 	/// <param name="slot_size">Slot size</param>
 	/// <param name="memory">Memory to be used on the allocator</param>
 	/// <param name="memory_size">Memory size (MGL_POOL_ALLOCATOR_SIZE)</param>
-	void mgl_init_pool_allocator(mgl_pool_allocator_t* allocator, mgl_u64_t slot_count, mgl_u64_t slot_size, void* memory, mgl_u64_t memory_size);
+	void MGL_API mgl_init_pool_allocator(mgl_pool_allocator_t* allocator, mgl_u64_t slot_count, mgl_u64_t slot_size, void* memory, mgl_u64_t memory_size);
 
 #ifdef __cplusplus
 }

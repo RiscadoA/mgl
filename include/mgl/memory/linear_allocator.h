@@ -19,13 +19,13 @@ extern "C" {
 	/// <param name="allocator">Allocator pointer</param>
 	/// <param name="memory">Memory to be used on the allocator</param>
 	/// <param name="memory_size">Memory size</param>
-	void mgl_init_linear_allocator(mgl_linear_allocator_t* allocator, void* memory, mgl_u64_t memory_size);
+	void MGL_API mgl_init_linear_allocator(mgl_linear_allocator_t* allocator, void* memory, mgl_u64_t memory_size);
 
 	/// <summary>
 	///		Clears a linear allocator.
 	/// </summary>
 	/// <param name="allocator">Allocator pointer</param>
-	void mgl_clear_linear_allocator(mgl_linear_allocator_t* allocator);
+	void MGL_API mgl_clear_linear_allocator(mgl_linear_allocator_t* allocator);
 
 #ifdef __cplusplus
 }

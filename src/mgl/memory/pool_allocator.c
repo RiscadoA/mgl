@@ -53,7 +53,7 @@ static mgl_allocator_functions_t mgl_pool_allocator_functions =
 	NULL,
 };
 
-void mgl_init_pool_allocator(mgl_pool_allocator_t * allocator, mgl_u64_t slot_count, mgl_u64_t slot_size, void * memory, mgl_u64_t memory_size)
+void MGL_API mgl_init_pool_allocator(mgl_pool_allocator_t * allocator, mgl_u64_t slot_count, mgl_u64_t slot_size, void * memory, mgl_u64_t memory_size)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && memory != NULL && memory_size != 0);
 	MGL_ASSERT(memory_size >= MGL_POOL_ALLOCATOR_SIZE(slot_count, slot_size));
