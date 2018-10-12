@@ -114,7 +114,7 @@ void MGL_API mgl_streams_terminate(void)
 	mgl_stderr_stream = NULL;
 }
 
-mgl_error_t mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size, mgl_u64_t * out_write_size)
+mgl_error_t MGL_API mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size, mgl_u64_t * out_write_size)
 {
 	MGL_DEBUG_ASSERT(stream != NULL && memory != NULL);
 	if (stream->functions->write == NULL)
@@ -122,7 +122,7 @@ mgl_error_t mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size
 	return stream->functions->write(stream, memory, size, out_write_size);
 }
 
-mgl_error_t mgl_read(mgl_stream_t * stream, void * memory, mgl_u64_t size, mgl_u64_t * out_read_size)
+mgl_error_t MGL_API mgl_read(mgl_stream_t * stream, void * memory, mgl_u64_t size, mgl_u64_t * out_read_size)
 {
 	MGL_DEBUG_ASSERT(stream != NULL && memory != NULL);
 	if (stream->functions->read == NULL)
@@ -130,7 +130,7 @@ mgl_error_t mgl_read(mgl_stream_t * stream, void * memory, mgl_u64_t size, mgl_u
 	return stream->functions->read(stream, memory, size, out_read_size);
 }
 
-mgl_error_t mgl_flush(mgl_stream_t * stream)
+mgl_error_t MGL_API mgl_flush(mgl_stream_t * stream)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->flush == NULL)
@@ -138,7 +138,7 @@ mgl_error_t mgl_flush(mgl_stream_t * stream)
 	return stream->functions->flush(stream);
 }
 
-mgl_bool_t mgl_eof(mgl_stream_t * stream)
+mgl_bool_t MGL_API mgl_eof(mgl_stream_t * stream)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->eof == NULL)
@@ -146,7 +146,7 @@ mgl_bool_t mgl_eof(mgl_stream_t * stream)
 	return stream->functions->eof(stream);
 }
 
-mgl_u64_t mgl_tell_r(mgl_stream_t * stream)
+mgl_u64_t MGL_API mgl_tell_r(mgl_stream_t * stream)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->tell_r == NULL)
@@ -154,7 +154,7 @@ mgl_u64_t mgl_tell_r(mgl_stream_t * stream)
 	return stream->functions->tell_r(stream);
 }
 
-mgl_u64_t mgl_tell_w(mgl_stream_t * stream)
+mgl_u64_t MGL_API mgl_tell_w(mgl_stream_t * stream)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->tell_w == NULL)
@@ -162,7 +162,7 @@ mgl_u64_t mgl_tell_w(mgl_stream_t * stream)
 	return stream->functions->tell_w(stream);
 }
 
-mgl_error_t mgl_seek_r(mgl_stream_t * stream, mgl_i64_t position, mgl_enum_t direction)
+mgl_error_t MGL_API mgl_seek_r(mgl_stream_t * stream, mgl_i64_t position, mgl_enum_t direction)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->seek_r == NULL)
@@ -170,7 +170,7 @@ mgl_error_t mgl_seek_r(mgl_stream_t * stream, mgl_i64_t position, mgl_enum_t dir
 	return stream->functions->seek_r(stream, position, direction);
 }
 
-mgl_error_t mgl_seek_w(mgl_stream_t * stream, mgl_i64_t position, mgl_enum_t direction)
+mgl_error_t MGL_API mgl_seek_w(mgl_stream_t * stream, mgl_i64_t position, mgl_enum_t direction)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
 	if (stream->functions->seek_w == NULL)
