@@ -15,6 +15,7 @@ set(MGL_SOURCE
 	"src/mgl/memory/linear_allocator.c"
 	"src/mgl/memory/stack_allocator.c"
 	"src/mgl/memory/pool_allocator.c"
+	"src/mgl/stream/stream.c"
 )
 
 set(MGL_INCLUDE
@@ -34,6 +35,7 @@ set(MGL_INCLUDE
 	"include/mgl/memory/linear_allocator.h"
 	"include/mgl/memory/stack_allocator.h"
 	"include/mgl/memory/pool_allocator.h"
+	"include/mgl/stream/stream.h"
 )
 
 #####################################################
