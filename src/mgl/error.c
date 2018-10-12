@@ -17,6 +17,7 @@ MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 		case MGL_ERROR_TOO_BIG: return u8"MGL_ERROR_TOO_BIG: Too big";
 		case MGL_ERROR_OUT_OF_BOUNDS: return u8"MGL_ERROR_TOO_BIG: Out of bounds";
 		case MGL_ERROR_UNSUPPORTED: return u8"MGL_ERROR_UNSUPPORTED: Unsupported feature";
+		case MGL_ERROR_INVALID_PARAMS: return u8"MGL_ERROR_INVALID_PARAMS: Invalid parameters";
 		default: return u8"???: Unknown error";
 	}
 }

@@ -24,8 +24,8 @@ extern "C" {
 		mgl_bool_t(*eof)(mgl_stream_t* stream);
 		mgl_u64_t(*tell_r)(mgl_stream_t* stream);
 		mgl_u64_t(*tell_w)(mgl_stream_t* stream);
-		mgl_error_t(*seek_r)(mgl_stream_t* stream, mgl_u64_t position, mgl_enum_t direction);
-		mgl_error_t(*seek_w)(mgl_stream_t* stream, mgl_u64_t position, mgl_enum_t direction);
+		mgl_error_t(*seek_r)(mgl_stream_t* stream, mgl_i64_t position, mgl_enum_t direction);
+		mgl_error_t(*seek_w)(mgl_stream_t* stream, mgl_i64_t position, mgl_enum_t direction);
 	} mgl_stream_functions_t;
 
 	struct mgl_stream_t
@@ -92,7 +92,7 @@ extern "C" {
 	/// <param name="position">Desired offset</param>
 	/// <param name="direction">Offset direction (MGL_STREAM_SEEK_BEGIN, MGL_STREAM_SEEK_CURRENT or MGL_STREAM_SEEK_END)</param>
 	/// <returns>Error code</returns>
-	mgl_error_t mgl_seek_r(mgl_stream_t* stream, mgl_u64_t position, mgl_enum_t direction);
+	mgl_error_t mgl_seek_r(mgl_stream_t* stream, mgl_i64_t position, mgl_enum_t direction);
 
 	/// <summary>
 	///		Seeks a writing position on a stream.
@@ -101,7 +101,7 @@ extern "C" {
 	/// <param name="position">Desired offset</param>
 	/// <param name="direction">Offset direction (MGL_STREAM_SEEK_BEGIN, MGL_STREAM_SEEK_CURRENT or MGL_STREAM_SEEK_END)</param>
 	/// <returns>Error code</returns>
-	mgl_error_t mgl_seek_w(mgl_stream_t* stream, mgl_u64_t position, mgl_enum_t direction);
+	mgl_error_t mgl_seek_w(mgl_stream_t* stream, mgl_i64_t position, mgl_enum_t direction);
 
 	/// <summary>
 	///		Initializes the MGL streams library.

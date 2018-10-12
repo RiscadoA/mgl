@@ -17,6 +17,7 @@ extern "C" {
 		MGL_ERROR_TOO_BIG			= 0x00000004,
 		MGL_ERROR_OUT_OF_BOUNDS		= 0x00000005,
 		MGL_ERROR_UNSUPPORTED		= 0x00000006,
+		MGL_ERROR_INVALID_PARAMS	= 0x00000007,
 	};
 
 	typedef mgl_enum_t mgl_error_t;
