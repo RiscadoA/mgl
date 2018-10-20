@@ -13,7 +13,16 @@ extern "C" {
 	/// <param name="dst">Destination pointer</param>
 	/// <param name="src">Source pointer</param>
 	/// <param name="size">Memory amount in bytes</param>
-	void MGL_API mgl_memcpy(void* dst, const void* src, mgl_u64_t size);
+	void MGL_API mgl_mem_copy(void* dst, const void* src, mgl_u64_t size);
+
+	/// <summary>
+	///		Checks if two memory regions are equal.
+	/// </summary>
+	/// <param name="x">Memory region x</param>
+	/// <param name="y">Memory region y</param>
+	/// <param name="size">Memory region size in bytes</param>
+	/// <returns>MGL_TRUE if they are equal, otherwise MGL_FALSE</returns>
+	mgl_bool_t MGL_API mgl_mem_equal(const void* x, const void* y, mgl_u64_t size);
 
 #ifdef __cplusplus
 }

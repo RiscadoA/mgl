@@ -18,6 +18,7 @@ set(MGL_SOURCE
 	"src/mgl/memory/pool_allocator.c"
 	"src/mgl/stream/stream.c"
 	"src/mgl/stream/buffer_stream.c"
+	"src/mgl/string/manipulation.c"
 )
 
 set(MGL_INCLUDE
@@ -40,6 +41,7 @@ set(MGL_INCLUDE
 	"include/mgl/memory/pool_allocator.h"
 	"include/mgl/stream/stream.h"
 	"include/mgl/stream/buffer_stream.h"
+	"include/mgl/string/manipulation.h"
 )
 
 #####################################################

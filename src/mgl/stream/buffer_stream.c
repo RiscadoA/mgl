@@ -17,7 +17,7 @@ static mgl_error_t mgl_buffer_stream_write(mgl_stream_t* stream, const void* mem
 	else if (buf->buffer_size - buf->w_head < size)
 	{
 		mgl_u64_t w_size = buf->buffer_size - buf->w_head;
-		mgl_memcpy((void*)((mgl_uptr_t)buf->buffer + buf->w_head), memory, w_size);
+		mgl_mem_copy((void*)((mgl_uptr_t)buf->buffer + buf->w_head), memory, w_size);
 		buf->w_head += w_size;
 		if (out_write_size != NULL)
 			*out_write_size = w_size;
@@ -26,7 +26,7 @@ static mgl_error_t mgl_buffer_stream_write(mgl_stream_t* stream, const void* mem
 	}
 	else
 	{
-		mgl_memcpy((void*)((mgl_uptr_t)buf->buffer + buf->w_head), memory, size);
+		mgl_mem_copy((void*)((mgl_uptr_t)buf->buffer + buf->w_head), memory, size);
 		buf->w_head += size;
 		if (out_write_size != NULL)
 			*out_write_size = size;
@@ -51,7 +51,7 @@ static mgl_error_t mgl_buffer_stream_read(mgl_stream_t* stream, void* memory, mg
 	else if (buf->buffer_size - buf->r_head < size)
 	{
 		mgl_u64_t r_size = buf->buffer_size - buf->r_head;
-		mgl_memcpy(memory, (void*)((mgl_uptr_t)buf->buffer + buf->r_head), r_size);
+		mgl_mem_copy(memory, (void*)((mgl_uptr_t)buf->buffer + buf->r_head), r_size);
 		buf->r_head += r_size;
 		if (out_read_size != NULL)
 			*out_read_size = r_size;
@@ -60,7 +60,7 @@ static mgl_error_t mgl_buffer_stream_read(mgl_stream_t* stream, void* memory, mg
 	}
 	else
 	{
-		mgl_memcpy(memory, (void*)((mgl_uptr_t)buf->buffer + buf->r_head), size);
+		mgl_mem_copy(memory, (void*)((mgl_uptr_t)buf->buffer + buf->r_head), size);
 		buf->r_head += size;
 		if (out_read_size != NULL)
 			*out_read_size = size;
