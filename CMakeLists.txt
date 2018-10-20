@@ -11,11 +11,13 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(MGL_SOURCE
 	"src/mgl/entry.c"
 	"src/mgl/error.c"
+	"src/mgl/memory/manipulation.c"
 	"src/mgl/memory/allocator.c"
 	"src/mgl/memory/linear_allocator.c"
 	"src/mgl/memory/stack_allocator.c"
 	"src/mgl/memory/pool_allocator.c"
 	"src/mgl/stream/stream.c"
+	"src/mgl/stream/buffer_stream.c"
 )
 
 set(MGL_INCLUDE
@@ -31,11 +33,13 @@ set(MGL_INCLUDE
 	"include/mgl/math/quaternion_matrix4x4.h"
 	"include/mgl/math/transform_matrix4x4.h"
 	"include/mgl/math/transform_quaternion.h"
+	"include/mgl/memory/manipulation.h"
 	"include/mgl/memory/allocator.h"
 	"include/mgl/memory/linear_allocator.h"
 	"include/mgl/memory/stack_allocator.h"
 	"include/mgl/memory/pool_allocator.h"
 	"include/mgl/stream/stream.h"
+	"include/mgl/stream/buffer_stream.h"
 )
 
 #####################################################
