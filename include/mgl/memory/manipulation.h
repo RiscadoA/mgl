@@ -1,7 +1,7 @@
-#ifndef MGL_MEMORY_LINEAR_ALLOCATOR_H
-#define MGL_MEMORY_LINEAR_ALLOCATOR_H
+#ifndef MGL_MEMORY_MANIPULATION_H
+#define MGL_MEMORY_MANIPULATION_H
 
-#include <mgl/memory/allocator.h>
+#include <mgl/error.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,4 +27,4 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-#endif // MGL_MEMORY_LINEAR_ALLOCATOR_H
+#endif // MGL_MEMORY_MANIPULATION_H
