@@ -114,6 +114,80 @@ extern "C" {
 	/// </summary>
 	void MGL_API mgl_streams_terminate(void);
 
+	/// <summary>
+	///		Writes a single byte into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="x">Byte</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_put_byte(mgl_stream_t* stream, mgl_u8_t x);
+
+	/// <summary>
+	///		Writes an 8-bit character into a stream.
+	///		This method differs from mgl_put_byte because it automatically converts LF (10, 0x0A) into CR-LF (13-10, 0x0D-0x0A) on Windows. 
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="x">8-bit character</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_put_char(mgl_stream_t* stream, mgl_u8_t x);
+
+	/// <summary>
+	///		Writes a null terminated byte string into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="byte_str">Null terminated byte string</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_put_string(mgl_stream_t* stream, const mgl_u8_t* byte_str);
+
+	/// <summary>
+	///		Prints a null terminated UTF-8 string into a stream.
+	///		This method differs from mgl_put_string because it will use mgl_put_char instead of mgl_put_byte.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="str">Null terminated UTF-8 string</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print(mgl_stream_t* stream, const mgl_u8_t* str);
+
+	/// <summary>
+	///		Reads a single byte from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="out">Out byte</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_get_byte(mgl_stream_t* stream, mgl_u8_t* out);
+
+	/// <summary>
+	///		Reads an 8-bit character from a stream.
+	///		This method differs from mgl_get_byte because it ignores carriage returns.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="out">Out 8-bit character</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_get_char(mgl_stream_t* stream, mgl_u8_t* out);
+
+	/// <summary>
+	///		Reads bytes from a stream until the buffer is filled or a certain sequence of bytes is found.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="memory">Buffer</param>
+	/// <param name="size">Buffer size</param>
+	/// <param name="out_read_size">Out read size</param>
+	/// <param name="end_sequence">Sequence to end on</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_read_bytes_until(mgl_stream_t* stream, void* memory, mgl_u64_t size, mgl_u64_t* out_read_size, const mgl_u8_t* end_sequence);
+
+	/// <summary>
+	///		Reads characters from a stream until the buffer is filled or a certain sequence of bytes is found.
+	///		Differs from mgl_read_bytes_until because it uses mgl_get_char instead of mgl_get_byte.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="memory">Buffer</param>
+	/// <param name="size">Buffer size</param>
+	/// <param name="out_read_size">Out read size</param>
+	/// <param name="end_sequence">Sequence to end on</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_read_chars_until(mgl_stream_t* stream, void* memory, mgl_u64_t size, mgl_u64_t* out_read_size, const mgl_u8_t* end_sequence);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

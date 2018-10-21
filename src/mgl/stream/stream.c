@@ -114,6 +114,162 @@ void MGL_API mgl_streams_terminate(void)
 	mgl_stderr_stream = NULL;
 }
 
+mgl_error_t MGL_API mgl_put_byte(mgl_stream_t * stream, mgl_u8_t x)
+{
+	MGL_DEBUG_ASSERT(stream != NULL);
+	return mgl_write(stream, &x, sizeof(x), NULL);
+}
+
+mgl_error_t MGL_API mgl_put_char(mgl_stream_t * stream, mgl_u8_t x)
+{
+	MGL_DEBUG_ASSERT(stream != NULL);
+#ifdef _WIN32
+	if (x == '\n')
+	{
+		static const mgl_u8_t crlf[] = { '\r', '\n' };
+		return mgl_write(stream, crlf, sizeof(crlf), NULL);
+	}
+#endif
+	return mgl_write(stream, &x, sizeof(x), NULL);
+}
+
+mgl_error_t MGL_API mgl_put_string(mgl_stream_t * stream, const mgl_u8_t * byte_str)
+{
+	MGL_DEBUG_ASSERT(stream != NULL && byte_str != NULL);
+	mgl_error_t err;
+	for (; *byte_str != 0; ++byte_str)
+	{
+		err = mgl_put_byte(stream, *byte_str);
+		if (err != MGL_ERROR_NONE)
+			return err;
+	}
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_print(mgl_stream_t * stream, const mgl_u8_t * str)
+{
+	MGL_DEBUG_ASSERT(stream != NULL && str != NULL);
+	mgl_error_t err;
+	for (; *str != 0; ++str)
+	{
+		err = mgl_put_char(stream, *str);
+		if (err != MGL_ERROR_NONE)
+			return err;
+	}
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_get_byte(mgl_stream_t * stream, mgl_u8_t * out)
+{
+	MGL_DEBUG_ASSERT(stream != NULL);
+	return mgl_read(stream, out, sizeof(*out), NULL);
+}
+
+mgl_error_t MGL_API mgl_get_char(mgl_stream_t * stream, mgl_u8_t * out)
+{
+	MGL_DEBUG_ASSERT(stream != NULL);
+	mgl_error_t err = mgl_read(stream, out, sizeof(*out), NULL);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	if (*out == '\r')
+		return mgl_read(stream, out, sizeof(*out), NULL);
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_read_bytes_until(mgl_stream_t * stream, void * memory, mgl_u64_t size, mgl_u64_t * out_read_size, const mgl_u8_t * end_sequence)
+{
+	MGL_DEBUG_ASSERT(stream != NULL && end_sequence != NULL);
+	const mgl_u8_t* seq_it = end_sequence;
+	mgl_u64_t seq_sz = 0;
+	mgl_error_t err;
+
+	if (memory == NULL)
+		size = MGL_U64_MAX;
+
+	for (mgl_u64_t i = 0; i < size; ++i)
+	{
+		mgl_u8_t r;
+		err = mgl_get_byte(stream, &r);
+		if (err != MGL_ERROR_NONE)
+			return err;
+		// Check if the sequence matches
+		if (*seq_it == r)
+		{
+			++seq_it;
+			++seq_sz;
+			// Check if the sequence ended
+			if (*seq_it == 0)
+			{
+				if (out_read_size != NULL)
+					*out_read_size = (i + 1) - seq_sz;
+				return MGL_ERROR_NONE;
+			}
+		}
+		// Otherwise fill the buffer
+		else
+		{
+			seq_it = end_sequence;
+			if (memory != NULL)
+			{
+				for (mgl_u64_t n = 0, end = seq_sz; n < end; ++n, --seq_sz)
+					((mgl_u8_t*)memory)[i - seq_sz] = end_sequence[n];
+				((mgl_u8_t*)memory)[i] = r;
+			}
+		}
+	}
+
+	if (out_read_size != NULL)
+		*out_read_size = size;
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_read_chars_until(mgl_stream_t * stream, void * memory, mgl_u64_t size, mgl_u64_t * out_read_size, const mgl_u8_t * end_sequence)
+{
+	MGL_DEBUG_ASSERT(stream != NULL && end_sequence != NULL);
+	const mgl_u8_t* seq_it = end_sequence;
+	mgl_u64_t seq_sz = 0;
+	mgl_error_t err;
+
+	if (memory == NULL)
+		size = MGL_U64_MAX;
+
+	for (mgl_u64_t i = 0; i < size; ++i)
+	{
+		mgl_u8_t r;
+		err = mgl_get_char(stream, &r);
+		if (err != MGL_ERROR_NONE)
+			return err;
+		// Check if the sequence matches
+		if (*seq_it == r)
+		{
+			++seq_it;
+			++seq_sz;
+			// Check if the sequence ended
+			if (*seq_it == 0)
+			{
+				if (out_read_size != NULL)
+					*out_read_size = (i + 1) - seq_sz;
+				return MGL_ERROR_NONE;
+			}
+		}
+		// Otherwise fill the buffer
+		else
+		{
+			seq_it = end_sequence;
+			if (memory != NULL)
+			{
+				for (mgl_u64_t n = 0, end = seq_sz; n < end; ++n, --seq_sz)
+					((mgl_u8_t*)memory)[i - seq_sz] = end_sequence[n];
+				((mgl_u8_t*)memory)[i] = r;
+			}
+		}
+	}
+
+	if (out_read_size != NULL)
+		*out_read_size = size;
+	return MGL_ERROR_NONE;
+}
+
 mgl_error_t MGL_API mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size, mgl_u64_t * out_write_size)
 {
 	MGL_DEBUG_ASSERT(stream != NULL && memory != NULL);
