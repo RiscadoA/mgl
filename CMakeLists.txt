@@ -19,6 +19,7 @@ set(MGL_SOURCE
 	"src/mgl/stream/stream.c"
 	"src/mgl/stream/buffer_stream.c"
 	"src/mgl/string/manipulation.c"
+	"src/mgl/string/conversion.c"
 )
 
 set(MGL_INCLUDE
@@ -42,6 +43,7 @@ set(MGL_INCLUDE
 	"include/mgl/stream/stream.h"
 	"include/mgl/stream/buffer_stream.h"
 	"include/mgl/string/manipulation.h"
+	"include/mgl/string/conversion.h"
 )
 
 #####################################################

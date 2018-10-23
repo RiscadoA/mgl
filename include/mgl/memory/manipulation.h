@@ -24,6 +24,14 @@ extern "C" {
 	/// <returns>MGL_TRUE if they are equal, otherwise MGL_FALSE</returns>
 	mgl_bool_t MGL_API mgl_mem_equal(const void* x, const void* y, mgl_u64_t size);
 
+	/// <summary>
+	///		Sets a whole memory region's bytes to a single value.
+	/// </summary>
+	/// <param name="buffer">Buffer</param>
+	/// <param name="size">Buffer size</param>
+	/// <param name="value">Value</param>
+	void MGL_API mgl_mem_set(void* buffer, mgl_u64_t size, mgl_u8_t value);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
