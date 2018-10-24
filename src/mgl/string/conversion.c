@@ -1043,3 +1043,825 @@ mgl_error_t MGL_API mgl_f64_to_str(mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl
 
 	return MGL_ERROR_NONE;
 }
+
+mgl_error_t MGL_API mgl_u8_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u8_t* value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+	
+	mgl_u64_t index = 0;
+
+	// Skip whitespaces
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_u8_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= UINT8_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (UINT8_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_u8_t)i;
+				break;
+			}
+		}
+	}
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_u16_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u16_t* value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespaces
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_u16_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= UINT16_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (UINT16_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_u16_t)i;
+				break;
+			}
+		}
+	}
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_u32_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u32_t* value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespaces
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_u32_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= UINT32_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (UINT32_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_u32_t)i;
+				break;
+			}
+		}
+	}
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_u64_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u64_t * value, mgl_u64_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespaces
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_u64_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= UINT64_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (UINT64_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += i;
+				break;
+			}
+		}
+	}
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_i8_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_i8_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	mgl_bool_t negative = MGL_FALSE;
+	// Check if negative
+	if (buffer[index] == '-')
+	{
+		negative = MGL_TRUE;
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_i8_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= INT8_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (INT8_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_i8_t)i;
+				break;
+			}
+		}
+	}
+
+	if (negative != MGL_FALSE)
+		out = -out;
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_i16_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_i16_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	mgl_bool_t negative = MGL_FALSE;
+	// Check if negative
+	if (buffer[index] == '-')
+	{
+		negative = MGL_TRUE;
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_i16_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= INT16_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (INT16_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_i16_t)i;
+				break;
+			}
+		}
+	}
+
+	if (negative != MGL_FALSE)
+		out = -out;
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_i32_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_i32_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	mgl_bool_t negative = MGL_FALSE;
+	// Check if negative
+	if (buffer[index] == '-')
+	{
+		negative = MGL_TRUE;
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_i32_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= INT32_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (INT32_MAX - i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += (mgl_i32_t)i;
+				break;
+			}
+		}
+	}
+
+	if (negative != MGL_FALSE)
+		out = -out;
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_i64_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_i64_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	mgl_bool_t negative = MGL_FALSE;
+	// Check if negative
+	if (buffer[index] == '-')
+	{
+		negative = MGL_TRUE;
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_i64_t out = 0;
+
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+		{
+			if (out_size != NULL)
+				*out_size = index;
+			break;
+		}
+		else if (index >= buffer_size)
+		{
+			if (out_size != NULL)
+				*out_size = buffer_size;
+			break;
+		}
+
+		if (out <= INT64_MAX / base)
+			out *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (INT64_MAX - (mgl_i64_t)i < out)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				out += i;
+				break;
+			}
+		}
+	}
+
+	if (negative != MGL_FALSE)
+		out = -out;
+
+	if (value != NULL)
+		*value = out;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_f32_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_f32_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_f32_t integral = 0.0f;
+	mgl_f32_t fractional = 0.0f;
+
+	// Integral part
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '.' || buffer[index] == '\0' || buffer[index] == 'E' || buffer[index] == 'e')
+			break;
+		else if (index >= buffer_size)
+			break;
+
+		if (integral <= MGL_F32_MAX / base)
+			integral *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (MGL_F32_MAX - i < integral)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				integral += i;
+				break;
+			}
+		}
+	}
+
+	// Fractional part
+	if (index < buffer_size && buffer[index] == '.')
+	{
+		mgl_f32_t div = 1.0f;
+		++index;
+		for (;; ++index)
+		{
+			if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0' || buffer[index] == 'E' || buffer[index] == 'e')
+			{
+				if (out_size != NULL)
+					*out_size = index;
+				break;
+			}
+			else if (index >= buffer_size)
+			{
+				if (out_size != NULL)
+					*out_size = buffer_size;
+				break;
+			}
+
+			div /= base;
+
+			for (mgl_u64_t i = 0; i < base + 1; ++i)
+			{
+				if (i == base)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				if (characters[i] == buffer[index])
+				{
+					if (MGL_F32_MAX - i * div < fractional)
+						return MGL_ERROR_FAILED_TO_PARSE;
+					fractional += i * div;
+					break;
+				}
+			}
+		}
+	}
+
+	// Has exponent?
+	if (index < buffer_size && (buffer[index] == 'E' || buffer[index] == 'e'))
+	{
+		++index;
+
+		mgl_i32_t exponent = 0;
+		mgl_bool_t isNegative = MGL_FALSE;
+		if (buffer[index] == '-')
+		{
+			isNegative = MGL_TRUE;
+			++index;
+		}
+
+		// Exponent part
+		for (;; ++index)
+		{
+			if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+				break;
+			else if (index >= buffer_size)
+				break;
+
+			if (exponent <= MGL_I32_MAX / base)
+				exponent *= base;
+			else
+				return MGL_ERROR_FAILED_TO_PARSE;
+
+			for (mgl_u64_t i = 0; i < base + 1; ++i)
+			{
+				if (i == base)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				if (characters[i] == buffer[index])
+				{
+					if (MGL_I32_MAX - i < exponent)
+						return MGL_ERROR_FAILED_TO_PARSE;
+					exponent += (mgl_i32_t)i;
+					break;
+				}
+			}
+		}
+
+		if (isNegative != MGL_FALSE)
+			exponent = -exponent;
+
+		if (out_size != NULL)
+			*out_size = index;
+		if (value != NULL)
+			*value = (integral + fractional) * (mgl_f32_t)pow(10, exponent);
+	}
+	// No exponent
+	else
+	{
+		if (out_size != NULL)
+			*out_size = index;
+		if (value != NULL)
+			*value = integral + fractional;
+	}
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_f64_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_f64_t * value, mgl_u8_t base, mgl_u64_t * out_size)
+{
+	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
+
+	mgl_u64_t index = 0;
+
+	// Skip whitespace
+	while (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t')
+	{
+		++index;
+		if (index >= buffer_size)
+			return MGL_ERROR_FAILED_TO_PARSE;
+	}
+
+	if (buffer[index] == '\0')
+		return MGL_ERROR_FAILED_TO_PARSE;
+
+	static const mgl_u8_t characters[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	mgl_f64_t integral = 0.0;
+	mgl_f64_t fractional = 0.0;
+
+	// Integral part
+	for (;; ++index)
+	{
+		if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '.' || buffer[index] == '\0' || buffer[index] == 'E' || buffer[index] == 'e')
+			break;
+		else if (index >= buffer_size)
+			break;
+
+		if (integral <= MGL_F64_MAX / base)
+			integral *= base;
+		else
+			return MGL_ERROR_FAILED_TO_PARSE;
+
+		for (mgl_u64_t i = 0; i < base + 1; ++i)
+		{
+			if (i == base)
+				return MGL_ERROR_FAILED_TO_PARSE;
+			if (characters[i] == buffer[index])
+			{
+				if (MGL_F64_MAX - i < integral)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				integral += i;
+				break;
+			}
+		}
+	}
+
+	// Fractional part
+	if (index < buffer_size && buffer[index] == '.')
+	{
+		mgl_f64_t div = 1.0;
+		++index;
+		for (;; ++index)
+		{
+			if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0' || buffer[index] == 'E' || buffer[index] == 'e')
+			{
+				if (out_size != NULL)
+					*out_size = index;
+				break;
+			}
+			else if (index >= buffer_size)
+			{
+				if (out_size != NULL)
+					*out_size = buffer_size;
+				break;
+			}
+
+			div /= base;
+
+			for (mgl_u64_t i = 0; i < base + 1; ++i)
+			{
+				if (i == base)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				if (characters[i] == buffer[index])
+				{
+					if (MGL_F64_MAX - i * div < fractional)
+						return MGL_ERROR_FAILED_TO_PARSE;
+					fractional += i * div;
+					break;
+				}
+			}
+		}
+	}
+
+	// Has exponent?
+	if (index < buffer_size && (buffer[index] == 'E' || buffer[index] == 'e'))
+	{
+		++index;
+
+		mgl_i64_t exponent = 0;
+		mgl_bool_t isNegative = MGL_FALSE;
+		if (buffer[index] == '-')
+		{
+			isNegative = MGL_TRUE;
+			++index;
+		}
+
+		// Exponent part
+		for (;; ++index)
+		{
+			if (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '\t' || buffer[index] == '\0')
+				break;
+			else if (index >= buffer_size)
+				break;
+
+			if (exponent <= MGL_I64_MAX / base)
+				exponent *= base;
+			else
+				return MGL_ERROR_FAILED_TO_PARSE;
+
+			for (mgl_u64_t i = 0; i < base + 1; ++i)
+			{
+				if (i == base)
+					return MGL_ERROR_FAILED_TO_PARSE;
+				if (characters[i] == buffer[index])
+				{
+					if (MGL_I64_MAX - (mgl_i64_t)i < exponent)
+						return MGL_ERROR_FAILED_TO_PARSE;
+					exponent += i;
+					break;
+				}
+			}
+		}
+
+		if (isNegative != MGL_FALSE)
+			exponent = -exponent;
+
+		if (out_size != NULL)
+			*out_size = index;
+		if (value != NULL)
+			*value = (integral + fractional) * pow(10, (double)exponent);
+	}
+	// No exponent
+	else
+	{
+		if (out_size != NULL)
+			*out_size = index;
+		if (value != NULL)
+			*value = integral + fractional;
+	}
+
+	return MGL_ERROR_NONE;
+}

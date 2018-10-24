@@ -119,6 +119,106 @@ extern "C" {
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_f64_to_str(mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_f64_t value, mgl_u8_t base, mgl_u64_t decimal_places, mgl_u64_t* out_size);
 
+	/// <summary>
+	///		Converts a string into an unsigned 8-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_u8_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_u8_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an unsigned 16-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_u16_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_u16_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an unsigned 32-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_u32_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_u32_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an unsigned 64-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_u64_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_u64_t* value, mgl_u64_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an signed 8-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_i8_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_i8_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an signed 16-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_i16_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_i16_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an signed 32-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_i32_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_i32_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an signed 64-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_i64_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_i64_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an floating point 32-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_f32_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_f32_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
+	/// <summary>
+	///		Converts a string into an floating point 64-bit value.
+	/// </summary>
+	/// <param name="buffer">Buffer to read result from</param>
+	/// <param name="buffer_size">Buffer size</param>
+	/// <param name="base">Base (2-16)</param>
+	/// <param name="out_size">Out string size (optional, can be NULL)</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_f64_from_str(const mgl_u8_t* buffer, mgl_u64_t buffer_size, mgl_f64_t* value, mgl_u8_t base, mgl_u64_t* out_size);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

@@ -19,6 +19,7 @@ extern "C" {
 		MGL_ERROR_UNSUPPORTED		= 0x00000006,
 		MGL_ERROR_INVALID_PARAMS	= 0x00000007,
 		MGL_ERROR_EOF				= 0x00000008,
+		MGL_ERROR_FAILED_TO_PARSE	= 0x00000009,
 	};
 
 	typedef mgl_enum_t mgl_error_t;
