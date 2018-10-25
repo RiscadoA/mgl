@@ -1,4 +1,5 @@
 #include <mgl/stream/stream.h>
+#include <mgl/string/conversion.h>
 #include <stdio.h>
 
 typedef struct
@@ -268,6 +269,106 @@ mgl_error_t MGL_API mgl_read_chars_until(mgl_stream_t * stream, void * memory, m
 	if (out_read_size != NULL)
 		*out_read_size = size;
 	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_print_u8(mgl_stream_t * stream, mgl_u8_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[8];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_u8_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_u16(mgl_stream_t * stream, mgl_u16_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[16];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_u16_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_u32(mgl_stream_t * stream, mgl_u32_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[32];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_u32_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_u64(mgl_stream_t * stream, mgl_u64_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[64];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_u64_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_i8(mgl_stream_t * stream, mgl_i8_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[9];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_i8_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_i16(mgl_stream_t * stream, mgl_i16_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[17];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_i16_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_i32(mgl_stream_t * stream, mgl_i32_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[33];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_i32_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_i64(mgl_stream_t * stream, mgl_i64_t value, mgl_u8_t base)
+{
+	mgl_u8_t buffer[65];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_i64_to_str(buffer, sizeof(buffer), value, base, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_f32(mgl_stream_t * stream, mgl_f32_t value, mgl_u8_t base, mgl_u64_t decimal_places)
+{
+	mgl_u8_t buffer[128];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_f32_to_str(buffer, sizeof(buffer), value, base, decimal_places, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
+}
+
+mgl_error_t MGL_API mgl_print_f64(mgl_stream_t * stream, mgl_f64_t value, mgl_u8_t base, mgl_u64_t decimal_places)
+{
+	mgl_u8_t buffer[128];
+	mgl_u64_t sz = 0;
+	mgl_error_t err = mgl_f64_to_str(buffer, sizeof(buffer), value, base, decimal_places, &sz);
+	if (err != MGL_ERROR_NONE)
+		return err;
+	return mgl_write(stream, buffer, sz, NULL);
 }
 
 mgl_error_t MGL_API mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size, mgl_u64_t * out_write_size)

@@ -188,6 +188,98 @@ extern "C" {
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_read_chars_until(mgl_stream_t* stream, void* memory, mgl_u64_t size, mgl_u64_t* out_read_size, const mgl_u8_t* end_sequence);
 
+	/// <summary>
+	///		Prints a unsigned 8-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_u8(mgl_stream_t* stream, mgl_u8_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a unsigned 16-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_u16(mgl_stream_t* stream, mgl_u16_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a unsigned 32-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_u32(mgl_stream_t* stream, mgl_u32_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a unsigned 64-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_u64(mgl_stream_t* stream, mgl_u64_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a signed 8-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_i8(mgl_stream_t* stream, mgl_i8_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a signed 16-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_i16(mgl_stream_t* stream, mgl_i16_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a signed 32-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_i32(mgl_stream_t* stream, mgl_i32_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a signed 64-bit value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_i64(mgl_stream_t* stream, mgl_i64_t value, mgl_u8_t base);
+
+	/// <summary>
+	///		Prints a 32-bit floating point value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <param name="decimal_places">Decimal places</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_f32(mgl_stream_t* stream, mgl_f32_t value, mgl_u8_t base, mgl_u64_t decimal_places);
+
+	/// <summary>
+	///		Prints a 64-bit floating point value into a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="value">Value to print</param>
+	/// <param name="base">Base</param>
+	/// <param name="decimal_places">Decimal places</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_print_f64(mgl_stream_t* stream, mgl_f64_t value, mgl_u8_t base, mgl_u64_t decimal_places);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
