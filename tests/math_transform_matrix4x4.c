@@ -78,7 +78,7 @@ int main(int argc, char** argv)
 		mgl_f32v4_t v3;
 
 		mgl_f32m4x4_t m1;
-		mgl_f32m4x4_rotate_x(MGL_PI/2, &m1);
+		mgl_f32m4x4_rotate_x(MGL_PI_F32 / 2, &m1);
 
 		mgl_f32m4x4_mul_v4(&m1, &v1, &v3);
 		TEST_REQUIRE_PASS(mgl_f32v4_equal_e(&v2, &v3, 0.01f));
@@ -91,7 +91,7 @@ int main(int argc, char** argv)
 		mgl_f32v4_t v3;
 
 		mgl_f32m4x4_t m1;
-		mgl_f32m4x4_rotate_y(MGL_PI / 2, &m1);
+		mgl_f32m4x4_rotate_y(MGL_PI_F32 / 2, &m1);
 
 		mgl_f32m4x4_mul_v4(&m1, &v1, &v3);
 		TEST_REQUIRE_PASS(mgl_f32v4_equal_e(&v2, &v3, 0.01f));
@@ -104,7 +104,7 @@ int main(int argc, char** argv)
 		mgl_f32v4_t v3;
 
 		mgl_f32m4x4_t m1;
-		mgl_f32m4x4_rotate_z(MGL_PI / 2, &m1);
+		mgl_f32m4x4_rotate_z(MGL_PI_F32 / 2, &m1);
 
 		mgl_f32m4x4_mul_v4(&m1, &v1, &v3);
 		TEST_REQUIRE_PASS(mgl_f32v4_equal_e(&v2, &v3, 0.01f));

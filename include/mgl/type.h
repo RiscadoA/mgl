@@ -7,6 +7,7 @@ extern "C" {
 #include <stdint.h>
 #include <float.h>
 #include <uchar.h>
+#include <math.h>
 
 	typedef int8_t		mgl_i8_t;
 	typedef int16_t		mgl_i16_t;
@@ -25,27 +26,31 @@ extern "C" {
 	typedef char		mgl_chr8_t;
 	typedef char32_t	mgl_chr32_t;
 
-#define MGL_I8_MAX		INT8_MAX
-#define MGL_I16_MAX		INT16_MAX
-#define MGL_I32_MAX		INT32_MAX
-#define MGL_I64_MAX		INT64_MAX
-#define MGL_I8_MIN		INT8_MIN
-#define MGL_I16_MIN		INT16_MIN
-#define MGL_I32_MIN		INT32_MIN
-#define MGL_I64_MIN		INT64_MIN
-#define MGL_U8_MAX		UINT8_MAX
-#define MGL_U16_MAX		UINT16_MAX
-#define MGL_U32_MAX		UINT32_MAX
-#define MGL_U64_MAX		UINT64_MAX
-#define MGL_F32_MAX		FLT_MAX
-#define MGL_F32_MIN		FLT_MIN
-#define MGL_F32_RAD		FLT_RADIX
-#define MGL_F64_MAX		DBL_MAX
-#define MGL_F64_MIN		DBL_MIN
-#define MGL_F64_RAD		FLT_RADIX
-#define MGL_IPTR_MAX	INTPTR_MAX
-#define MGL_IPTR_MIN	INTPTR_MIN
-#define MGL_UPTR_MAX	UINTPTR_MAX
+#define MGL_I8_MAX			INT8_MAX
+#define MGL_I16_MAX			INT16_MAX
+#define MGL_I32_MAX			INT32_MAX
+#define MGL_I64_MAX			INT64_MAX
+#define MGL_I8_MIN			INT8_MIN
+#define MGL_I16_MIN			INT16_MIN
+#define MGL_I32_MIN			INT32_MIN
+#define MGL_I64_MIN			INT64_MIN
+#define MGL_U8_MAX			UINT8_MAX
+#define MGL_U16_MAX			UINT16_MAX
+#define MGL_U32_MAX			UINT32_MAX
+#define MGL_U64_MAX			UINT64_MAX
+#define MGL_F32_MAX			FLT_MAX
+#define MGL_F32_MIN			FLT_MIN
+#define MGL_F32_RAD			FLT_RADIX
+#define MGL_F64_MAX			DBL_MAX
+#define MGL_F64_MIN			DBL_MIN
+#define MGL_F64_RAD			FLT_RADIX
+#define MGL_IPTR_MAX		INTPTR_MAX
+#define MGL_IPTR_MIN		INTPTR_MIN
+#define MGL_UPTR_MAX		UINTPTR_MAX
+#define MGL_F32_INFINITY	((mgl_f32_t)INFINITY)
+#define MGL_F64_INFINITY	((mgl_f64_t)INFINITY)
+#define MGL_F32_NAN			((mgl_f32_t)NAN)
+#define MGL_F64_NAN			((mgl_f64_t)NAN)
 
 #define MGL_TRUE		(1)
 #define MGL_FALSE		(0)
