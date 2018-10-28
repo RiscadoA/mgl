@@ -280,6 +280,106 @@ extern "C" {
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_print_f64(mgl_stream_t* stream, mgl_f64_t value, mgl_u8_t base, mgl_u64_t decimal_places);
 
+	/// <summary>
+	///		Parses a unsigned 8-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_u8(mgl_stream_t* stream, mgl_u8_t base, mgl_u8_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a unsigned 16-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_u16(mgl_stream_t* stream, mgl_u8_t base, mgl_u16_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a unsigned 32-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_u32(mgl_stream_t* stream, mgl_u8_t base, mgl_u32_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a unsigned 64-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_u64(mgl_stream_t* stream, mgl_u8_t base, mgl_u64_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a signed 8-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_i8(mgl_stream_t* stream, mgl_u8_t base, mgl_i8_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a signed 16-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_i16(mgl_stream_t* stream, mgl_u8_t base, mgl_i16_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a signed 32-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_i32(mgl_stream_t* stream, mgl_u8_t base, mgl_i32_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a signed 64-bit value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_i64(mgl_stream_t* stream, mgl_u8_t base, mgl_i64_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a 32-bit floating point value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_f32(mgl_stream_t* stream, mgl_u8_t base, mgl_f32_t* out, const mgl_u8_t* separator);
+
+	/// <summary>
+	///		Parses a 64-bit floating point value from a stream.
+	/// </summary>
+	/// <param name="stream">Stream</param>
+	/// <param name="base">Base</param>
+	/// <param name="out">Out value</param>
+	/// <param name="separator">Separator between numbers</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_parse_f64(mgl_stream_t* stream, mgl_u8_t base, mgl_f64_t* out, const mgl_u8_t* separator);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

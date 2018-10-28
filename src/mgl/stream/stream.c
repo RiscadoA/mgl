@@ -371,6 +371,116 @@ mgl_error_t MGL_API mgl_print_f64(mgl_stream_t * stream, mgl_f64_t value, mgl_u8
 	return mgl_write(stream, buffer, sz, NULL);
 }
 
+mgl_error_t MGL_API mgl_parse_u8(mgl_stream_t * stream, mgl_u8_t base, mgl_u8_t * out, const mgl_u8_t* separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_u8_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_u16(mgl_stream_t * stream, mgl_u8_t base, mgl_u16_t * out, const mgl_u8_t* separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_u16_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_u32(mgl_stream_t * stream, mgl_u8_t base, mgl_u32_t * out, const mgl_u8_t* separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_u32_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_u64(mgl_stream_t * stream, mgl_u8_t base, mgl_u64_t * out, const mgl_u8_t* separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_u64_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_i8(mgl_stream_t * stream, mgl_u8_t base, mgl_i8_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_i8_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_i16(mgl_stream_t * stream, mgl_u8_t base, mgl_i16_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_i16_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_i32(mgl_stream_t * stream, mgl_u8_t base, mgl_i32_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_i32_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_i64(mgl_stream_t * stream, mgl_u8_t base, mgl_i64_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_i64_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_f32(mgl_stream_t * stream, mgl_u8_t base, mgl_f32_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_f32_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
+mgl_error_t MGL_API mgl_parse_f64(mgl_stream_t * stream, mgl_u8_t base, mgl_f64_t * out, const mgl_u8_t * separator)
+{
+	mgl_u8_t buffer[256];
+	buffer[255] = 0;
+	mgl_error_t e = mgl_read_chars_until(stream, buffer, sizeof(buffer) - 1, NULL, separator);
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_f64_from_str(buffer, sizeof(buffer), out, base, NULL);
+	return e;
+}
+
 mgl_error_t MGL_API mgl_write(mgl_stream_t * stream, const void * memory, mgl_u64_t size, mgl_u64_t * out_write_size)
 {
 	MGL_DEBUG_ASSERT(stream != NULL && memory != NULL);
