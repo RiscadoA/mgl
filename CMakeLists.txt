@@ -21,6 +21,8 @@ set(MGL_SOURCE
 	"src/mgl/string/manipulation.c"
 	"src/mgl/string/conversion.c"
 	"src/mgl/thread/thread.c"
+	"src/mgl/thread/mutex.c"
+	"src/mgl/thread/atomic.c"
 )
 
 set(MGL_INCLUDE
@@ -46,6 +48,8 @@ set(MGL_INCLUDE
 	"include/mgl/string/manipulation.h"
 	"include/mgl/string/conversion.h"
 	"include/mgl/thread/thread.h"
+	"include/mgl/thread/mutex.h"
+	"include/mgl/thread/atomic.h"
 )
 
 #####################################################
