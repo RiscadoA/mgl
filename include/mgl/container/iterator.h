@@ -7,7 +7,7 @@
 extern "C" {
 #endif // __cplusplus
 
-#define MGL_ITERATOR_AVAILABLE_SIZE 32
+#define MGL_ITERATOR_AVAILABLE_SIZE 8
 
 	typedef struct mgl_iterator_functions_t mgl_iterator_functions_t;
 
@@ -33,7 +33,7 @@ extern "C" {
 	/// <param name="it">Iterator</param>
 	/// <param name="out">New iterator</param>
 	/// <returns>Error code</returns>
-	mgl_error_t mgl_iterator_next(const mgl_iterator_t* it, mgl_iterator_t* out);
+	mgl_error_t MGL_API mgl_iterator_next(const mgl_iterator_t* it, mgl_iterator_t* out);
 
 	/// <summary>
 	///		Moves an iterator to previous element.
@@ -41,7 +41,7 @@ extern "C" {
 	/// <param name="it">Iterator</param>
 	/// <param name="out">New iterator</param>
 	/// <returns>Error code</returns>
-	mgl_error_t mgl_iterator_prev(const mgl_iterator_t* it, mgl_iterator_t* out);
+	mgl_error_t MGL_API mgl_iterator_prev(const mgl_iterator_t* it, mgl_iterator_t* out);
 
 	/// <summary>
 	///		Moves an iterator.
@@ -50,14 +50,14 @@ extern "C" {
 	/// <param name="out">New iterator</param>
 	/// <param name="move">Movement</param>
 	/// <returns>Error code</returns>
-	mgl_error_t mgl_iterator_move(const mgl_iterator_t* it, mgl_iterator_t* out, mgl_i64_t move);
+	mgl_error_t MGL_API mgl_iterator_move(const mgl_iterator_t* it, mgl_iterator_t* out, mgl_i64_t move);
 
 	/// <summary>
 	///		Checks if an iterator points to NULL.
 	/// </summary>
 	/// <param name="it">Iterator</param>
 	/// <returns>MGL_TRUE or MGL_FALSE</returns>
-	mgl_bool_t mgl_iterator_is_null(const mgl_iterator_t* it);
+	mgl_bool_t MGL_API mgl_iterator_is_null(const mgl_iterator_t* it);
 
 	/// <summary>
 	///		Gets the pointer to value which the iterator is currently on.
@@ -65,7 +65,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="it">Iterator</param>
 	/// <returns>Pointer</returns>
-	void* mgl_iterator_get(const mgl_iterator_t* it);
+	void* MGL_API mgl_iterator_get(const mgl_iterator_t* it);
 
 	/// <summary>
 	///		Gets the raw pointer to value which the iterator is currently on.
@@ -73,7 +73,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="it">Iterator</param>
 	/// <returns>Pointer</returns>
-	void* mgl_iterator_get_raw(const mgl_iterator_t* it);
+	void* MGL_API mgl_iterator_get_raw(const mgl_iterator_t* it);
 
 #ifdef __cplusplus
 }

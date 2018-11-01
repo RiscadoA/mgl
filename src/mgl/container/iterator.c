@@ -1,6 +1,6 @@
 #include <mgl/container/iterator.h>
 
-mgl_error_t mgl_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
+mgl_error_t MGL_API mgl_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
 {
 	MGL_DEBUG_ASSERT(it != NULL && out != NULL);
 	if (it->functions->next == NULL)
@@ -8,7 +8,7 @@ mgl_error_t mgl_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
 	return it->functions->next(it, out);
 }
 
-mgl_error_t mgl_iterator_prev(const mgl_iterator_t * it, mgl_iterator_t * out)
+mgl_error_t MGL_API mgl_iterator_prev(const mgl_iterator_t * it, mgl_iterator_t * out)
 {
 	MGL_DEBUG_ASSERT(it != NULL && out != NULL);
 	if (it->functions->prev == NULL)
@@ -16,7 +16,7 @@ mgl_error_t mgl_iterator_prev(const mgl_iterator_t * it, mgl_iterator_t * out)
 	return it->functions->prev(it, out);
 }
 
-mgl_error_t mgl_iterator_move(const mgl_iterator_t * it, mgl_iterator_t * out, mgl_i64_t move)
+mgl_error_t MGL_API mgl_iterator_move(const mgl_iterator_t * it, mgl_iterator_t * out, mgl_i64_t move)
 {
 	MGL_DEBUG_ASSERT(it != NULL && out != NULL);
 	if (it->functions->move == NULL)
@@ -24,7 +24,7 @@ mgl_error_t mgl_iterator_move(const mgl_iterator_t * it, mgl_iterator_t * out, m
 	return it->functions->move(it, out, move);
 }
 
-mgl_bool_t mgl_iterator_is_null(const mgl_iterator_t * it)
+mgl_bool_t MGL_API mgl_iterator_is_null(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
 	if (it->functions->is_null == NULL)
@@ -32,7 +32,7 @@ mgl_bool_t mgl_iterator_is_null(const mgl_iterator_t * it)
 	return it->functions->is_null(it);
 }
 
-void * mgl_iterator_get(const mgl_iterator_t * it)
+void * MGL_API mgl_iterator_get(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
 	if (it->functions->get == NULL)
@@ -40,7 +40,7 @@ void * mgl_iterator_get(const mgl_iterator_t * it)
 	return it->functions->get(it);
 }
 
-void * mgl_iterator_get_raw(const mgl_iterator_t * it)
+void * MGL_API mgl_iterator_get_raw(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
 	if (it->functions->get_raw == NULL)
