@@ -19,6 +19,9 @@ MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 		case MGL_ERROR_UNSUPPORTED: return u8"MGL_ERROR_UNSUPPORTED: Unsupported feature";
 		case MGL_ERROR_INVALID_PARAMS: return u8"MGL_ERROR_INVALID_PARAMS: Invalid parameters";
 		case MGL_ERROR_FAILED_TO_PARSE: return u8"MGL_ERROR_FAILED_TO_PARSE: Failed to parse";
+		case MGL_ERROR_TIMEOUT: return u8"MGL_ERROR_TIMEOUT: Time out";
+		case MGL_ERROR_THREAD_STILL_RUNNING: return u8"MGL_ERROR_THREAD_STILL_RUNNING: Thread is still running";
+		case MGL_ERROR_MUTEX_ALREADY_LOCKED: return u8"MGL_ERROR_MUTEX_ALREADY_LOCKED: Mutex is already locked";
 		default: return u8"???: Unknown error";
 	}
 }
