@@ -7,8 +7,9 @@
 extern "C" {
 #endif // __cplusplus
 
-#define MGL_ITERATOR_AVAILABLE_SIZE 8
+#define MGL_ITERATOR_AVAILABLE_SIZE 32
 
+	typedef struct mgl_iterator_t mgl_iterator_t;
 	typedef struct mgl_iterator_functions_t mgl_iterator_functions_t;
 
 	struct mgl_iterator_functions_t
@@ -22,10 +23,14 @@ extern "C" {
 	};
 
 	/// <summary>
-	///		Contains information about a thread.
+	///		Contains information about an iterator.
 	///		Do not access members directly.
 	/// </summary>
-	typedef struct { mgl_iterator_functions_t* functions; mgl_u8_t data[MGL_ITERATOR_AVAILABLE_SIZE]; } mgl_iterator_t;
+	struct mgl_iterator_t
+	{
+		mgl_iterator_functions_t* functions;
+		mgl_u8_t data[MGL_ITERATOR_AVAILABLE_SIZE];
+	};
 
 	/// <summary>
 	///		Moves an iterator to next element.

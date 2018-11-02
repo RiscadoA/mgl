@@ -27,23 +27,20 @@ mgl_error_t MGL_API mgl_iterator_move(const mgl_iterator_t * it, mgl_iterator_t 
 mgl_bool_t MGL_API mgl_iterator_is_null(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
-	if (it->functions->is_null == NULL)
-		return MGL_ERROR_UNSUPPORTED;
+	MGL_DEBUG_ASSERT(it->functions->is_null != NULL);
 	return it->functions->is_null(it);
 }
 
 void * MGL_API mgl_iterator_get(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
-	if (it->functions->get == NULL)
-		return MGL_ERROR_UNSUPPORTED;
+	MGL_DEBUG_ASSERT(it->functions->get != NULL);
 	return it->functions->get(it);
 }
 
 void * MGL_API mgl_iterator_get_raw(const mgl_iterator_t * it)
 {
 	MGL_DEBUG_ASSERT(it != NULL);
-	if (it->functions->get_raw == NULL)
-		return MGL_ERROR_UNSUPPORTED;
+	MGL_DEBUG_ASSERT(it->functions->get_raw != NULL);
 	return it->functions->get_raw(it);
 }
