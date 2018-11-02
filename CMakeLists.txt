@@ -25,6 +25,7 @@ set(MGL_SOURCE
 	"src/mgl/thread/atomic.c"
 	"src/mgl/container/iterator.c"
 	"src/mgl/container/array.c"
+	"src/mgl/container/vector.c"
 )
 
 set(MGL_INCLUDE
@@ -54,6 +55,7 @@ set(MGL_INCLUDE
 	"include/mgl/thread/atomic.h"
 	"include/mgl/container/iterator.h"
 	"include/mgl/container/array.h"
+	"include/mgl/container/vector.h"
 )
 
 #####################################################
