@@ -214,7 +214,8 @@ mgl_error_t MGL_API mgl_vector_push_begin(mgl_vector_t * vec, const void * data,
 			return e;
 	}
 
-	mgl_mem_copy(vec->buffer + vec->element_size, vec->buffer, vec->element_count * vec->element_size);
+	if (vec->element_count > 0)
+		mgl_mem_copy(vec->buffer + vec->element_size, vec->buffer, vec->element_count * vec->element_size);
 
 	if (data != NULL)
 		mgl_mem_copy(vec->buffer, data, vec->element_size);
@@ -232,6 +233,74 @@ void MGL_API mgl_vector_pop_begin(mgl_vector_t * vec)
 	--vec->element_count;
 	if (vec->element_count != 0)
 		mgl_mem_copy(vec->buffer, vec->buffer + vec->element_size, vec->element_count * vec->element_size);
+}
+
+mgl_error_t MGL_API mgl_vector_insert_after(mgl_vector_t * vec, const mgl_iterator_t * it, const void * data, void ** out_ptr)
+{
+	MGL_DEBUG_ASSERT(vec != NULL);
+	
+	if (it == NULL)
+		return mgl_vector_push_end(vec, data, out_ptr);
+	mgl_u64_t index = ((mgl_vector_iterator_t*)it->data)->index;
+	if (mgl_iterator_is_null(it) || vec->element_count == 1 || index == vec->element_count - 1)
+		return mgl_vector_push_end(vec, data, out_ptr);
+
+	if (vec->element_count >= vec->internal_count)
+	{
+		mgl_u64_t previous_count = vec->internal_count;
+		vec->internal_count *= 2;
+		mgl_error_t e = mgl_reallocate(vec->allocator, vec->buffer, previous_count * vec->element_size, vec->internal_count * vec->element_size, &vec->buffer);
+		if (e != MGL_ERROR_NONE)
+			return e;
+	}
+
+	mgl_mem_copy(vec->buffer + (index + 2) * vec->element_size, vec->buffer + (index + 1) * vec->element_size, (vec->element_count - index - 1) * vec->element_size);
+	if (data != NULL)
+		mgl_mem_copy(vec->buffer + (index + 1) * vec->element_size, data, vec->element_size);
+	if (out_ptr != NULL)
+		*out_ptr = vec->buffer + (index + 1) * vec->element_size;
+	++vec->element_count;
+
+	return MGL_ERROR_NONE;
+}
+
+mgl_error_t MGL_API mgl_vector_insert_before(mgl_vector_t * vec, const mgl_iterator_t * it, const void * data, void ** out_ptr)
+{
+	MGL_DEBUG_ASSERT(vec != NULL);
+
+	if (it == NULL)
+		return mgl_vector_push_begin(vec, data, out_ptr);
+	mgl_u64_t index = ((mgl_vector_iterator_t*)it->data)->index;
+	if (mgl_iterator_is_null(it) || vec->element_count == 1 || index == 0)
+		return mgl_vector_push_begin(vec, data, out_ptr);
+
+	if (vec->element_count >= vec->internal_count)
+	{
+		mgl_u64_t previous_count = vec->internal_count;
+		vec->internal_count *= 2;
+		mgl_error_t e = mgl_reallocate(vec->allocator, vec->buffer, previous_count * vec->element_size, vec->internal_count * vec->element_size, &vec->buffer);
+		if (e != MGL_ERROR_NONE)
+			return e;
+	}
+
+	mgl_mem_copy(vec->buffer + (index + 1) * vec->element_size, vec->buffer + index * vec->element_size, (vec->element_count - index) * vec->element_size);
+	if (data != NULL)
+		mgl_mem_copy(vec->buffer + index * vec->element_size, data, vec->element_size);
+	if (out_ptr != NULL)
+		*out_ptr = vec->buffer + index * vec->element_size;
+	++vec->element_count;
+
+	return MGL_ERROR_NONE;
+}
+
+void MGL_API mgl_vector_remove(mgl_vector_t * vec, const mgl_iterator_t * it)
+{
+	MGL_DEBUG_ASSERT(vec != NULL && it != NULL);
+	MGL_ASSERT(!mgl_iterator_is_null(it));
+	mgl_u64_t index = ((mgl_vector_iterator_t*)it->data)->index;
+	if (vec->element_count > 1)
+		mgl_mem_copy(vec->buffer + index * vec->element_size, vec->buffer + (index + 1) * vec->element_size, (vec->element_count - index - 1) * vec->element_size);
+	--vec->element_count;
 }
 
 mgl_error_t MGL_API mgl_vector_resize(mgl_vector_t * vec, mgl_u64_t element_count)
@@ -257,4 +326,11 @@ void MGL_API mgl_vector_clear(mgl_vector_t * vec)
 {
 	MGL_DEBUG_ASSERT(vec != NULL);
 	vec->element_count = 0;
+}
+
+void MGL_API mgl_vector_set(mgl_vector_t * vec, void * data)
+{
+	MGL_DEBUG_ASSERT(vec != NULL && data != NULL);
+	for (mgl_u32_t i = 0; i < vec->element_count; ++i)
+		mgl_mem_copy(vec->buffer + i * vec->element_size, data, vec->element_size);
 }

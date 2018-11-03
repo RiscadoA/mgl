@@ -116,8 +116,9 @@ extern "C" {
 	/// <param name="vec">Vector pointer</param>
 	/// <param name="it">Iterator</param>
 	/// <param name="data">Element data pointer to copy from (can be set to NULL)</param>
-	/// <returns>Pointer to new element</returns>
-	void* MGL_API mgl_vector_insert_after(mgl_vector_t* vec, const mgl_iterator_t* it, const void* data);
+	/// <param name="out_ptr">Out pointer to new element</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_vector_insert_after(mgl_vector_t* vec, const mgl_iterator_t* it, const void* data, void** out_ptr);
 
 	/// <summary>
 	///		Inserts an element on a vector before the element which the iterator points to.
@@ -125,8 +126,9 @@ extern "C" {
 	/// <param name="vec">Vector pointer</param>
 	/// <param name="it">Iterator</param>
 	/// <param name="data">Element data pointer to copy from (can be set to NULL)</param>
-	/// <returns>Pointer to new element</returns>
-	void* MGL_API mgl_vector_insert_before(mgl_vector_t* vec, const mgl_iterator_t* it, const void* data);
+	/// <param name="out_ptr">Out pointer to new element</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_vector_insert_before(mgl_vector_t* vec, const mgl_iterator_t* it, const void* data, void** out_ptr);
 
 	/// <summary>
 	///		Removes an element on a vector which the iterator points to.
@@ -148,6 +150,13 @@ extern "C" {
 	/// </summary>
 	/// <param name="vec">Vector pointer</param>
 	void MGL_API mgl_vector_clear(mgl_vector_t* vec);
+
+	/// <summary>
+	///		Sets all elements in a vector to a value.
+	/// </summary>
+	/// <param name="vec">Vector pointer</param>
+	/// <param name="data">Data to copy into every element</param>
+	void MGL_API mgl_vector_set(mgl_vector_t* vec, void* data);
 
 #ifdef __cplusplus
 }

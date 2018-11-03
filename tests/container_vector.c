@@ -140,6 +140,45 @@ int main(int argc, char** argv)
 			TEST_REQUIRE_PASS(e == MGL_ERROR_NONE);
 	}
 
+	mgl_vector_clear(&vec);
+	
+	mgl_u32_t x = 0;
+	TEST_REQUIRE_PASS(mgl_vector_insert_before(&vec, NULL, &x, NULL) == MGL_ERROR_NONE);
+	// 0
+	x = 1;
+	TEST_REQUIRE_PASS(mgl_vector_insert_before(&vec, NULL, &x, NULL) == MGL_ERROR_NONE);
+	// 1 0
+	mgl_get_vector_element_it(&vec, 1, &it);
+	x = 2;
+	TEST_REQUIRE_PASS(mgl_vector_insert_before(&vec, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 1 2 0
+	mgl_get_vector_element_it(&vec, 1, &it);
+	x = 3;
+	TEST_REQUIRE_PASS(mgl_vector_insert_after(&vec, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 1 2 3 0
+
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 0) == 1);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 1) == 2);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 2) == 3);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 3) == 0);
+
+	mgl_get_vector_element_it(&vec, 1, &it);
+	mgl_vector_remove(&vec, &it);
+	// 1 3 0
+
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 0) == 1);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 1) == 3);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 2) == 0);
+
+	x = 0;
+	mgl_vector_set(&vec, &x);
+
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 0) == 0);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 1) == 0);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_access_vector(&vec, 2) == 0);
+	TEST_REQUIRE_PASS(mgl_get_vector_element_count(&vec) == 3);
+	TEST_REQUIRE_PASS(mgl_get_vector_element_size(&vec) == sizeof(mgl_u32_t));
+
 	mgl_terminate();
 	EXIT_PASS();
 }
