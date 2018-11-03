@@ -323,7 +323,7 @@ void MGL_API mgl_singly_linked_list_remove(mgl_singly_linked_list_t * list, cons
 			list->end_node = node;
 	}
 
-	void* mem = (mgl_u8_t*)((mgl_singly_linked_list_iterator_t*)it->data)->node - sizeof(list->element_size);
+	void* mem = (mgl_u8_t*)((mgl_singly_linked_list_iterator_t*)it->data)->node - list->element_size;
 	MGL_ASSERT(mgl_deallocate(list->allocator, mem) == MGL_ERROR_NONE);
 	
 	--list->element_count;
