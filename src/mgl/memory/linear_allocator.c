@@ -1,4 +1,5 @@
 #include <mgl/memory/linear_allocator.h>
+#include <mgl/memory/manipulation.h>
 
 static mgl_error_t mgl_linear_allocator_allocate(mgl_allocator_t* allocator, mgl_u64_t size, void** out_ptr)
 {
@@ -28,7 +29,17 @@ static mgl_error_t mgl_linear_allocator_reallocate(mgl_allocator_t* allocator, v
 		*out_ptr = ptr;
 		return MGL_ERROR_NONE;
 	}
-	else return mgl_linear_allocator_allocate(allocator, new_size, out_ptr);
+	else
+	{
+		mgl_error_t e = mgl_linear_allocator_allocate(allocator, new_size, out_ptr);
+		if (e != MGL_ERROR_NONE)
+			return e;
+		if (prev_size <= new_size)
+			mgl_mem_copy(*out_ptr, ptr, prev_size);
+		else
+			mgl_mem_copy(*out_ptr, ptr, new_size);
+		return MGL_ERROR_NONE;
+	}
 }
 
 static mgl_error_t mgl_linear_allocator_deallocate(mgl_allocator_t* allocator, void* ptr)

@@ -10,6 +10,8 @@ MGL_STATIC_ASSERT(sizeof(mgl_array_iterator_t) <= MGL_ITERATOR_AVAILABLE_SIZE, "
 
 static mgl_error_t mgl_array_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
 {
+	out->functions = it->functions;
+	
 	if (((mgl_array_iterator_t*)it->data)->index + 1 >= ((mgl_array_iterator_t*)it->data)->arr->element_count)
 	{
 		((mgl_array_iterator_t*)out->data)->index = ((mgl_array_iterator_t*)it->data)->arr->element_count;
@@ -24,6 +26,8 @@ static mgl_error_t mgl_array_iterator_next(const mgl_iterator_t * it, mgl_iterat
 
 static mgl_error_t mgl_array_iterator_prev(const mgl_iterator_t * it, mgl_iterator_t * out)
 {
+	out->functions = it->functions;
+	
 	if (((mgl_array_iterator_t*)it->data)->index == 0)
 	{
 		((mgl_array_iterator_t*)out->data)->index = ((mgl_array_iterator_t*)it->data)->arr->element_count;
@@ -38,6 +42,8 @@ static mgl_error_t mgl_array_iterator_prev(const mgl_iterator_t * it, mgl_iterat
 
 static mgl_error_t mgl_array_iterator_move(const mgl_iterator_t * it, mgl_iterator_t * out, mgl_i64_t move)
 {
+	out->functions = it->functions;
+	
 	if (move > 0)
 	{
 		if (((mgl_array_iterator_t*)it->data)->index + (mgl_u64_t)move >= ((mgl_array_iterator_t*)it->data)->arr->element_count)

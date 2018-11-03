@@ -37,6 +37,20 @@ extern "C" {
 	void MGL_API mgl_terminate_vector(mgl_vector_t* vec);
 
 	/// <summary>
+	///		Gets a vector's element count.
+	/// </summary>
+	/// <param name="vec">Vector pointer</param>
+	/// <returns>Vector's element count</returns>
+	mgl_u64_t MGL_API mgl_get_vector_element_count(const mgl_vector_t* vec);
+
+	/// <summary>
+	///		Gets a vector's element size.
+	/// </summary>
+	/// <param name="vec">Vector pointer</param>
+	/// <returns>Vector's element size</returns>
+	mgl_u64_t MGL_API mgl_get_vector_element_size(const mgl_vector_t* vec);
+
+	/// <summary>
 	///		Inits an iterator pointing to the first element of the vector.
 	/// </summary>
 	/// <param name="vec">Vector pointer</param>
@@ -71,8 +85,9 @@ extern "C" {
 	/// </summary>
 	/// <param name="vec">Vector pointer</param>
 	/// <param name="data">Element data pointer to copy from (can be set to NULL)</param>
-	/// <returns>Pointer to new element</returns>
-	void* MGL_API mgl_vector_push_end(mgl_vector_t* vec, const void* data);
+	/// <param name="out_ptr">Out pointer to new element</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_vector_push_end(mgl_vector_t* vec, const void* data, void** out_ptr);
 
 	/// <summary>
 	///		Pops an element from the end of a vector.
@@ -85,8 +100,9 @@ extern "C" {
 	/// </summary>
 	/// <param name="vec">Vector pointer</param>
 	/// <param name="data">Element data pointer to copy from (can be set to NULL)</param>
-	/// <returns>Pointer to new element</returns>
-	void* MGL_API mgl_vector_push_begin(mgl_vector_t* vec, const void* data);
+	/// <param name="out_ptr">Out pointer to new element</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_vector_push_begin(mgl_vector_t* vec, const void* data, void** out_ptr);
 
 	/// <summary>
 	///		Pops an element from the begin of a vector.
@@ -123,8 +139,9 @@ extern "C" {
 	///		Resizes a vector.
 	/// </summary>
 	/// <param name="vec">Vector pointer</param>
-	/// <param name="index">New vector size</param>
-	void MGL_API mgl_vector_resize(mgl_vector_t* vec, mgl_u64_t size);
+	/// <param name="element_count">New vector element count</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_vector_resize(mgl_vector_t* vec, mgl_u64_t element_count);
 
 	/// <summary>
 	///		Clears a vector.
