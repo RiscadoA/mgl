@@ -7,7 +7,7 @@ typedef struct
 	mgl_singly_linked_list_t* list;
 } mgl_singly_linked_list_iterator_t;
 
-MGL_STATIC_ASSERT(sizeof(mgl_singly_linked_list_iterator_t) <= MGL_ITERATOR_AVAILABLE_SIZE, "singly_linked_list iterator too big");
+MGL_STATIC_ASSERT(sizeof(mgl_singly_linked_list_iterator_t) <= MGL_ITERATOR_AVAILABLE_SIZE, "Singly linked list iterator too big");
 
 static mgl_error_t mgl_singly_linked_list_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
 {

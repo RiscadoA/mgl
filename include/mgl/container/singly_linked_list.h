@@ -30,6 +30,8 @@ extern "C" {
 		mgl_allocator_t* allocator;
 	} mgl_singly_linked_list_t;
 
+#define MGL_SINGLY_LINKED_LIST_NODE_SIZE(element_size) (element_size + sizeof(mgl_singly_linked_list_node_t))
+
 	/// <summary>
 	///		Initializes a singly linked list.
 	/// </summary>

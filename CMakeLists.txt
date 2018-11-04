@@ -28,6 +28,7 @@ set(MGL_SOURCE
 	"src/mgl/container/array.c"
 	"src/mgl/container/vector.c"
 	"src/mgl/container/singly_linked_list.c"
+	"src/mgl/container/doubly_linked_list.c"
 )
 
 set(MGL_INCLUDE
@@ -60,6 +61,7 @@ set(MGL_INCLUDE
 	"include/mgl/container/array.h"
 	"include/mgl/container/vector.h"
 	"include/mgl/container/singly_linked_list.h"
+	"include/mgl/container/doubly_linked_list.h"
 )
 
 #####################################################
