@@ -80,6 +80,58 @@ int main(int argc, char** argv)
 			TEST_REQUIRE_PASS(e == MGL_ERROR_NONE);
 	}
 	
+	mgl_singly_linked_list_clear(&list);
+
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	x = 0;
+	TEST_REQUIRE_PASS(mgl_singly_linked_list_insert_before(&list, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 0
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	x = 1;
+	TEST_REQUIRE_PASS(mgl_singly_linked_list_insert_after(&list, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 0 1
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	x = 2;
+	TEST_REQUIRE_PASS(mgl_singly_linked_list_insert_after(&list, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 0 2 1
+	mgl_get_singly_linked_list_end_it(&list, &it);
+	x = 3;
+	TEST_REQUIRE_PASS(mgl_singly_linked_list_insert_before(&list, &it, &x, NULL) == MGL_ERROR_NONE);
+	// 0 2 3 1
+
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 0);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 2);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 3);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 1);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_OUT_OF_BOUNDS);
+
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	mgl_singly_linked_list_remove(&list, &it);
+	// 0 3 1
+
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 0);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 3);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 1);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_OUT_OF_BOUNDS);
+
+	x = 4;
+	mgl_singly_linked_list_set(&list, &x);
+	mgl_get_singly_linked_list_begin_it(&list, &it);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 4);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 4);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(*(mgl_u32_t*)mgl_iterator_get(&it) == 4);
+	TEST_REQUIRE_PASS(mgl_iterator_next(&it, &it) == MGL_ERROR_OUT_OF_BOUNDS);
+
 	mgl_terminate_singly_linked_list(&list);
 
 	mgl_terminate();
