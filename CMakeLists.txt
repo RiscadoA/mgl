@@ -12,10 +12,12 @@ set(MGL_SOURCE
 	"src/mgl/entry.c"
 	"src/mgl/error.c"
 	"src/mgl/memory/manipulation.c"
+	"src/mgl/memory/crc.c"
 	"src/mgl/memory/allocator.c"
 	"src/mgl/memory/linear_allocator.c"
 	"src/mgl/memory/stack_allocator.c"
 	"src/mgl/memory/pool_allocator.c"
+	"src/mgl/memory/debug_allocator.c"
 	"src/mgl/stream/stream.c"
 	"src/mgl/stream/buffer_stream.c"
 	"src/mgl/string/manipulation.c"
@@ -23,6 +25,11 @@ set(MGL_SOURCE
 	"src/mgl/thread/thread.c"
 	"src/mgl/thread/mutex.c"
 	"src/mgl/thread/atomic.c"
+	"src/mgl/container/iterator.c"
+	"src/mgl/container/array.c"
+	"src/mgl/container/vector.c"
+	"src/mgl/container/singly_linked_list.c"
+	"src/mgl/container/doubly_linked_list.c"
 )
 
 set(MGL_INCLUDE
@@ -39,10 +46,12 @@ set(MGL_INCLUDE
 	"include/mgl/math/transform_matrix4x4.h"
 	"include/mgl/math/transform_quaternion.h"
 	"include/mgl/memory/manipulation.h"
+	"include/mgl/memory/crc.h"
 	"include/mgl/memory/allocator.h"
 	"include/mgl/memory/linear_allocator.h"
 	"include/mgl/memory/stack_allocator.h"
 	"include/mgl/memory/pool_allocator.h"
+	"include/mgl/memory/debug_allocator.h"
 	"include/mgl/stream/stream.h"
 	"include/mgl/stream/buffer_stream.h"
 	"include/mgl/string/manipulation.h"
@@ -50,6 +59,11 @@ set(MGL_INCLUDE
 	"include/mgl/thread/thread.h"
 	"include/mgl/thread/mutex.h"
 	"include/mgl/thread/atomic.h"
+	"include/mgl/container/iterator.h"
+	"include/mgl/container/array.h"
+	"include/mgl/container/vector.h"
+	"include/mgl/container/singly_linked_list.h"
+	"include/mgl/container/doubly_linked_list.h"
 )
 
 #####################################################
