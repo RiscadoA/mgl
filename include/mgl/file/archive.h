@@ -57,6 +57,7 @@ extern "C" {
 	{
 		mgl_error_t(*file_find)(void* self, const mgl_chr8_t* path, mgl_iterator_t* out);
 		mgl_error_t(*file_get_first)(void* self, const mgl_iterator_t* file, mgl_iterator_t* out);
+		mgl_error_t(*file_get_parent)(void* self, const mgl_iterator_t* file, mgl_iterator_t* out);
 		mgl_error_t(*file_create)(void* self, const mgl_iterator_t* parent, const mgl_chr8_t* name, mgl_file_attributes_t attributes, mgl_iterator_t* out);
 		void(*file_delete)(void* self, const mgl_iterator_t* file);
 		mgl_error_t(*file_open)(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream);
@@ -104,6 +105,14 @@ extern "C" {
 	/// <param name="out">Child file</param>
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_file_get_first(const mgl_iterator_t* file, mgl_iterator_t* out);
+
+	/// <summary>
+	///		Gets the parent file of a file.
+	/// </summary>
+	/// <param name="file">Child file</param>
+	/// <param name="out">Parent file</param>
+	/// <returns>Error code</returns>
+	mgl_error_t MGL_API mgl_file_get_parent(const mgl_iterator_t* file, mgl_iterator_t* out);
 
 	/// <summary>
 	///		Creates a new file.
