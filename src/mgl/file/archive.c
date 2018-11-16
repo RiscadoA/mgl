@@ -74,6 +74,18 @@ mgl_error_t MGL_API mgl_file_create(const mgl_iterator_t * parent, const mgl_chr
 	return ((mgl_file_iterator_t*)parent->data)->archive->functions->file_create(((mgl_file_iterator_t*)parent->data)->archive, parent, name, attributes, out);
 }
 
+mgl_file_attributes_t MGL_API mgl_file_get_attributes(const mgl_iterator_t * file)
+{
+	MGL_DEBUG_ASSERT(file != NULL);
+	return ((mgl_file_iterator_t*)file->data)->archive->functions->file_get_attributes(((mgl_file_iterator_t*)file->data)->archive, file);
+}
+
+const mgl_chr8_t *MGL_API mgl_file_get_name(const mgl_iterator_t * file)
+{
+	MGL_DEBUG_ASSERT(file != NULL);
+	return ((mgl_file_iterator_t*)file->data)->archive->functions->file_get_name(((mgl_file_iterator_t*)file->data)->archive, file);
+}
+
 void MGL_API mgl_file_delete(const mgl_iterator_t * file)
 {
 	MGL_DEBUG_ASSERT(file != NULL);

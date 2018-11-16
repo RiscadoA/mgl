@@ -60,6 +60,8 @@ extern "C" {
 		mgl_error_t(*file_create)(void* self, const mgl_iterator_t* parent, const mgl_chr8_t* name, mgl_file_attributes_t attributes, mgl_iterator_t* out);
 		void(*file_delete)(void* self, const mgl_iterator_t* file);
 		mgl_error_t(*file_open)(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream);
+		mgl_file_attributes_t(*file_get_attributes)(void* self, const mgl_iterator_t* file);
+		const mgl_chr8_t*(*file_get_name)(void* self, const mgl_iterator_t* file);
 		void(*file_close)(void* self, mgl_file_stream_t* stream);
 	};
 
@@ -115,6 +117,20 @@ extern "C" {
 	///		Returns MGL_ERROR_UNSUPPORTED_PARENT_ATTRIBUTES if the parent file lacks the MGL_FILE_ATTRIBUTE_FOLDER attribute.
 	/// </returns>
 	mgl_error_t MGL_API mgl_file_create(const mgl_iterator_t* parent, const mgl_chr8_t* name, mgl_file_attributes_t attributes, mgl_iterator_t* out);
+
+	/// <summary>
+	///		Gets a file's attributes.
+	/// </summary>
+	/// <param name="file">File iterator</param>
+	/// <returns>File's attributes</returns>
+	mgl_file_attributes_t MGL_API mgl_file_get_attributes(const mgl_iterator_t* file);
+
+	/// <summary>
+	///		Gets a file's name.
+	/// </summary>
+	/// <param name="file">File iterator</param>
+	/// <returns>File's name</returns>
+	const mgl_chr8_t* MGL_API mgl_file_get_name(const mgl_iterator_t* file);
 
 	/// <summary>
 	///		Deletes a file and all of its children.
