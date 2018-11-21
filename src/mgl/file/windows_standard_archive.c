@@ -353,6 +353,22 @@ error_cleanup_1:
 
 void MGL_API mgl_terminate_windows_standard_archive(mgl_windows_standard_archive_t * archive)
 {
+	mgl_windows_standard_archive_file_t* file = (mgl_windows_standard_archive_file_t*)archive->root_file;
+	while (file != NULL)
+	{
+		while (file->child != NULL)
+			file = file->child;
+		mgl_windows_standard_archive_file_t* next = file->next;
+		if (next == NULL)
+		{
+			next = file->parent;
+			if (next != NULL)
+				next = next->next;
+		}
+
+		mgl_deallocate(archive->allocator, file);
+		file = next;
+	}
 	archive->base.functions = NULL;
 }
 
