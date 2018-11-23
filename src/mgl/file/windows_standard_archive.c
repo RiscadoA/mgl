@@ -187,23 +187,70 @@ static mgl_error_t mgl_windows_standard_archive_file_find(void* self, const mgl_
 
 static mgl_error_t mgl_windows_standard_archive_file_get_first(void* self, const mgl_iterator_t* file, mgl_iterator_t* out)
 {
+	MGL_DEBUG_ASSERT(self != NULL && file != NULL && out != NULL);
+
 	mgl_windows_standard_archive_t* archive = (mgl_windows_standard_archive_t*)self;
-	
-	return MGL_ERROR_NONE; // TO DO
+	((mgl_windows_standard_archive_file_iterator_t*)out->data)->base.archive = (mgl_archive_t*)archive;
+	if (((mgl_windows_standard_archive_file_iterator_t*)file->data)->file == NULL || ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->child == NULL)
+	{
+		((mgl_windows_standard_archive_file_iterator_t*)out->data)->file = NULL;
+		return MGL_ERROR_FILE_NOT_FOUND;
+	}
+	else ((mgl_windows_standard_archive_file_iterator_t*)out->data)->file = ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->child;
+	return MGL_ERROR_NONE;
 }
 
 static mgl_error_t mgl_windows_standard_archive_file_get_parent(void* self, const mgl_iterator_t* file, mgl_iterator_t* out)
 {
+	MGL_DEBUG_ASSERT(self != NULL && file != NULL && out != NULL);
+
 	mgl_windows_standard_archive_t* archive = (mgl_windows_standard_archive_t*)self;
-	
-	return MGL_ERROR_NONE; // TO DO
+	((mgl_windows_standard_archive_file_iterator_t*)out->data)->base.archive = (mgl_archive_t*)archive;
+	if (((mgl_windows_standard_archive_file_iterator_t*)file->data)->file == NULL || ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->parent == NULL)
+	{
+		((mgl_windows_standard_archive_file_iterator_t*)out->data)->file = NULL;
+		return MGL_ERROR_FILE_NOT_FOUND;
+	}
+	else ((mgl_windows_standard_archive_file_iterator_t*)out->data)->file = ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->parent;
+	return MGL_ERROR_NONE;
 }
 
 static mgl_error_t mgl_windows_standard_archive_file_create(void* self, const mgl_iterator_t* parent, const mgl_chr8_t* name, mgl_file_attributes_t attributes, mgl_iterator_t* out)
 {
+	MGL_DEBUG_ASSERT(self != NULL && parent != NULL && name != NULL && out != NULL && !(attributes & MGL_FILE_ATTRIBUTE_ARCHIVE));
+	
 	mgl_windows_standard_archive_t* archive = (mgl_windows_standard_archive_t*)self;
 	
-	return MGL_ERROR_NONE; // TO DO
+	mgl_chr8_t path[4096] = { 0 };
+	{
+		mgl_buffer_stream_t stream;
+		mgl_init_buffer_stream(&stream, path, sizeof(path));
+
+		mgl_print((mgl_stream_t*)&stream, archive->path);
+		mgl_print((mgl_stream_t*)&stream, u8"\\");
+
+		mgl_windows_standard_archive_file_t* sequence[256] = { NULL };
+		mgl_windows_standard_archive_file_t* file = ((mgl_windows_standard_archive_file_iterator_t*)file->parent)->file;
+		mgl_u64_t file_count;
+		for (file_count = 0; file->parent != NULL && file_count < 256; ++i)
+		{
+			sequence[file_count] = i;
+			file = file->parent;
+		} 
+
+		mgl_print((mgl_stream_t*)&stream, name);
+	}
+
+	if (attributes & MGL_FILE_ATTRIBUTE_FOLDER) // Folder
+	{
+
+	}
+	else // File
+	{
+
+	}
+	
+	return MGL_ERROR_NONE;
 }
 
 static void mgl_windows_standard_archive_file_delete(void* self, const mgl_iterator_t* file)
@@ -306,13 +353,6 @@ static mgl_error_t mgl_windows_standard_archive_recursive_add_folder(mgl_windows
 
 		if (parent->child == NULL)
 			parent->child = new_file;
-		/*else
-		{
-			mgl_windows_standard_archive_file_t* prev_file = parent->child;
-			while (prev_file->next != NULL)
-				prev_file = prev_file->next;
-			prev_file->next = new_file;
-		}*/
 	} while (FindNextFileA(hFind, &ffd) != 0);
 
 	if (GetLastError() != ERROR_NO_MORE_FILES)
