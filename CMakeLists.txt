@@ -30,6 +30,8 @@ set(MGL_SOURCE
 	"src/mgl/container/vector.c"
 	"src/mgl/container/singly_linked_list.c"
 	"src/mgl/container/doubly_linked_list.c"
+	"src/mgl/file/archive.c"
+	"src/mgl/file/windows_standard_archive.c"
 )
 
 set(MGL_INCLUDE
@@ -64,6 +66,8 @@ set(MGL_INCLUDE
 	"include/mgl/container/vector.h"
 	"include/mgl/container/singly_linked_list.h"
 	"include/mgl/container/doubly_linked_list.h"
+	"include/mgl/file/archive.h"
+	"include/mgl/file/windows_standard_archive.h"
 )
 
 #####################################################

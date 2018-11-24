@@ -22,6 +22,10 @@ MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 		case MGL_ERROR_TIMEOUT: return u8"MGL_ERROR_TIMEOUT: Time out";
 		case MGL_ERROR_THREAD_STILL_RUNNING: return u8"MGL_ERROR_THREAD_STILL_RUNNING: Thread is still running";
 		case MGL_ERROR_MUTEX_ALREADY_LOCKED: return u8"MGL_ERROR_MUTEX_ALREADY_LOCKED: Mutex is already locked";
+		case MGL_ERROR_FILE_NOT_FOUND: return u8"MGL_ERROR_FILE_NOT_FOUND: Couldn't find a file";
+		case MGL_ERROR_ARCHIVE_NOT_FOUND: return u8"MGL_ERROR_ARCHIVE_NOT_FOUND: Couldn't find an archive";
+		case MGL_ERROR_FILE_ALREADY_EXISTS: return u8"MGL_ERROR_FILE_ALREADY_EXISTS: The file already exists"; 
+		case MGL_ERROR_UNSUPPORTED_PARENT_ATTRIBUTES: return u8"MGL_ERROR_UNSUPPORTED_PARENT_ATTRIBUTES: The parent file has unsupported attributes";
 		default: return u8"???: Unknown error";
 	}
 }
