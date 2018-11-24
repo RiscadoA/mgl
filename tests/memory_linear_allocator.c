@@ -11,14 +11,14 @@ int main(int argc, char** argv)
 	mgl_init_linear_allocator(&allocator, allocator_memory, sizeof(allocator_memory));
 
 	void* ptr;
-	TEST_REQUIRE_PASS(mgl_allocate(&allocator, 6, &ptr) == MGL_ERROR_OVERFLOW);
-	TEST_REQUIRE_PASS(mgl_allocate(&allocator, 4, &ptr) == MGL_ERROR_NONE);
-	TEST_REQUIRE_PASS(mgl_deallocate(&allocator, ptr) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(mgl_allocate((mgl_allocator_t*)&allocator, 6, &ptr) == MGL_ERROR_OVERFLOW);
+	TEST_REQUIRE_PASS(mgl_allocate((mgl_allocator_t*)&allocator, 4, &ptr) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(mgl_deallocate((mgl_allocator_t*)&allocator, ptr) == MGL_ERROR_NONE);
 	mgl_clear_linear_allocator(&allocator);
-	TEST_REQUIRE_PASS(mgl_allocate(&allocator, 3, &ptr) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(mgl_allocate((mgl_allocator_t*)&allocator, 3, &ptr) == MGL_ERROR_NONE);
 	void* ptr_2;
-	TEST_REQUIRE_PASS(mgl_allocate(&allocator, 2, &ptr_2) == MGL_ERROR_OVERFLOW);
-	TEST_REQUIRE_PASS(mgl_allocate(&allocator, 1, &ptr_2) == MGL_ERROR_NONE);
+	TEST_REQUIRE_PASS(mgl_allocate((mgl_allocator_t*)&allocator, 2, &ptr_2) == MGL_ERROR_OVERFLOW);
+	TEST_REQUIRE_PASS(mgl_allocate((mgl_allocator_t*)&allocator, 1, &ptr_2) == MGL_ERROR_NONE);
 
 	mgl_terminate();
 	EXIT_PASS();
