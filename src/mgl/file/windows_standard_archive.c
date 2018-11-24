@@ -84,6 +84,8 @@ static mgl_bool_t mgl_windows_standard_archive_stream_eof(mgl_stream_t* stream)
 	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
 	return fsd->eof;
 }
+
+static mgl_u64_t mgl_windows_standard_archive_stream_tell(mgl_stream_t* stream)
 {
 	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
 	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
