@@ -18,10 +18,23 @@ extern "C" {
 	/// <summary>
 	///		File attributes.
 	/// </summary>
-	enum 
+	enum
 	{
 		MGL_FILE_ATTRIBUTE_ARCHIVE	= 0x01,
 		MGL_FILE_ATTRIBUTE_FOLDER	= 0x02,
+	};
+	/// <summary>
+	///		File access type.
+	/// </summary>
+	typedef mgl_u32_t mgl_file_access_t;
+
+	/// <summary>
+	///		File access types.
+	/// </summary>
+	enum
+	{
+		MGL_FILE_READ	= 0x01,
+		MGL_FILE_WRITE	= 0x02,
 	};
 
 #define MGL_FILE_STREAM_AVAILABLE_SIZE 32
@@ -59,7 +72,7 @@ extern "C" {
 		mgl_error_t(*file_get_parent)(void* self, const mgl_iterator_t* file, mgl_iterator_t* out);
 		mgl_error_t(*file_create)(void* self, const mgl_iterator_t* parent, const mgl_chr8_t* name, mgl_file_attributes_t attributes, mgl_iterator_t* out);
 		void(*file_delete)(void* self, const mgl_iterator_t* file);
-		mgl_error_t(*file_open)(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream);
+		mgl_error_t(*file_open)(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream, mgl_file_access_t access);
 		void(*file_close)(void* self, mgl_file_stream_t* stream);
 		mgl_file_attributes_t(*file_get_attributes)(void* self, const mgl_iterator_t* file);
 		const mgl_chr8_t*(*file_get_name)(void* self, const mgl_iterator_t* file);
@@ -151,10 +164,11 @@ extern "C" {
 	/// </summary>
 	/// <param name="file">File iterator</param>
 	/// <param name="stream">Out file stream</param>
+	/// <param name="access">File access type</param>
 	/// <returns>
 	///		Returns MGL_ERROR_UNSUPPORTED if the file has the MGL_FILE_ATTRIBUTE_FOLDER attribute.
 	/// </returns>
-	mgl_error_t MGL_API mgl_file_open(const mgl_iterator_t* file, mgl_file_stream_t* stream);
+	mgl_error_t MGL_API mgl_file_open(const mgl_iterator_t* file, mgl_file_stream_t* stream, mgl_file_access_t access);
 
 	/// <summary>
 	///		Closes a file stream.

@@ -98,10 +98,10 @@ void MGL_API mgl_file_delete(const mgl_iterator_t * file)
 	((mgl_file_iterator_t*)file->data)->archive->functions->file_delete(((mgl_file_iterator_t*)file->data)->archive, file);
 }
 
-mgl_error_t MGL_API mgl_file_open(const mgl_iterator_t * file, mgl_file_stream_t * stream)
+mgl_error_t MGL_API mgl_file_open(const mgl_iterator_t * file, mgl_file_stream_t * stream, mgl_file_access_t access)
 {
 	MGL_DEBUG_ASSERT(file != NULL);
-	return ((mgl_file_iterator_t*)file->data)->archive->functions->file_open(((mgl_file_iterator_t*)file->data)->archive, file, stream);
+	return ((mgl_file_iterator_t*)file->data)->archive->functions->file_open(((mgl_file_iterator_t*)file->data)->archive, file, stream, access);
 }
 
 void MGL_API mgl_file_close(mgl_file_stream_t * stream)

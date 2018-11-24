@@ -19,14 +19,129 @@ struct mgl_windows_standard_archive_file_t
 
 typedef struct
 {
-	HANDLE file;
+	HANDLE handle;
+	mgl_bool_t eof;
 } mgl_windows_standard_archive_file_stream_t;
+
+MGL_STATIC_ASSERT(sizeof(mgl_windows_standard_archive_file_stream_t) <= MGL_FILE_STREAM_AVAILABLE_SIZE, u8"File stream is too big");
 
 typedef struct
 {
 	mgl_file_iterator_t base;
 	mgl_windows_standard_archive_file_t* file;
 } mgl_windows_standard_archive_file_iterator_t;
+
+static mgl_error_t mgl_windows_standard_archive_stream_write(mgl_stream_t* stream, const void* memory, mgl_u64_t size, mgl_u64_t* out_write_size)
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+
+	DWORD written;
+	BOOL ret = WriteFile(fsd->handle, memory, (DWORD)size, &written, NULL);
+	if (out_write_size != NULL)
+		*out_write_size = written;
+
+	if (ret == 0)
+		return MGL_ERROR_EXTERNAL;
+
+	return MGL_ERROR_NONE;
+}
+
+static mgl_error_t mgl_windows_standard_archive_stream_read(mgl_stream_t* stream, void* memory, mgl_u64_t size, mgl_u64_t* out_read_size)
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+
+	DWORD read;
+	BOOL ret = ReadFile(fsd->handle, memory, (DWORD)size, &read, NULL);
+	if (out_read_size != NULL)
+		*out_read_size = read;
+
+	if (ret == 0 || read != size)
+	{
+		if (GetLastError() == ERROR_HANDLE_EOF || read != size)
+		{
+			fsd->eof = MGL_TRUE;
+			return MGL_ERROR_EOF;
+		}
+		else
+			return MGL_ERROR_EXTERNAL;
+	}
+
+	return MGL_ERROR_NONE;
+}
+
+static mgl_error_t mgl_windows_standard_archive_stream_flush(mgl_stream_t* stream)
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+	return (FlushFileBuffers(fsd->handle) == 0) ? MGL_ERROR_EXTERNAL : MGL_ERROR_NONE;
+}
+
+static mgl_bool_t mgl_windows_standard_archive_stream_eof(mgl_stream_t* stream)
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+	return fsd->eof;
+}
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+	LARGE_INTEGER li;
+	li.QuadPart = 0;
+	SetFilePointerEx(fsd->handle, li, &li, FILE_CURRENT);
+	return (mgl_u64_t)li.QuadPart;
+}
+
+static mgl_error_t mgl_windows_standard_archive_stream_seek(mgl_stream_t* stream, mgl_i64_t position, mgl_enum_t direction)
+{
+	mgl_file_stream_t* fs = (mgl_file_stream_t*)stream;
+	mgl_windows_standard_archive_file_stream_t* fsd = (mgl_windows_standard_archive_file_stream_t*)fs->data;
+	if (direction == MGL_STREAM_SEEK_BEGIN)
+	{
+		LARGE_INTEGER li;
+		li.QuadPart = position;
+		if (SetFilePointerEx(fsd->handle, li, NULL, FILE_BEGIN) == 0)
+		{
+			fsd->eof = MGL_TRUE;
+			return MGL_ERROR_EOF;
+		}
+	}
+	else if (direction == MGL_STREAM_SEEK_END)
+	{
+		LARGE_INTEGER li;
+		li.QuadPart = position;
+		if (SetFilePointerEx(fsd->handle, li, NULL, FILE_END) == 0)
+		{
+			fsd->eof = MGL_TRUE;
+			return MGL_ERROR_EOF;
+		}
+	}
+	else if (direction == MGL_STREAM_SEEK_CURRENT)
+	{
+		LARGE_INTEGER li;
+		li.QuadPart = position;
+		if (SetFilePointerEx(fsd->handle, li, NULL, FILE_CURRENT) == 0)
+		{
+			fsd->eof = MGL_TRUE;
+			return MGL_ERROR_EOF;
+		}
+	}
+	fsd->eof = MGL_FALSE;
+	return MGL_ERROR_NONE;
+}
+
+static mgl_stream_functions_t mgl_windows_standard_archive_stream_functions =
+{
+	&mgl_windows_standard_archive_stream_write,
+	&mgl_windows_standard_archive_stream_read,
+	&mgl_windows_standard_archive_stream_flush,
+	&mgl_windows_standard_archive_stream_eof,
+	&mgl_windows_standard_archive_stream_tell,
+	&mgl_windows_standard_archive_stream_tell,
+	&mgl_windows_standard_archive_stream_seek,
+	&mgl_windows_standard_archive_stream_seek
+};
 
 static mgl_error_t mgl_windows_standard_archive_file_iterator_next(const mgl_iterator_t * it, mgl_iterator_t * out)
 {
@@ -130,8 +245,6 @@ static mgl_iterator_functions_t mgl_windows_standard_archive_file_iterator_funct
 };
 
 MGL_STATIC_ASSERT(sizeof(mgl_windows_standard_archive_file_iterator_t) <= MGL_ITERATOR_AVAILABLE_SIZE, u8"Iterator is too big");
-
-MGL_STATIC_ASSERT(sizeof(mgl_windows_standard_archive_file_stream_t) <= MGL_FILE_STREAM_AVAILABLE_SIZE, u8"File stream is too big");
 
 static mgl_error_t mgl_windows_standard_archive_file_find(void* self, const mgl_chr8_t* path, mgl_iterator_t* out)
 {
@@ -258,14 +371,14 @@ static mgl_error_t mgl_windows_standard_archive_file_create(void* self, const mg
 	}
 	else // File
 	{
-		HANDLE h = CreateFileA(path, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (h == INVALID_HANDLE_VALUE)
+		HANDLE file_h = CreateFileA(path, 0, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+		if (file_h == INVALID_HANDLE_VALUE)
 		{
 			if (GetLastError() == ERROR_FILE_EXISTS)
 				return MGL_ERROR_FILE_ALREADY_EXISTS;
 			return MGL_ERROR_EXTERNAL;
 		}
-		CloseHandle(h);
+		CloseHandle(file_h);
 	}
 
 	mgl_windows_standard_archive_file_t* new_file;
@@ -347,18 +460,70 @@ static void mgl_windows_standard_archive_file_delete(void* self, const mgl_itera
 	MGL_DEBUG_ASSERT(mgl_deallocate(archive->allocator, file) == MGL_ERROR_NONE);
 }
 
-static mgl_error_t mgl_windows_standard_archive_file_open(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream)
+static mgl_error_t mgl_windows_standard_archive_file_open(void* self, const mgl_iterator_t* file, mgl_file_stream_t* stream, mgl_file_access_t access)
 {
+	MGL_DEBUG_ASSERT(self != NULL && file != NULL && stream != NULL);
+	MGL_DEBUG_ASSERT(!(((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->attributes & MGL_FILE_ATTRIBUTE_FOLDER) &&
+					 !(((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->attributes & MGL_FILE_ATTRIBUTE_ARCHIVE));
+
 	mgl_windows_standard_archive_t* archive = (mgl_windows_standard_archive_t*)self;
 	
-	return MGL_ERROR_NONE; // TO DO
+	stream->archive = (mgl_archive_t*)archive;
+	stream->base.functions = &mgl_windows_standard_archive_stream_functions;
+	mgl_mem_copy(&stream->file_it, file, sizeof(*file));
+
+	mgl_chr8_t path[4096] = { 0 };
+	{
+		mgl_buffer_stream_t stream;
+		mgl_init_buffer_stream(&stream, path, sizeof(path));
+
+		mgl_print((mgl_stream_t*)&stream, archive->path);
+		mgl_print((mgl_stream_t*)&stream, u8"\\");
+
+		mgl_windows_standard_archive_file_t* sequence[256] = { NULL };
+		mgl_windows_standard_archive_file_t* file_temp = ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->parent;
+		mgl_u64_t file_count;
+		for (file_count = 0; file_temp->parent != NULL && file_count < 256; ++file_count)
+		{
+			sequence[file_count] = file_temp;
+			file_temp = file_temp->parent;
+		}
+
+		for (mgl_u64_t i = 0; i < file_count; ++i)
+		{
+			mgl_print((mgl_stream_t*)&stream, sequence[file_count - i - 1]->name);
+			mgl_print((mgl_stream_t*)&stream, u8"\\");
+		}
+
+		mgl_print((mgl_stream_t*)&stream, ((mgl_windows_standard_archive_file_iterator_t*)file->data)->file->name);
+	}
+
+	DWORD access_win = 0;
+	if (access & MGL_FILE_READ)
+		access_win |= GENERIC_READ;
+	if (access & MGL_FILE_WRITE)
+		access_win |= GENERIC_WRITE;
+
+	HANDLE handle = CreateFileA(path, access_win, 0, NULL, OPEN_EXISTING, 0, NULL);
+	if (handle == INVALID_HANDLE_VALUE)
+		return MGL_ERROR_EXTERNAL;
+	((mgl_windows_standard_archive_file_stream_t*)stream->data)->handle = handle;
+
+	return MGL_ERROR_NONE;
 }
 
 static void mgl_windows_standard_archive_file_close(void* self, mgl_file_stream_t* stream)
 {
+	MGL_DEBUG_ASSERT(self != NULL && stream != NULL);
+	
 	mgl_windows_standard_archive_t* archive = (mgl_windows_standard_archive_t*)self;
 	
-	// TO DO
+	CloseHandle(((mgl_windows_standard_archive_file_stream_t*)stream->data)->handle);
+
+	stream->archive = NULL;
+	stream->base.functions = NULL;
+	stream->file_it.functions = NULL;
+	((mgl_windows_standard_archive_file_stream_t*)stream->data)->handle = NULL;
 }
 
 static mgl_file_attributes_t mgl_windows_standard_archive_file_get_attributes(void* self, const mgl_iterator_t* file)
