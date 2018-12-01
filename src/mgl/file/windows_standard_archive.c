@@ -383,6 +383,7 @@ static mgl_error_t mgl_windows_standard_archive_file_create(void* self, const mg
 		CloseHandle(file_h);
 	}
 
+	MGL_DEBUG_ASSERT(mgl_lock_mutex(&archive->mutex) == MGL_ERROR_NONE);
 	mgl_windows_standard_archive_file_t* new_file;
 	MGL_DEBUG_ASSERT(mgl_allocate(archive->allocator, sizeof(*new_file), &new_file) == MGL_ERROR_NONE);
 	new_file->attributes = attributes;
@@ -391,6 +392,7 @@ static mgl_error_t mgl_windows_standard_archive_file_create(void* self, const mg
 	new_file->next = ((mgl_windows_standard_archive_file_iterator_t*)parent->data)->file->child;
 	((mgl_windows_standard_archive_file_iterator_t*)parent->data)->file->child = new_file;
 	mgl_str_copy(name, new_file->name, sizeof(new_file->name));
+	MGL_DEBUG_ASSERT(mgl_unlock_mutex(&archive->mutex) == MGL_ERROR_NONE);
 
 	if (out != NULL)
 	{
@@ -453,8 +455,10 @@ static void mgl_windows_standard_archive_file_delete(void* self, const mgl_itera
 	}
 
 	// Delete file
+	MGL_DEBUG_ASSERT(mgl_lock_mutex(&archive->mutex) == MGL_ERROR_NONE);
 	if (file == file->parent->child)
 		file->parent->child = file->next;
+	MGL_DEBUG_ASSERT(mgl_unlock_mutex(&archive->mutex) == MGL_ERROR_NONE);
 	if (file->attributes & MGL_FILE_ATTRIBUTE_FOLDER)
 		MGL_DEBUG_ASSERT(RemoveDirectoryA(path) != 0);
 	else
@@ -633,6 +637,10 @@ mgl_error_t MGL_API mgl_init_windows_standard_archive(mgl_windows_standard_archi
 	((mgl_windows_standard_archive_file_t*)archive->root_file)->attributes = MGL_FILE_ATTRIBUTE_ARCHIVE;
 	mgl_str_copy(u8"root", ((mgl_windows_standard_archive_file_t*)archive->root_file)->name, sizeof(((mgl_windows_standard_archive_file_t*)archive->root_file)->name));
 
+	e = mgl_create_mutex(&archive->mutex);
+	if (e != MGL_ERROR_NONE)
+		return e;
+
 	// Search for files in the archive folder
 	e = mgl_windows_standard_archive_recursive_add_folder(archive, windows_folder_path, (mgl_windows_standard_archive_file_t*)archive->root_file);
 	if (e != MGL_ERROR_NONE)
@@ -648,6 +656,7 @@ error_cleanup_1:
 void MGL_API mgl_terminate_windows_standard_archive(mgl_windows_standard_archive_t * archive)
 {
 	mgl_windows_standard_archive_file_t* file = (mgl_windows_standard_archive_file_t*)archive->root_file;
+	MGL_ASSERT(mgl_destroy_mutex(&archive->mutex) == MGL_ERROR_NONE);
 	while (file != NULL)
 	{
 		while (file->child != NULL)

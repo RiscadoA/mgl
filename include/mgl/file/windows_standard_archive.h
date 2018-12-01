@@ -3,6 +3,7 @@
 
 #include <mgl/file/archive.h>
 #include <mgl/container/singly_linked_list.h>
+#include <mgl/thread/mutex.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,6 +21,7 @@ extern "C" {
 		mgl_chr8_t path[2048];
 		mgl_allocator_t* allocator;
 		void* root_file;
+		mgl_mutex_t mutex;
 	};
 
 	/// <summary>
