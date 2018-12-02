@@ -32,7 +32,7 @@ extern "C" {
 	/// <param name="size">Allocation size</param>
 	/// <param name="out_ptr">Out allocated pointer</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_allocate(mgl_allocator_t* allocator, mgl_u64_t size, void** out_ptr);
+	mgl_error_t MGL_API mgl_allocate(void* allocator, mgl_u64_t size, void** out_ptr);
 
 	/// <summary>
 	///		Reallocates memory on an allocator.
@@ -43,7 +43,7 @@ extern "C" {
 	/// <param name="new_size">New allocation size</param>
 	/// <param name="out_ptr">Out allocated pointer</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_reallocate(mgl_allocator_t* allocator, void* ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void** out_ptr);
+	mgl_error_t MGL_API mgl_reallocate(void* allocator, void* ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void** out_ptr);
 
 	/// <summary>
 	///		Deallocates memory allocated by mgl_allocate or mgl_reallocate.
@@ -51,7 +51,7 @@ extern "C" {
 	/// <param name="allocator">Allocator pointer</param>
 	/// <param name="ptr">Memory pointer</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_deallocate(mgl_allocator_t* allocator, void* ptr);
+	mgl_error_t MGL_API mgl_deallocate(void* allocator, void* ptr);
 	
 	/// <summary>
 	///		Allocates aligned memory on an allocator.
@@ -61,7 +61,7 @@ extern "C" {
 	/// <param name="alignment">Allocation alignment</param>
 	/// <param name="out_ptr">Out allocated pointer</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_allocate_aligned(mgl_allocator_t* allocator, mgl_u64_t size, mgl_u64_t alignment, void** out_ptr);
+	mgl_error_t MGL_API mgl_allocate_aligned(void* allocator, mgl_u64_t size, mgl_u64_t alignment, void** out_ptr);
 	
 	/// <summary>
 	///		Deallocates aligned memory allocated by mgl_allocate_aligned.
@@ -69,7 +69,7 @@ extern "C" {
 	/// <param name="allocator">Allocator pointer</param>
 	/// <param name="ptr">Memory pointer</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_deallocate_aligned(mgl_allocator_t* allocator, void* ptr);
+	mgl_error_t MGL_API mgl_deallocate_aligned(void* allocator, void* ptr);
 
 	/// <summary>
 	///		Initializes the MGL allocators library.

@@ -38,35 +38,35 @@ mgl_allocator_functions_t mgl_standard_allocator_functions =
 	NULL
 };
 
-mgl_error_t MGL_API mgl_allocate(mgl_allocator_t * allocator, mgl_u64_t size, void ** out_ptr)
+mgl_error_t MGL_API mgl_allocate(void * allocator, mgl_u64_t size, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
-	return allocator->functions->allocate(allocator, size, out_ptr);
+	return ((mgl_allocator_t*)allocator)->functions->allocate(allocator, size, out_ptr);
 }
 
-mgl_error_t MGL_API mgl_reallocate(mgl_allocator_t * allocator, void * ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void ** out_ptr)
+mgl_error_t MGL_API mgl_reallocate(void * allocator, void * ptr, mgl_u64_t prev_size, mgl_u64_t new_size, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	if (ptr == NULL)
-		return mgl_allocate(allocator, new_size, out_ptr);
-	return allocator->functions->reallocate(allocator, ptr, prev_size, new_size, out_ptr);
+		return mgl_allocate(((mgl_allocator_t*)allocator), new_size, out_ptr);
+	return ((mgl_allocator_t*)allocator)->functions->reallocate(((mgl_allocator_t*)allocator), ptr, prev_size, new_size, out_ptr);
 }
 
 mgl_error_t MGL_API mgl_deallocate(mgl_allocator_t * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
-	return allocator->functions->deallocate(allocator, ptr);
+	return ((mgl_allocator_t*)allocator)->functions->deallocate(allocator, ptr);
 }
 
-mgl_error_t MGL_API mgl_allocate_aligned(mgl_allocator_t * allocator, mgl_u64_t size, mgl_u64_t alignment, void ** out_ptr)
+mgl_error_t MGL_API mgl_allocate_aligned(void * allocator, mgl_u64_t size, mgl_u64_t alignment, void ** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
-	if (allocator->functions->allocate_aligned == NULL)
+	if (((mgl_allocator_t*)allocator)->functions->allocate_aligned == NULL)
 	{
 		MGL_DEBUG_ASSERT((alignment & (alignment - 1)) == 0);
 		mgl_u64_t needed_size = size + alignment;
 		void* raw_ptr = NULL;
-		mgl_error_t err = allocator->functions->allocate(allocator, needed_size, &raw_ptr);
+		mgl_error_t err = ((mgl_allocator_t*)allocator)->functions->allocate(((mgl_allocator_t*)allocator), needed_size, &raw_ptr);
 		if (err != MGL_ERROR_NONE)
 			return err;
 		mgl_uptr_t adjustment = alignment - ((mgl_uptr_t)raw_ptr & (alignment - 1));
@@ -78,18 +78,18 @@ mgl_error_t MGL_API mgl_allocate_aligned(mgl_allocator_t * allocator, mgl_u64_t 
 		*out_ptr = aligned_mem;
 		return MGL_ERROR_NONE;
 	}
-	else return allocator->functions->allocate_aligned(allocator, size, alignment, out_ptr);
+	else return ((mgl_allocator_t*)allocator)->functions->allocate_aligned(((mgl_allocator_t*)allocator), size, alignment, out_ptr);
 }
 
-mgl_error_t MGL_API mgl_deallocate_aligned(mgl_allocator_t * allocator, void * ptr)
+mgl_error_t MGL_API mgl_deallocate_aligned(void * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && ptr != NULL);
-	if (allocator->functions->deallocate_aligned == NULL)
+	if (((mgl_allocator_t*)allocator)->functions->deallocate_aligned == NULL)
 	{
 		void* raw_mem = (void*)((mgl_uptr_t)ptr - ((mgl_u8_t*)ptr)[-1]);
-		return allocator->functions->deallocate(allocator, raw_mem);
+		return ((mgl_allocator_t*)allocator)->functions->deallocate(((mgl_allocator_t*)allocator), raw_mem);
 	}
-	else return allocator->functions->deallocate_aligned(allocator, ptr);
+	else return ((mgl_allocator_t*)allocator)->functions->deallocate_aligned(((mgl_allocator_t*)allocator), ptr);
 }
 
 mgl_error_t MGL_API mgl_allocators_init(void)
