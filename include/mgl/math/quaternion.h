@@ -27,7 +27,7 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <returns>Returns MGL_FALSE if the quaternions are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32q4_equal(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs)
+	static inline mgl_bool_t mgl_f32q4_equal(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -53,7 +53,7 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <returns>Returns MGL_FALSE if the quaternions are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32q4_nequal(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs)
+	static inline mgl_bool_t mgl_f32q4_nequal(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -80,7 +80,7 @@ extern "C" {
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the quaternions are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32q4_equal_e(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32q4_equal_e(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -111,7 +111,7 @@ extern "C" {
 	/// <param name="rhs">Second quaternions</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the quaternions are equal, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32q4_nequal_e(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32q4_nequal_e(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -141,7 +141,7 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_add(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_add(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
@@ -164,7 +164,7 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_sub(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_sub(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
@@ -187,7 +187,7 @@ extern "C" {
 	/// <param name="lhs">First quaternion</param>
 	/// <param name="rhs">Second quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_mul(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_mul(const mgl_f32q4_t* lhs, const mgl_f32q4_t* rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
@@ -221,7 +221,7 @@ extern "C" {
 	/// <param name="lhs">Quaternion</param>
 	/// <param name="rhs">Scalar</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_scale(const mgl_f32q4_t* lhs, mgl_f32_t rhs, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_scale(const mgl_f32q4_t* lhs, mgl_f32_t rhs, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && r != NULL);
 
@@ -243,7 +243,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_conjugate(const mgl_f32q4_t* q, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_conjugate(const mgl_f32q4_t* q, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
 		r->x = -q->x;
@@ -257,7 +257,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <returns>Norm squared</returns>
-	inline mgl_f32_t mgl_f32q4_norm_squared(const mgl_f32q4_t* q)
+	static inline mgl_f32_t mgl_f32q4_norm_squared(const mgl_f32q4_t* q)
 	{
 		MGL_DEBUG_ASSERT(q != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -273,7 +273,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <returns>Norm</returns>
-	inline mgl_f32_t mgl_f32q4_norm(const mgl_f32q4_t* q)
+	static inline mgl_f32_t mgl_f32q4_norm(const mgl_f32q4_t* q)
 	{
 		MGL_DEBUG_ASSERT(q != NULL);
 		return mgl_f32_sqrt(mgl_f32q4_norm_squared(q));
@@ -284,7 +284,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_normalize(const mgl_f32q4_t* q, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_normalize(const mgl_f32q4_t* q, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD

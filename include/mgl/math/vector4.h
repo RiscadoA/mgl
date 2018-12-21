@@ -27,7 +27,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_add3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_add3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -50,7 +50,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_add4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_add4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -72,7 +72,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_sub3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_sub3(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -95,7 +95,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_sub4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_sub4(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -117,7 +117,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_mul(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_mul(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -139,7 +139,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_div(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_div(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -161,7 +161,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32v4_equal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
+	static inline mgl_bool_t mgl_f32v4_equal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -187,7 +187,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32v4_nequal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
+	static inline mgl_bool_t mgl_f32v4_nequal(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -214,7 +214,7 @@ extern "C" {
 	/// <param name="rhs">Second vector</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the vectors are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32v4_equal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32v4_equal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -245,7 +245,7 @@ extern "C" {
 	/// <param name="rhs">Second vector</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the vectors are equal, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32v4_nequal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32v4_nequal_e(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -275,7 +275,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_cross(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_cross(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -297,7 +297,7 @@ extern "C" {
 	/// <param name="lhs">First vector</param>
 	/// <param name="rhs">Second vector</param>
 	/// <returns>Result</returns>
-	inline mgl_f32_t mgl_f32v4_dot(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
+	static inline mgl_f32_t mgl_f32v4_dot(const mgl_f32v4_t* lhs, const mgl_f32v4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -314,7 +314,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">Vector</param>
 	/// <returns>Norm squared</returns>
-	inline mgl_f32_t mgl_f32v4_norm_squared(const mgl_f32v4_t* v)
+	static inline mgl_f32_t mgl_f32v4_norm_squared(const mgl_f32v4_t* v)
 	{
 		MGL_DEBUG_ASSERT(v != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -330,7 +330,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">Vector</param>
 	/// <returns>Norm</returns>
-	inline mgl_f32_t mgl_f32v4_norm(const mgl_f32v4_t* v)
+	static inline mgl_f32_t mgl_f32v4_norm(const mgl_f32v4_t* v)
 	{
 		MGL_DEBUG_ASSERT(v != NULL);
 		return mgl_f32_sqrt(mgl_f32v4_norm_squared(v));
@@ -341,7 +341,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">Vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32v4_normalize(const mgl_f32v4_t* v, mgl_f32v4_t* r)
+	static inline void mgl_f32v4_normalize(const mgl_f32v4_t* v, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(v != NULL && r != NULL);
 #ifdef MGL_MATH_USE_SIMD

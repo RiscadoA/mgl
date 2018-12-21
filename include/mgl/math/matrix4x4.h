@@ -25,7 +25,7 @@ extern "C" {
 	///		Sets a 4x4 matrix as identity.
 	/// </summary>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_identity(mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_identity(mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
@@ -52,7 +52,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="m">Matrix</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_transpose(const mgl_f32m4x4_t* m, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_transpose(const mgl_f32m4x4_t* m, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(m != NULL && r != NULL);
 
@@ -61,7 +61,7 @@ extern "C" {
 		mgl_f128_t m_1 = mgl_f128_load_aligned(m->cols[1]);
 		mgl_f128_t m_2 = mgl_f128_load_aligned(m->cols[2]);
 		mgl_f128_t m_3 = mgl_f128_load_aligned(m->cols[3]);
-		
+
 		mgl_f128m4x4_transpose(m_0, m_1, m_2, m_3);
 
 		mgl_f128_store(m_0, r->cols[0]);
@@ -101,7 +101,7 @@ extern "C" {
 	/// <param name="lhs">First matrix</param>
 	/// <param name="rhs">Second matrix</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_mul(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_mul(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
@@ -149,7 +149,7 @@ extern "C" {
 	/// <param name="lhs">First matrix</param>
 	/// <param name="rhs">Second matrix</param>
 	/// <returns>Returns MGL_FALSE if the matrices are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32m4x4_equal(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs)
+	static inline mgl_bool_t mgl_f32m4x4_equal(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -213,7 +213,7 @@ extern "C" {
 	/// <param name="lhs">First matrix</param>
 	/// <param name="rhs">Second matrix</param>
 	/// <returns>Returns MGL_FALSE if the matrices are equal, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32m4x4_nequal(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs)
+	static inline mgl_bool_t mgl_f32m4x4_nequal(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -278,7 +278,7 @@ extern "C" {
 	/// <param name="rhs">Second matrix</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the matrices are different, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32m4x4_equal_e(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32m4x4_equal_e(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD
@@ -327,7 +327,7 @@ extern "C" {
 	/// <param name="rhs">Second matrix</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>Returns MGL_FALSE if the matrices are equal, otherwise returns MGL_TRUE</returns>
-	inline mgl_bool_t mgl_f32m4x4_nequal_e(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f32m4x4_nequal_e(const mgl_f32m4x4_t* lhs, const mgl_f32m4x4_t* rhs, mgl_f32_t epsilon)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL);
 #ifdef MGL_MATH_USE_SIMD

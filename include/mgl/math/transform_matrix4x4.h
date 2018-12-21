@@ -15,7 +15,7 @@ extern "C" {
 	/// <param name="lhs">Matrix</param>
 	/// <param name="rhs">Vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32m4x4_mul_v4(const mgl_f32m4x4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32m4x4_mul_v4(const mgl_f32m4x4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 
@@ -50,10 +50,10 @@ extern "C" {
 	/// <param name="y">Y scale</param>
 	/// <param name="z">Z scale</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_scale(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_scale(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
-		
+
 		r->cols[0][0] = x;
 		r->cols[0][1] = 0.0f;
 		r->cols[0][2] = 0.0f;
@@ -79,10 +79,10 @@ extern "C" {
 	/// <param name="y">Y translation</param>
 	/// <param name="z">Z translation</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_translate(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_translate(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
-		
+
 		r->cols[0][0] = 1.0f;
 		r->cols[0][1] = 0.0f;
 		r->cols[0][2] = 0.0f;
@@ -106,7 +106,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="angle">Rotation angle in radians</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_rotate_x(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_rotate_x(mgl_f32_t angle, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
@@ -133,7 +133,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="angle">Rotation angle in radians</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_rotate_y(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_rotate_y(mgl_f32_t angle, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
@@ -160,7 +160,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="angle">Rotation angle in radians</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32m4x4_rotate_z(mgl_f32_t angle, mgl_f32m4x4_t* r)
+	static inline void mgl_f32m4x4_rotate_z(mgl_f32_t angle, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
