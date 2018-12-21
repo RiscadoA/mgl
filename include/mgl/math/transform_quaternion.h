@@ -17,7 +17,7 @@ extern "C" {
 	/// <param name="y">Rotation axis Y</param>
 	/// <param name="z">Rotation axis Z</param>
 	/// <param name="r">Out result quaternion</param>
-	inline void mgl_f32q4_angle_axis(mgl_f32_t angle, mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32q4_t* r)
+	static inline void mgl_f32q4_angle_axis(mgl_f32_t angle, mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32q4_t* r)
 	{
 		MGL_DEBUG_ASSERT(r != NULL);
 
@@ -33,7 +33,7 @@ extern "C" {
 	/// <param name="lhs">Quaternion</param>
 	/// <param name="rhs">Vector</param>
 	/// <param name="r">Out result vector</param>
-	inline void mgl_f32q4_mul_v4(const mgl_f32q4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
+	static inline void mgl_f32q4_mul_v4(const mgl_f32q4_t* lhs, const mgl_f32v4_t* rhs, mgl_f32v4_t* r)
 	{
 		MGL_DEBUG_ASSERT(lhs != NULL && rhs != NULL && r != NULL);
 

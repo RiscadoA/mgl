@@ -33,7 +33,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="value">Value</param>
 	/// <returns>mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_load(const mgl_f32_t value[4])
+	static inline mgl_f128_t mgl_f128_load(const mgl_f32_t value[4])
 	{
 		MGL_DEBUG_ASSERT(value != NULL);
 		return _mm_loadu_ps(value);
@@ -44,7 +44,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="value">Value</param>
 	/// <returns>mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_load_aligned(const mgl_f32_t value[4])
+	static inline mgl_f128_t mgl_f128_load_aligned(const mgl_f32_t value[4])
 	{
 		MGL_DEBUG_ASSERT(value != NULL);
 		return _mm_load_ps(value);
@@ -55,7 +55,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">mgl_f128_t</param>
 	/// <param name="value">Out values</param>
-	inline void mgl_f128_store(mgl_f128_t v, mgl_f32_t value[4])
+	static inline void mgl_f128_store(mgl_f128_t v, mgl_f32_t value[4])
 	{
 		MGL_DEBUG_ASSERT(value != NULL);
 		_mm_storeu_ps(value, v);
@@ -66,7 +66,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">mgl_f128_t</param>
 	/// <param name="value">Out values</param>
-	inline void mgl_f128_store_aligned(mgl_f128_t v, mgl_f32_t value[4])
+	static inline void mgl_f128_store_aligned(mgl_f128_t v, mgl_f32_t value[4])
 	{
 		MGL_DEBUG_ASSERT(value != NULL);
 		_mm_store_ps(value, v);
@@ -80,7 +80,7 @@ extern "C" {
 	/// <param name="z">Z component</param>
 	/// <param name="w">W component</param>
 	/// <returns>mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_set(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32_t w)
+	static inline mgl_f128_t mgl_f128_set(mgl_f32_t x, mgl_f32_t y, mgl_f32_t z, mgl_f32_t w)
 	{
 		return _mm_setr_ps(x, y, z, w);
 	}
@@ -90,7 +90,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">Scalar value</param>
 	/// <returns>mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_set_scalar(mgl_f32_t v)
+	static inline mgl_f128_t mgl_f128_set_scalar(mgl_f32_t v)
 	{
 		return _mm_set1_ps(v);
 	}
@@ -121,7 +121,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_hadd(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_hadd(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_hadd_ps(lhs, rhs);
 	}
@@ -134,7 +134,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_hsub(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_hsub(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_hsub_ps(lhs, rhs);
 	}
@@ -147,7 +147,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_addsub(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_addsub(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_addsub_ps(lhs, rhs);
 	}
@@ -158,7 +158,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_add(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_add(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_add_ps(lhs, rhs);
 	}
@@ -169,7 +169,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_sub(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_sub(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_sub_ps(lhs, rhs);
 	}
@@ -180,7 +180,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_mul(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_mul(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_mul_ps(lhs, rhs);
 	}
@@ -191,7 +191,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_div(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_div(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_div_ps(lhs, rhs);
 	}
@@ -202,7 +202,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_min(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_min(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_min_ps(lhs, rhs);
 	}
@@ -213,7 +213,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_max(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_max(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_max_ps(lhs, rhs);
 	}
@@ -223,7 +223,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_sqrt(mgl_f128_t v)
+	static inline mgl_f128_t mgl_f128_sqrt(mgl_f128_t v)
 	{
 		return _mm_sqrt_ps(v);
 	}
@@ -233,7 +233,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_rsqrt(mgl_f128_t v)
+	static inline mgl_f128_t mgl_f128_rsqrt(mgl_f128_t v)
 	{
 		return _mm_rsqrt_ps(v);
 	}
@@ -243,7 +243,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_rcp(mgl_f128_t v)
+	static inline mgl_f128_t mgl_f128_rcp(mgl_f128_t v)
 	{
 		return _mm_rcp_ps(v);
 	}
@@ -254,7 +254,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result mgl_f128_t</returns>
-	inline mgl_f128_t mgl_f128_cross(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_cross(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_sub_ps(
 			_mm_mul_ps(_mm_shuffle_ps(lhs, lhs, _MM_SHUFFLE(3, 0, 2, 1)), _mm_shuffle_ps(rhs, rhs, _MM_SHUFFLE(3, 1, 0, 2))),
@@ -268,7 +268,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result</returns>
-	inline mgl_f128_t mgl_f128_dot(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f128_t mgl_f128_dot(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_dp_ps(lhs, rhs, 0xFF);
 	}
@@ -279,7 +279,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>Result</returns>
-	inline mgl_f32_t mgl_f128_dot_scalar(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_f32_t mgl_f128_dot_scalar(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_cvtss_f32(_mm_dp_ps(lhs, rhs, 0xFF));
 	}
@@ -290,7 +290,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>MGL_FALSE if different, otherwise equal</returns>
-	inline mgl_bool_t mgl_f128_equal(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_bool_t mgl_f128_equal(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_movemask_ps(_mm_cmpeq_ps(lhs, rhs)) == 0xF;
 	}
@@ -301,7 +301,7 @@ extern "C" {
 	/// <param name="lhs">Left mgl_f128_t</param>
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <returns>MGL_FALSE if equal, otherwise equal</returns>
-	inline mgl_bool_t mgl_f128_nequal(mgl_f128_t lhs, mgl_f128_t rhs)
+	static inline mgl_bool_t mgl_f128_nequal(mgl_f128_t lhs, mgl_f128_t rhs)
 	{
 		return _mm_movemask_ps(_mm_cmpeq_ps(lhs, rhs)) != 0xF;
 	}
@@ -313,7 +313,7 @@ extern "C" {
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>MGL_FALSE if different, otherwise equal</returns>
-	inline mgl_bool_t mgl_f128_equal_e(mgl_f128_t lhs, mgl_f128_t rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f128_equal_e(mgl_f128_t lhs, mgl_f128_t rhs, mgl_f32_t epsilon)
 	{
 		mgl_f128_t eps = _mm_set1_ps(epsilon);
 		mgl_f128_t abd = _mm_andnot_ps(_mm_set1_ps(-0.0f), _mm_sub_ps(lhs, rhs));
@@ -327,7 +327,7 @@ extern "C" {
 	/// <param name="rhs">Right mgl_f128_t</param>
 	/// <param name="epsilon">Maximum difference</param>
 	/// <returns>MGL_FALSE if equal, otherwise equal</returns>
-	inline mgl_bool_t mgl_f128_nequal_e(mgl_f128_t lhs, mgl_f128_t rhs, mgl_f32_t epsilon)
+	static inline mgl_bool_t mgl_f128_nequal_e(mgl_f128_t lhs, mgl_f128_t rhs, mgl_f32_t epsilon)
 	{
 		mgl_f128_t eps = _mm_set1_ps(epsilon);
 		mgl_f128_t abd = _mm_andnot_ps(_mm_set1_ps(-0.0f), _mm_sub_ps(lhs, rhs));
@@ -339,7 +339,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="v">Scalar mgl_f128_t</param>
 	/// <returns>mgl_f32_t</returns>
-	inline mgl_f32_t mgl_f128_to_f32(mgl_f128_t v)
+	static inline mgl_f32_t mgl_f128_to_f32(mgl_f128_t v)
 	{
 		return _mm_cvtss_f32(v);
 	}

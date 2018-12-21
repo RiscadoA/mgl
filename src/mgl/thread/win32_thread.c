@@ -24,11 +24,8 @@ static unsigned int mgl_win32_thread_func(void* arg)
 	return 0;
 }
 
-#endif // _WIN32
-
 mgl_error_t MGL_API mgl_create_thread(mgl_thread_t * thread, void(*function)(void *), void * argument)
 {
-#ifdef _WIN32
 	MGL_DEBUG_ASSERT(thread != NULL && function != NULL);	
 	mgl_win32_thread_t* win32_thread = (mgl_win32_thread_t*)thread->data;
 	win32_thread->argument = argument;
@@ -38,14 +35,10 @@ mgl_error_t MGL_API mgl_create_thread(mgl_thread_t * thread, void(*function)(voi
 	if (win32_thread->handle == NULL)
 		return MGL_ERROR_EXTERNAL;
 	return MGL_ERROR_NONE;
-#else // _WIN32
-#	error Unsupported platform (mgl_create_thread)
-#endif // _WIN32
 }
 
 mgl_error_t MGL_API mgl_destroy_thread(mgl_thread_t * thread)
 {
-#ifdef _WIN32
 	MGL_DEBUG_ASSERT(thread != NULL);
 	mgl_win32_thread_t* win32_thread = (mgl_win32_thread_t*)thread->data;
 	if (win32_thread->running != MGL_FALSE)
@@ -53,14 +46,10 @@ mgl_error_t MGL_API mgl_destroy_thread(mgl_thread_t * thread)
 	if (CloseHandle(win32_thread->handle) == FALSE)
 		return MGL_ERROR_EXTERNAL;
 	return MGL_ERROR_NONE;
-#else // _WIN32
-#	error Unsupported platform (mgl_destroy_thread)
-#endif // _WIN32
 }
 
 mgl_error_t MGL_API mgl_wait_for_thread(mgl_thread_t * thread, mgl_u32_t timeout)
 {
-#ifdef _WIN32
 	mgl_win32_thread_t* win32_thread = (mgl_win32_thread_t*)thread->data;
 	DWORD ret;
 	if (timeout == 0)
@@ -73,7 +62,8 @@ mgl_error_t MGL_API mgl_wait_for_thread(mgl_thread_t * thread, mgl_u32_t timeout
 		return MGL_ERROR_EXTERNAL;
 	else
 		return MGL_ERROR_NONE;
-#else // _WIN32
-#	error Unsupported platform (mgl_wait_for_thread)
-#endif // _WIN32
+
 }
+
+#endif // _WIN32
+

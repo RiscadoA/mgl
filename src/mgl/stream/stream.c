@@ -27,7 +27,7 @@ static mgl_error_t mgl_std_stream_write(mgl_stream_t* stream, const void* memory
 static mgl_error_t mgl_std_stream_read(mgl_stream_t* stream, void* memory, mgl_u64_t size, mgl_u64_t* out_read_size)
 {
 	mgl_std_file_stream_t* std = (mgl_std_file_stream_t*)stream;
-	mgl_u64_t s = fread_s(memory, size, 1, size, std->file);
+	mgl_u64_t s = fread(memory, size, 1, std->file);
 	if (out_read_size != NULL)
 		*out_read_size = s;
 	return MGL_ERROR_NONE;

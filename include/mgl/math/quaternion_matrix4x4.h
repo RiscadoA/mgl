@@ -13,7 +13,7 @@ extern "C" {
 	/// </summary>
 	/// <param name="q">Quaternion</param>
 	/// <param name="r">Out result matrix</param>
-	inline void mgl_f32q4_to_m4x4(const mgl_f32q4_t* q, mgl_f32m4x4_t* r)
+	static inline void mgl_f32q4_to_m4x4(const mgl_f32q4_t* q, mgl_f32m4x4_t* r)
 	{
 		MGL_DEBUG_ASSERT(q != NULL && r != NULL);
 

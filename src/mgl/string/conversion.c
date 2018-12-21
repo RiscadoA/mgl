@@ -1,4 +1,5 @@
 #include <mgl/string/conversion.h>
+#include <math.h>
 
 mgl_error_t MGL_API mgl_u8_to_str(mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u8_t value, mgl_u8_t base, mgl_u64_t * out_size)
 {
@@ -1047,7 +1048,7 @@ mgl_error_t MGL_API mgl_f64_to_str(mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl
 mgl_error_t MGL_API mgl_u8_from_str(const mgl_u8_t * buffer, mgl_u64_t buffer_size, mgl_u8_t* value, mgl_u8_t base, mgl_u64_t * out_size)
 {
 	MGL_DEBUG_ASSERT(buffer != NULL && base >= 2 && base <= 16);
-	
+
 	mgl_u64_t index = 0;
 
 	// Skip whitespaces

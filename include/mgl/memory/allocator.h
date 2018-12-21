@@ -52,7 +52,7 @@ extern "C" {
 	/// <param name="ptr">Memory pointer</param>
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_deallocate(mgl_allocator_t* allocator, void* ptr);
-	
+
 	/// <summary>
 	///		Allocates aligned memory on an allocator.
 	/// </summary>
@@ -62,7 +62,7 @@ extern "C" {
 	/// <param name="out_ptr">Out allocated pointer</param>
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_allocate_aligned(mgl_allocator_t* allocator, mgl_u64_t size, mgl_u64_t alignment, void** out_ptr);
-	
+
 	/// <summary>
 	///		Deallocates aligned memory allocated by mgl_allocate_aligned.
 	/// </summary>

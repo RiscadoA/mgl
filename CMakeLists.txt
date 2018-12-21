@@ -22,9 +22,12 @@ set(MGL_SOURCE
 	"src/mgl/stream/buffer_stream.c"
 	"src/mgl/string/manipulation.c"
 	"src/mgl/string/conversion.c"
-	"src/mgl/thread/thread.c"
-	"src/mgl/thread/mutex.c"
-	"src/mgl/thread/atomic.c"
+	"src/mgl/thread/win32_thread.c"
+	"src/mgl/thread/win32_mutex.c"
+	"src/mgl/thread/win32_atomic.c"
+	"src/mgl/thread/posix_thread.c"
+	"src/mgl/thread/posix_mutex.c"
+	"src/mgl/thread/posix_atomic.c"
 	"src/mgl/container/iterator.c"
 	"src/mgl/container/array.c"
 	"src/mgl/container/vector.c"
@@ -91,6 +94,7 @@ if(MGL_BUILD_SHARED)
 else()
 	add_library(mgl STATIC ${MGL_SOURCE} ${MGL_INCLUDE})
 endif()
+set_property(TARGET mgl PROPERTY C_STANDARD 11)
 add_library(MGL::mgl ALIAS mgl)
 
 generate_export_header(mgl)
@@ -102,8 +106,16 @@ target_include_directories(mgl
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+if(UNIX)
+    target_link_libraries(mgl INTERFACE m dl pthread) # Link math lib
+endif()
+if(MSVC)
+    target_compile_options(mgl INTERFACE /arch:SSE4.1)
+else()
+    target_compile_options(mgl INTERFACE -msse4.1)
+endif()
 
-target_compile_options(mgl PRIVATE -WX -W3)
+#target_compile_options(mgl PRIVATE -WX -W3)
 target_compile_definitions(mgl
 	PUBLIC
 		MGL_VERSION="${PROJECT_VERSION}"
