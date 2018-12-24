@@ -2,6 +2,7 @@
 #define MGL_INPUT_WINDOW_H
 
 #include <mgl/error.h>
+#include <mgl/input/input_manager.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,6 +33,8 @@ extern "C" {
 		mgl_enum_t(*get_mode)(void* window);
 		void(*poll_events)(void* window);
 		void(*wait_for_events)(void* window);
+		mgl_u32_t(*get_key_button)(void* window, mgl_enum_t key_code);
+		mgl_u32_t(*get_mouse_button)(void* window, mgl_enum_t mouse_button);
 	} mgl_window_functions_t;
 
 	typedef struct
@@ -88,6 +91,20 @@ extern "C" {
 	/// </summary>
 	/// <param name="window">Window pointer</param>
 	void MGL_API mgl_wait_for_window_events(void* window);
+
+    /// <summary>
+	///		Gets the button ID of a certain keyboard key.
+	/// </summary>
+	/// <param name="window">Window pointer</param>
+	/// <param name="key_code">Key code</param>
+	mgl_u32_t MGL_API mgl_get_window_key_button(void* window, mgl_enum_t key_code);
+
+	/// <summary>
+	///		Gets the button ID of a certain mouse button.
+	/// </summary>
+	/// <param name="window">Window pointer</param>
+	/// <param name="mouse_button">Mouse button</param>
+	mgl_u32_t MGL_API mgl_get_window_mouse_button(void* window, mgl_enum_t mouse_button);
 
 	/// <summary>
 	///		Sets a new window on close callback.

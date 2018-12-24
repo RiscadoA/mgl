@@ -1,6 +1,5 @@
 #include <mgl/thread/mutex.h>
 
-#define __unix__
 #ifdef __unix__
 #include <pthread.h>
 #include <errno.h>

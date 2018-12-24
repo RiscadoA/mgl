@@ -52,7 +52,7 @@ mgl_error_t MGL_API mgl_reallocate(void * allocator, void * ptr, mgl_u64_t prev_
 	return ((mgl_allocator_t*)allocator)->functions->reallocate(((mgl_allocator_t*)allocator), ptr, prev_size, new_size, out_ptr);
 }
 
-mgl_error_t MGL_API mgl_deallocate(mgl_allocator_t * allocator, void * ptr)
+mgl_error_t MGL_API mgl_deallocate(void * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	return ((mgl_allocator_t*)allocator)->functions->deallocate(allocator, ptr);

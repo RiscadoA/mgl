@@ -5,6 +5,9 @@
 extern "C" {
 #endif // __cplusplus
 
+    /*
+        These key codes are used to get the
+    */
 	enum
 	{
 		MGL_KEYBOARD_Q,

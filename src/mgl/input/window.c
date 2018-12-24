@@ -42,6 +42,20 @@ void MGL_API mgl_wait_for_window_events(void * window)
 	window_base->functions->wait_for_events(window);
 }
 
+mgl_u32_t MGL_API mgl_get_window_key_button(void* window, mgl_enum_t key_code)
+{
+    MGL_DEBUG_ASSERT(window != NULL);
+	mgl_window_base_t* window_base = (mgl_window_base_t*)window;
+	return window_base->functions->get_key_button(window, key_code);
+}
+
+mgl_u32_t MGL_API mgl_get_window_mouse_button(void* window, mgl_enum_t mouse_button)
+{
+    MGL_DEBUG_ASSERT(window != NULL);
+	mgl_window_base_t* window_base = (mgl_window_base_t*)window;
+	return window_base->functions->get_mouse_button(window, mouse_button);
+}
+
 mgl_window_on_close_callback_t MGL_API mgl_set_window_on_close_callback(void * window, mgl_window_on_close_callback_t callback)
 {
 	MGL_DEBUG_ASSERT(window != NULL);
