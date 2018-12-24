@@ -218,4 +218,21 @@ export(PACKAGE MGL)
 
 ##############################################
 # Build tests
-add_subdirectory(tests/)
+option(MGL_BUILD_TESTS OFF)
+if(MGL_BUILD_TESTS)
+    add_subdirectory(tests/)
+endif()
+
+##############################################
+# Build examples
+option(MGL_BUILD_EXAMPLES ON)
+if(MGL_BUILD_EXAMPLES)
+    file(GLOB_RECURSE files "src/examples/*.c")
+    foreach(file ${files})
+	string(REGEX REPLACE "(^.*\\/|\\.[^.]*$)" "" file_without_ext ${file})
+	set(file_without_ext example_${file_without_ext})
+	add_executable(${file_without_ext} ${file})
+	target_link_libraries(${file_without_ext} mgl)
+	set_target_properties(${file_without_ext} PROPERTIES FOLDER Examples)
+endforeach()
+endif()

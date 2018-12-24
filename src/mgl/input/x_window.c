@@ -10,7 +10,7 @@
 static const mgl_chr8_t* mgl_x_window_get_type(void* window)
 {
 	MGL_DEBUG_ASSERT(window != NULL);
-	return u8"x11";
+	return u8"xlib";
 }
 
 static mgl_u32_t mgl_x_window_get_width(void* window)

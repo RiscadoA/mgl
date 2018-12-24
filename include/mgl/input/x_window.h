@@ -42,8 +42,8 @@ extern "C" {
 	} mgl_x_window_settings_t;
 
 	/// <summary>
-	///		Opens a X11 window.
-	///		The window type name is "x11".
+	///		Opens a Xlib window.
+	///		The window type name is "xlib".
 	/// </summary>
 	/// <param name="window">Window pointer</param>
 	/// <param name="settings">Settings pointer</param>
