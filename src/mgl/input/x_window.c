@@ -3,6 +3,7 @@
 #include <mgl/input/mouse.h>
 #include <mgl/string/manipulation.h>
 
+#define __unix__
 #ifdef __unix__
 #include <X11/keysymdef.h>
 #include <X11/XKBlib.h>
@@ -98,8 +99,7 @@ static mgl_u32_t mgl_x_window_get_key_button(void* window, mgl_enum_t key_code)
         TEST_KEY(MGL_KEYBOARD_CAPS, XK_Caps_Lock);
         TEST_KEY(MGL_KEYBOARD_LSHIFT, XK_Shift_L);
         TEST_KEY(MGL_KEYBOARD_RSHIFT, XK_Shift_R);
-        TEST_KEY(MGL_KEYBOARD_LCONTROL, XK_Control_L);
-        TEST_KEY(MGL_KEYBOARD_RCONTROL, XK_Control_R);
+        TEST_KEY(MGL_KEYBOARD_CONTROL, XK_Control_L);
         TEST_KEY(MGL_KEYBOARD_ALT, XK_Alt_L);
         TEST_KEY(MGL_KEYBOARD_ALTGR, XK_Menu);
         TEST_KEY(MGL_KEYBOARD_SPACE, XK_space);
@@ -177,14 +177,22 @@ static void mgl_x_window_handle_event(mgl_x_window_t* window, const XEvent* e)
     {
         case KeyPress:
         {
-            mgl_button_t* button = window->keyboard_buttons[e->xkey.keycode];
+            mgl_button_t* button;
+            if (e->xkey.keycode == XK_Control_R)
+                button = window->keyboard_buttons[XK_Control_L];
+            else
+                button = window->keyboard_buttons[e->xkey.keycode];
             mgl_feed_button(window->input_manager, button->id, MGL_TRUE);
             break;
         }
 
         case KeyRelease:
         {
-            mgl_button_t* button = window->keyboard_buttons[e->xkey.keycode];
+            mgl_button_t* button;
+            if (e->xkey.keycode == XK_Control_R)
+                button = window->keyboard_buttons[XK_Control_L];
+            else
+                button = window->keyboard_buttons[e->xkey.keycode];
             mgl_feed_button(window->input_manager, button->id, MGL_FALSE);
             break;
         }
@@ -286,6 +294,8 @@ static mgl_window_functions_t mgl_x_window_functions =
 	&mgl_x_window_wait_for_events,
 	&mgl_x_window_get_key_button,
 	&mgl_x_window_get_mouse_button,
+	&mgl_x_window_get_mouse_axis,
+	&mgl_x_window_get_action,
 };
 
 mgl_error_t MGL_API mgl_open_x_window(mgl_x_window_t * window, const mgl_x_window_settings_t * settings)

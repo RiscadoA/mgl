@@ -2,6 +2,7 @@
 #include <mgl/stream/stream.h>
 #include <mgl/input/input_manager.h>
 #include <mgl/input/keyboard.h>
+#include <mgl/input/mouse.h>
 
 #ifdef __unix__
 #include <mgl/input/x_window.h>
@@ -118,7 +119,7 @@ int main(int argc, char** argv)
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_AXIS_RANGE, u8"axis_range") == MGL_ERROR_NONE);
-        action->axis_range.id = mgl_get_axis(&input_manager, u8"Mouse X");
+        action->axis_range.id = mgl_get_window_mouse_axis(&window, MGL_MOUSE_X);
         action->axis_range.range_min = 0.5f;
         action->axis_range.range_max = 1.0f;
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &axis_range_callback) == MGL_ERROR_NONE);
@@ -127,14 +128,14 @@ int main(int argc, char** argv)
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON, u8"mouse left") == MGL_ERROR_NONE);
-        action->button.id = mgl_get_button(&input_manager, u8"Mouse Left");
+        action->button.id = mgl_get_window_mouse_button(&window, MGL_MOUSE_LEFT);
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &mouse_action_callback) == MGL_ERROR_NONE);
     }
 
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON, u8"mouse right") == MGL_ERROR_NONE);
-        action->button.id = mgl_get_button(&input_manager, u8"Mouse Right");
+        action->button.id = mgl_get_window_mouse_button(&window, MGL_MOUSE_RIGHT);
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &mouse_action_callback) == MGL_ERROR_NONE);
     }
 
