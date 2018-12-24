@@ -12,94 +12,10 @@ static LRESULT CALLBACK WindowProc(
 	WPARAM wparam,
 	LPARAM lparam);
 
-
-static mgl_enum_t mgl_windows_key_to_mgl_key(int key)
-{
-	switch (key)
-	{
-		case 'Q': return MGL_KEYBOARD_Q;
-		case 'W': return MGL_KEYBOARD_W;
-		case 'E': return MGL_KEYBOARD_E;
-		case 'R': return MGL_KEYBOARD_R;
-		case 'T': return MGL_KEYBOARD_T;
-		case 'Y': return MGL_KEYBOARD_Y;
-		case 'U': return MGL_KEYBOARD_U;
-		case 'I': return MGL_KEYBOARD_I;
-		case 'O': return MGL_KEYBOARD_O;
-		case 'P': return MGL_KEYBOARD_P;
-		case 'A': return MGL_KEYBOARD_A;
-		case 'S': return MGL_KEYBOARD_S;
-		case 'D': return MGL_KEYBOARD_D;
-		case 'F': return MGL_KEYBOARD_F;
-		case 'G': return MGL_KEYBOARD_G;
-		case 'H': return MGL_KEYBOARD_H;
-		case 'J': return MGL_KEYBOARD_J;
-		case 'K': return MGL_KEYBOARD_K;
-		case 'L': return MGL_KEYBOARD_L;
-		case 'Z': return MGL_KEYBOARD_Z;
-		case 'X': return MGL_KEYBOARD_X;
-		case 'C': return MGL_KEYBOARD_C;
-		case 'V': return MGL_KEYBOARD_V;
-		case 'B': return MGL_KEYBOARD_B;
-		case 'N': return MGL_KEYBOARD_N;
-		case 'M': return MGL_KEYBOARD_M;
-
-		case '1': return MGL_KEYBOARD_NUM1;
-		case '2': return MGL_KEYBOARD_NUM2;
-		case '3': return MGL_KEYBOARD_NUM3;
-		case '4': return MGL_KEYBOARD_NUM4;
-		case '5': return MGL_KEYBOARD_NUM5;
-		case '6': return MGL_KEYBOARD_NUM6;
-		case '7': return MGL_KEYBOARD_NUM7;
-		case '8': return MGL_KEYBOARD_NUM8;
-		case '9': return MGL_KEYBOARD_NUM9;
-		case '0': return MGL_KEYBOARD_NUM0;
-
-		case VK_F1: return MGL_KEYBOARD_F1;
-		case VK_F2: return MGL_KEYBOARD_F2;
-		case VK_F3: return MGL_KEYBOARD_F3;
-		case VK_F4: return MGL_KEYBOARD_F4;
-		case VK_F5: return MGL_KEYBOARD_F5;
-		case VK_F6: return MGL_KEYBOARD_F6;
-		case VK_F7: return MGL_KEYBOARD_F7;
-		case VK_F8: return MGL_KEYBOARD_F8;
-		case VK_F9: return MGL_KEYBOARD_F9;
-		case VK_F10: return MGL_KEYBOARD_F10;
-		case VK_F11: return MGL_KEYBOARD_F11;
-		case VK_F12: return MGL_KEYBOARD_F12;
-
-		case VK_ESCAPE: return MGL_KEYBOARD_ESCAPE;
-		case VK_TAB: return MGL_KEYBOARD_TAB;
-		case VK_CAPITAL: return MGL_KEYBOARD_CAPS;
-		case VK_LSHIFT: return MGL_KEYBOARD_LSHIFT;
-		case VK_RSHIFT: return MGL_KEYBOARD_RSHIFT;
-		case VK_LCONTROL: return MGL_KEYBOARD_LCONTROL;
-		case VK_RCONTROL: return MGL_KEYBOARD_RCONTROL;
-		case VK_LMENU: return MGL_KEYBOARD_ALT;
-		case VK_RMENU: return MGL_KEYBOARD_ALTGR;
-		case VK_SPACE: return MGL_KEYBOARD_SPACE;
-		case VK_RETURN: return MGL_KEYBOARD_ENTER;
-		case VK_BACK: return MGL_KEYBOARD_BACKSPACE;
-		case VK_INSERT: return MGL_KEYBOARD_INSERT;
-		case VK_DELETE: return MGL_KEYBOARD_DELETE;
-		case VK_HOME: return MGL_KEYBOARD_HOME;
-		case VK_END: return MGL_KEYBOARD_END;
-		case VK_PRIOR: return MGL_KEYBOARD_PAGEUP;
-		case VK_NEXT: return MGL_KEYBOARD_PAGEDOWN;
-
-		case VK_LEFT: return MGL_KEYBOARD_LEFT;
-		case VK_RIGHT: return MGL_KEYBOARD_RIGHT;
-		case VK_UP: return MGL_KEYBOARD_UP;
-		case VK_DOWN: return MGL_KEYBOARD_DOWN;
-
-		default: return -1;
-	}
-}
-
 static const mgl_chr8_t* mgl_windows_window_get_type(void* window)
 {
 	MGL_DEBUG_ASSERT(window != NULL);
-	return u8"windows";
+	return u8"win32";
 }
 
 static mgl_u32_t mgl_windows_window_get_width(void* window)
@@ -145,6 +61,143 @@ static void mgl_windows_window_wait_for_events(void* window)
 	DispatchMessage(&msg);
 }
 
+
+static mgl_u32_t mgl_windows_window_get_key_button(void* window, mgl_enum_t key_code)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_windows_window_t* win_window = (mgl_windows_window_t*)window;
+
+#define TEST_KEY(key_test, keycode) case key_test: return win_window->keyboard_buttons[keycode]->id
+	switch (key_code)
+	{
+		TEST_KEY(MGL_KEYBOARD_Q, 'Q');
+		TEST_KEY(MGL_KEYBOARD_W, 'W');
+		TEST_KEY(MGL_KEYBOARD_E, 'E');
+		TEST_KEY(MGL_KEYBOARD_R, 'R');
+		TEST_KEY(MGL_KEYBOARD_T, 'T');
+		TEST_KEY(MGL_KEYBOARD_Y, 'Y');
+		TEST_KEY(MGL_KEYBOARD_U, 'U');
+		TEST_KEY(MGL_KEYBOARD_I, 'I');
+		TEST_KEY(MGL_KEYBOARD_O, 'O');
+		TEST_KEY(MGL_KEYBOARD_P, 'P');
+		TEST_KEY(MGL_KEYBOARD_A, 'A');
+		TEST_KEY(MGL_KEYBOARD_S, 'S');
+		TEST_KEY(MGL_KEYBOARD_D, 'D');
+		TEST_KEY(MGL_KEYBOARD_F, 'F');
+		TEST_KEY(MGL_KEYBOARD_G, 'G');
+		TEST_KEY(MGL_KEYBOARD_H, 'H');
+		TEST_KEY(MGL_KEYBOARD_J, 'J');
+		TEST_KEY(MGL_KEYBOARD_K, 'K');
+		TEST_KEY(MGL_KEYBOARD_L, 'L');
+		TEST_KEY(MGL_KEYBOARD_Z, 'Z');
+		TEST_KEY(MGL_KEYBOARD_X, 'X');
+		TEST_KEY(MGL_KEYBOARD_C, 'C');
+		TEST_KEY(MGL_KEYBOARD_V, 'V');
+		TEST_KEY(MGL_KEYBOARD_B, 'B');
+		TEST_KEY(MGL_KEYBOARD_N, 'N');
+		TEST_KEY(MGL_KEYBOARD_M, 'M');
+
+		TEST_KEY(MGL_KEYBOARD_NUM1, '1');
+		TEST_KEY(MGL_KEYBOARD_NUM2, '2');
+		TEST_KEY(MGL_KEYBOARD_NUM3, '3');
+		TEST_KEY(MGL_KEYBOARD_NUM4, '4');
+		TEST_KEY(MGL_KEYBOARD_NUM5, '5');
+		TEST_KEY(MGL_KEYBOARD_NUM6, '6');
+		TEST_KEY(MGL_KEYBOARD_NUM7, '7');
+		TEST_KEY(MGL_KEYBOARD_NUM8, '8');
+		TEST_KEY(MGL_KEYBOARD_NUM9, '9');
+		TEST_KEY(MGL_KEYBOARD_NUM0, '0');
+
+		TEST_KEY(MGL_KEYBOARD_F1, VK_F1);
+		TEST_KEY(MGL_KEYBOARD_F2, VK_F2);
+		TEST_KEY(MGL_KEYBOARD_F3, VK_F3);
+		TEST_KEY(MGL_KEYBOARD_F4, VK_F4);
+		TEST_KEY(MGL_KEYBOARD_F5, VK_F5);
+		TEST_KEY(MGL_KEYBOARD_F6, VK_F6);
+		TEST_KEY(MGL_KEYBOARD_F7, VK_F7);
+		TEST_KEY(MGL_KEYBOARD_F8, VK_F8);
+		TEST_KEY(MGL_KEYBOARD_F9, VK_F9);
+		TEST_KEY(MGL_KEYBOARD_F10, VK_F10);
+		TEST_KEY(MGL_KEYBOARD_F11, VK_F11);
+		TEST_KEY(MGL_KEYBOARD_F12, VK_F12);
+
+		TEST_KEY(MGL_KEYBOARD_ESCAPE, VK_ESCAPE);
+		TEST_KEY(MGL_KEYBOARD_TAB, VK_TAB);
+		TEST_KEY(MGL_KEYBOARD_CAPS, VK_CAPITAL);
+		TEST_KEY(MGL_KEYBOARD_LSHIFT, VK_LSHIFT);
+		TEST_KEY(MGL_KEYBOARD_RSHIFT, VK_RSHIFT);
+		TEST_KEY(MGL_KEYBOARD_CONTROL, VK_CONTROL);
+		TEST_KEY(MGL_KEYBOARD_ALT, VK_LMENU);
+		TEST_KEY(MGL_KEYBOARD_ALTGR, VK_RMENU);
+		TEST_KEY(MGL_KEYBOARD_SPACE, VK_SPACE);
+		TEST_KEY(MGL_KEYBOARD_BACKSPACE, VK_BACK);
+		TEST_KEY(MGL_KEYBOARD_INSERT, VK_INSERT);
+		TEST_KEY(MGL_KEYBOARD_DELETE, VK_DELETE);
+		TEST_KEY(MGL_KEYBOARD_HOME, VK_HOME);
+		TEST_KEY(MGL_KEYBOARD_END, VK_END);
+		TEST_KEY(MGL_KEYBOARD_PAGEUP, VK_PRIOR);
+		TEST_KEY(MGL_KEYBOARD_PAGEDOWN, VK_NEXT);
+
+		TEST_KEY(MGL_KEYBOARD_LEFT, VK_LEFT);
+		TEST_KEY(MGL_KEYBOARD_RIGHT, VK_RIGHT);
+		TEST_KEY(MGL_KEYBOARD_UP, VK_UP);
+		TEST_KEY(MGL_KEYBOARD_DOWN, VK_DOWN);
+
+		default:
+			return MGL_NULL_BUTTON;
+	}
+#undef TEST_KEY
+}
+
+static mgl_u32_t mgl_windows_window_get_mouse_button(void* window, mgl_enum_t mouse_button)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_windows_window_t* win_window = (mgl_windows_window_t*)window;
+
+	if (mouse_button == MGL_MOUSE_LEFT)
+		return win_window->mouse_buttons[0]->id;
+	else  if (mouse_button == MGL_MOUSE_MIDDLE)
+		return win_window->mouse_buttons[1]->id;
+	else  if (mouse_button == MGL_MOUSE_RIGHT)
+		return win_window->mouse_buttons[2]->id;
+	else  if (mouse_button == MGL_MOUSE_EXTRA_1)
+		return win_window->mouse_buttons[3]->id;
+	else  if (mouse_button == MGL_MOUSE_EXTRA_2)
+		return win_window->mouse_buttons[4]->id;
+	else
+		return MGL_NULL_BUTTON;
+}
+
+static mgl_u32_t mgl_windows_window_get_mouse_axis(void* window, mgl_enum_t mouse_axis)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_windows_window_t* win_window = (mgl_windows_window_t*)window;
+
+	if (mouse_axis == MGL_MOUSE_X)
+		return win_window->mouse_x_axis->id;
+	else  if (mouse_axis == MGL_MOUSE_Y)
+		return win_window->mouse_y_axis->id;
+	else  if (mouse_axis == MGL_MOUSE_WHEEL)
+		return win_window->mouse_wheel_axis->id;
+	else
+		return MGL_NULL_BUTTON;
+}
+
+static mgl_u32_t mgl_windows_window_get_action(void* window, mgl_enum_t window_action)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_windows_window_t* win_window = (mgl_windows_window_t*)window;
+
+	if (window_action == MGL_WINDOW_CLOSE)
+		return win_window->close->id;
+	else  if (window_action == MGL_WINDOW_MOUSE_ENTER)
+		return win_window->mouse_enter->id;
+	else  if (window_action == MGL_WINDOW_MOUSE_LEAVE)
+		return win_window->mouse_leave->id;
+	else
+		return MGL_NULL_BUTTON;
+}
+
 static mgl_window_functions_t mgl_windows_window_functions =
 {
 	&mgl_windows_window_get_type,
@@ -152,7 +205,11 @@ static mgl_window_functions_t mgl_windows_window_functions =
 	&mgl_windows_window_get_height,
 	&mgl_windows_window_get_mode,
 	&mgl_windows_window_poll_events,
-	&mgl_windows_window_wait_for_events
+	&mgl_windows_window_wait_for_events,
+	&mgl_windows_window_get_key_button,
+	&mgl_windows_window_get_mouse_button,
+	&mgl_windows_window_get_mouse_axis,
+	&mgl_windows_window_get_action,
 };
 
 mgl_error_t MGL_API mgl_open_windows_window(mgl_windows_window_t * window, const mgl_windows_window_settings_t * settings)
@@ -162,23 +219,11 @@ mgl_error_t MGL_API mgl_open_windows_window(mgl_windows_window_t * window, const
 	window->width = settings->width;
 	window->height = settings->height;
 	window->mode = settings->mode;
+	window->input_manager = settings->input_manager;
 
 	window->base.functions = &mgl_windows_window_functions;
-	window->base.close_callback = NULL;
-	window->base.key_down_callback = NULL;
-	window->base.key_up_callback = NULL;
-	window->base.mouse_down_callback = NULL;
-	window->base.mouse_up_callback = NULL;
-	window->base.mouse_enter_callback = NULL;
-	window->base.mouse_leave_callback = NULL;
-	window->base.mouse_move_callback = NULL;
-	window->base.mouse_scroll_callback = NULL;
 
 	window->tracking = MGL_FALSE;
-	window->alt = MGL_FALSE;
-	window->control = MGL_FALSE;
-	window->system = MGL_FALSE;
-	window->shift = MGL_FALSE;
 
 	HWND hwnd;
 	HINSTANCE instance = GetModuleHandle(NULL);
@@ -266,16 +311,100 @@ mgl_error_t MGL_API mgl_open_windows_window(mgl_windows_window_t * window, const
 	if (hwnd == NULL)
 		return MGL_ERROR_EXTERNAL;
 
+	
 	ShowWindow(hwnd, SW_SHOWNORMAL);
 	SetWindowLongPtrA(hwnd, GWLP_USERDATA, (LONG_PTR)window);
+	
 	window->hwnd = hwnd;
+
+	// Init buttons of the input manager
+	mgl_input_manager_t* im = window->input_manager;
+	for (mgl_u32_t i = 0; i < 256; ++i)
+	{
+		mgl_chr8_t name[MGL_MAX_BUTTON_NAME_SIZE];
+		mgl_error_t e;
+
+		LONG code = MapVirtualKey(i, 0);
+		if (!code || !GetKeyNameTextA(code << 16, name, MGL_MAX_BUTTON_NAME_SIZE))
+			e = mgl_add_button(im, &window->keyboard_buttons[i], NULL);
+		else
+			e = mgl_add_button(im, &window->keyboard_buttons[i], name);
+		if (e != MGL_ERROR_NONE)
+			return e;
+	}
+
+	mgl_error_t e = mgl_add_button(im, &window->mouse_buttons[0], u8"mouse_l");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_add_button(im, &window->mouse_buttons[1], u8"mouse_m");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_add_button(im, &window->mouse_buttons[2], u8"mouse_r");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_add_button(im, &window->mouse_buttons[3], u8"mouse_x1");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	e = mgl_add_button(im, &window->mouse_buttons[4], u8"mouse_x2");
+	if (e != MGL_ERROR_NONE)
+		return e;
+
+	// Init mouse axes
+	e = mgl_add_axis(im, &window->mouse_x_axis, u8"mouse_x");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_x_axis->min_value = 0.0f;
+	window->mouse_x_axis->max_value = 1.0f;
+	window->mouse_x_axis->speed = INFINITY;
+	e = mgl_add_axis(im, &window->mouse_y_axis, u8"mouse_y");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_y_axis->min_value = 0.0f;
+	window->mouse_y_axis->max_value = 1.0f;
+	window->mouse_y_axis->speed = INFINITY;
+	e = mgl_add_axis(im, &window->mouse_wheel_axis, u8"mouse_w");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_wheel_axis->min_value = -1.0f;
+	window->mouse_wheel_axis->max_value = 1.0f;
+	window->mouse_wheel_axis->speed = 0.1f;
+
+	e = mgl_add_action(im, &window->close, MGL_ACTION_EMPTY, u8"window_close");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->close->data = window;
+	e = mgl_add_action(im, &window->mouse_enter, MGL_ACTION_EMPTY, u8"mouse_enter");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_enter->data = window;
+	e = mgl_add_action(im, &window->mouse_leave, MGL_ACTION_EMPTY, u8"mouse_leave");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_leave->data = window;
+
 	return MGL_ERROR_NONE;
 }
 
 void MGL_API mgl_close_windows_window(mgl_windows_window_t * window)
 {
 	MGL_DEBUG_ASSERT(window != NULL);
+
+	mgl_input_manager_t* im = window->input_manager;
+	for (mgl_u32_t i = 0; i < 256; ++i)
+		mgl_remove_button(im, window->keyboard_buttons[i]->id);
+	for (mgl_u32_t i = 0; i < 5; ++i)
+		mgl_remove_button(im, window->mouse_buttons[i]->id);
+	mgl_remove_axis(im, window->mouse_x_axis->id);
+	mgl_remove_axis(im, window->mouse_y_axis->id);
+	mgl_remove_axis(im, window->mouse_wheel_axis->id);
+	mgl_remove_action(im, window->close->id);
+	mgl_remove_action(im, window->mouse_enter->id);
+	mgl_remove_action(im, window->mouse_leave->id);
+
+	CloseWindow(window->hwnd);
 }
+
+#include <mgl/stream/stream.h>
 
 static LRESULT CALLBACK WindowProc(
 	HWND hwnd,
@@ -289,8 +418,7 @@ static LRESULT CALLBACK WindowProc(
 	{
 		case WM_CLOSE:
 		{
-			if (window->base.close_callback != NULL)
-				window->base.close_callback(window);
+			mgl_fire_action(window->input_manager, window->close->id, MGL_ACTION_FIRED);
 			break;
 		}
 
@@ -313,142 +441,99 @@ static LRESULT CALLBACK WindowProc(
 				window->tracking = MGL_TRUE;
 			}
 
-			if (window->base.mouse_move_callback != NULL)
-				window->base.mouse_move_callback(window, (mgl_f32_t)GET_X_LPARAM(lparam), (mgl_f32_t)GET_Y_LPARAM(lparam));
+			mgl_feed_axis(window->input_manager, window->mouse_x_axis->id, (mgl_f32_t)GET_X_LPARAM(lparam) / (mgl_f32_t)window->width);
+			mgl_feed_axis(window->input_manager, window->mouse_y_axis->id, (mgl_f32_t)GET_Y_LPARAM(lparam) / (mgl_f32_t)window->height);
+
 			break;
 		}
 
 		case WM_MOUSEHOVER:
 		{
-			if (window->base.mouse_enter_callback != NULL)
-				window->base.mouse_enter_callback(window);
+			mgl_fire_action(window->input_manager, window->mouse_enter->id, MGL_ACTION_FIRED);
 			break;
 		}
 
 		case WM_MOUSELEAVE:
 		{
 			window->tracking = MGL_FALSE;
-			if (window->base.mouse_leave_callback != NULL)
-				window->base.mouse_leave_callback(window);
+			mgl_fire_action(window->input_manager, window->mouse_leave->id, MGL_ACTION_FIRED);
 			break;
 		}
 		
 		case WM_MOUSEWHEEL:
 		{
-			if (window->base.mouse_scroll_callback != NULL)
-				window->base.mouse_scroll_callback(window, GET_WHEEL_DELTA_WPARAM(wparam) > 0 ? 1.0f : -1.0f);
+			mgl_feed_axis_instant(window->input_manager, window->mouse_wheel_axis->id, GET_WHEEL_DELTA_WPARAM(wparam) > 0 ? 1.0f : -1.0f, 0.0f);
 			break;
 		}
 
 		case WM_KEYDOWN:
 		{
-			if (wparam == VK_LSHIFT || wparam == VK_RSHIFT)
-				window->shift = MGL_TRUE;
-			else if (wparam == VK_MENU)
-				window->alt = MGL_TRUE;
-			else if (wparam == VK_LCONTROL || wparam == VK_RCONTROL)
-				window->control = MGL_TRUE;
-			else if (wparam == VK_LWIN || wparam == VK_RWIN)
-				window->system = MGL_TRUE;
+			if (lparam & 0x40000000)
+				break;
 
-			if (window->base.key_down_callback != NULL)
-			{
-				mgl_enum_t mods = MGL_KEY_MOD_NONE;
-				if (window->shift) mods |= MGL_KEY_MOD_SHIFT;
-				if (window->alt) mods |= MGL_KEY_MOD_ALT;
-				if (window->control) mods |= MGL_KEY_MOD_CONTROL;
-				if (window->system) mods |= MGL_KEY_MOD_SYSTEM;
-
-				window->base.key_down_callback(window, mgl_windows_key_to_mgl_key((int)wparam), mods);
-			}
+			mgl_button_t* button = window->keyboard_buttons[wparam];
+			mgl_feed_button(window->input_manager, button->id, MGL_TRUE);
+			break;
 		}
 
 		case WM_KEYUP:
 		{
-			if (wparam == VK_LSHIFT || wparam == VK_RSHIFT)
-				window->shift = MGL_FALSE;
-			else if (wparam == VK_MENU)
-				window->alt = MGL_FALSE;
-			else if (wparam == VK_LCONTROL || wparam == VK_RCONTROL)
-				window->control = MGL_FALSE;
-			else if (wparam == VK_LWIN || wparam == VK_RWIN)
-				window->system = MGL_FALSE;
-
-			if (window->base.key_up_callback != NULL)
-			{
-				mgl_enum_t mods = MGL_KEY_MOD_NONE;
-				if (window->shift) mods |= MGL_KEY_MOD_SHIFT;
-				if (window->alt) mods |= MGL_KEY_MOD_ALT;
-				if (window->control) mods |= MGL_KEY_MOD_CONTROL;
-				if (window->system) mods |= MGL_KEY_MOD_SYSTEM;
-
-				window->base.key_up_callback(window, mgl_windows_key_to_mgl_key((int)wparam), mods);
-			}
+			mgl_button_t* button = window->keyboard_buttons[wparam];
+			mgl_feed_button(window->input_manager, button->id, MGL_FALSE);
+			break;
 		}
 
 		case WM_LBUTTONDOWN:
 		{
-			if (window->base.mouse_down_callback != NULL)
-				window->base.mouse_down_callback(window, MGL_MOUSE_LEFT);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[0]->id, MGL_TRUE);
 			break;
 		}
 
 		case WM_RBUTTONDOWN:
 		{
-			if (window->base.mouse_down_callback != NULL)
-				window->base.mouse_down_callback(window, MGL_MOUSE_RIGHT);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[2]->id, MGL_TRUE);
 			break;
 		}
 
 		case WM_MBUTTONDOWN:
 		{
-			if (window->base.mouse_down_callback != NULL)
-				window->base.mouse_down_callback(window, MGL_MOUSE_MIDDLE);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[1]->id, MGL_TRUE);
 			break;
 		}
 
 		case WM_XBUTTONDOWN:
 		{
-			if (window->base.mouse_down_callback != NULL)
-			{
-				if (GET_XBUTTON_WPARAM(wparam) == XBUTTON1)
-					window->base.mouse_down_callback(window, MGL_MOUSE_EXTRA_0);
-				else if (GET_XBUTTON_WPARAM(wparam) == XBUTTON2)
-					window->base.mouse_down_callback(window, MGL_MOUSE_EXTRA_1);
-			}
+			if (GET_XBUTTON_WPARAM(wparam) == XBUTTON1)
+				mgl_feed_button(window->input_manager, window->mouse_buttons[3]->id, MGL_TRUE);
+			else if (GET_XBUTTON_WPARAM(wparam) == XBUTTON2)
+				mgl_feed_button(window->input_manager, window->mouse_buttons[4]->id, MGL_TRUE);
 			break;
 		}
 
 		case WM_LBUTTONUP:
 		{
-			if (window->base.mouse_up_callback != NULL)
-				window->base.mouse_up_callback(window, MGL_MOUSE_LEFT);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[0]->id, MGL_FALSE);
 			break;
 		}
 
 		case WM_RBUTTONUP:
 		{
-			if (window->base.mouse_up_callback != NULL)
-				window->base.mouse_up_callback(window, MGL_MOUSE_RIGHT);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[2]->id, MGL_FALSE);
 			break;
 		}
 
 		case WM_MBUTTONUP:
 		{
-			if (window->base.mouse_up_callback != NULL)
-				window->base.mouse_up_callback(window, MGL_MOUSE_MIDDLE);
+			mgl_feed_button(window->input_manager, window->mouse_buttons[1]->id, MGL_FALSE);
 			break;
 		}
 
 		case WM_XBUTTONUP:
 		{
-			if (window->base.mouse_up_callback != NULL)
-			{
-				if (GET_XBUTTON_WPARAM(wparam) == XBUTTON1)
-					window->base.mouse_up_callback(window, MGL_MOUSE_EXTRA_0);
-				else if (GET_XBUTTON_WPARAM(wparam) == XBUTTON2)
-					window->base.mouse_up_callback(window, MGL_MOUSE_EXTRA_1);
-			}
+			if (GET_XBUTTON_WPARAM(wparam) == XBUTTON1)
+				mgl_feed_button(window->input_manager, window->mouse_buttons[3]->id, MGL_FALSE);
+			else if (GET_XBUTTON_WPARAM(wparam) == XBUTTON2)
+				mgl_feed_button(window->input_manager, window->mouse_buttons[4]->id, MGL_FALSE);
 			break;
 		}
 

@@ -55,7 +55,9 @@ extern "C" {
 #define MGL_TRUE		(1)
 #define MGL_FALSE		(0)
 
-#define NULL ((void*)0)
+#ifndef NULL
+#	define NULL ((void*)0)
+#endif
 
 #if defined(_MSC_VER)
 #define MGL_ALIGNED(x) __declspec(align(x))

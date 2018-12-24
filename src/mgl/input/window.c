@@ -55,3 +55,17 @@ mgl_u32_t MGL_API mgl_get_window_mouse_button(void* window, mgl_enum_t mouse_but
 	mgl_window_base_t* window_base = (mgl_window_base_t*)window;
 	return window_base->functions->get_mouse_button(window, mouse_button);
 }
+
+mgl_u32_t MGL_API mgl_get_window_mouse_axis(void * window, mgl_enum_t mouse_axis)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_window_base_t* window_base = (mgl_window_base_t*)window;
+	return window_base->functions->get_mouse_axis(window, mouse_axis);
+}
+
+mgl_u32_t MGL_API mgl_get_window_action(void * window, mgl_enum_t window_action)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_window_base_t* window_base = (mgl_window_base_t*)window;
+	return window_base->functions->get_action(window, window_action);
+}

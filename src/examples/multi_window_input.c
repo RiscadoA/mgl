@@ -67,7 +67,7 @@ int main(int argc, char** argv)
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON_SEQUENCE, u8"quit_1") == MGL_ERROR_NONE);
         action->sequence.button_count = 2;
-        action->sequence.buttons[0] = mgl_get_window_key_button(&window_1, MGL_KEYBOARD_LCONTROL);
+        action->sequence.buttons[0] = mgl_get_window_key_button(&window_1, MGL_KEYBOARD_CONTROL);
         action->sequence.buttons[1] = mgl_get_window_key_button(&window_1, MGL_KEYBOARD_Q);
         action->sequence.can_release = MGL_FALSE;
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &quit_callback) == MGL_ERROR_NONE);
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON_SEQUENCE, u8"quit_2") == MGL_ERROR_NONE);
         action->sequence.button_count = 2;
-        action->sequence.buttons[0] = mgl_get_window_key_button(&window_2, MGL_KEYBOARD_LCONTROL);
+        action->sequence.buttons[0] = mgl_get_window_key_button(&window_2, MGL_KEYBOARD_CONTROL);
         action->sequence.buttons[1] = mgl_get_window_key_button(&window_2, MGL_KEYBOARD_Q);
         action->sequence.can_release = MGL_FALSE;
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &quit_callback) == MGL_ERROR_NONE);

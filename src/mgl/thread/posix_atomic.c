@@ -1,6 +1,6 @@
 #include <mgl/thread/atomic.h>
 
-#ifndef __STDC_NO_ATOMICS__
+#if !defined(__STDC_NO_ATOMICS__) && defined(__STDC_VERSION__ )
 #include <stdatomic.h>
 
 static void* mgl_align_pointer(void* ptr, mgl_u64_t alignment)

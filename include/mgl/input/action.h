@@ -18,6 +18,7 @@ extern "C" {
 // Action types
 enum
 {
+	MGL_ACTION_EMPTY, // Empty action (triggered manually)
 	MGL_ACTION_BUTTON, // Triggered when a button is pressed or released (MGL_ACTION_PRESSED or MGL_ACTION_RELEASED)
 	MGL_ACTION_BUTTON_GROUP, // Triggered when a group of buttons are pressed or released (MGL_ACTION_PRESSED or MGL_ACTION_RELEASED)
 	MGL_ACTION_BUTTON_SEQUENCE, // Triggered when a sequence of buttons is pressed (MGL_ACTION_PRESSED)
@@ -27,6 +28,7 @@ enum
 // Action states
 enum
 {
+	MGL_ACTION_FIRED,
     MGL_ACTION_PRESSED,
     MGL_ACTION_RELEASED,
     MGL_ACTION_ENTERED,
@@ -43,6 +45,7 @@ struct mgl_action_t
     mgl_u32_t id;
     mgl_action_callback_t callbacks[MGL_MAX_ACTION_CALLBACKS];
     mgl_enum_t type;
+	void* data; // User data
 
     // Action type specific data
     union

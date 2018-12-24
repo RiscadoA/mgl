@@ -24,6 +24,7 @@ extern "C" {
         mgl_axis_t* mouse_x_axis;
         mgl_axis_t* mouse_y_axis;
         mgl_axis_t* mouse_wheel_axis;
+		mgl_action_t *close, *mouse_enter, *mouse_leave;
 #ifdef __unix__
 		Display* display;
         int screen;

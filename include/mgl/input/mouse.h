@@ -16,6 +16,15 @@ enum
 	MGL_MOUSE_BUTTON_COUNT
 };
 
+enum
+{
+	MGL_MOUSE_X, // X mouse coordinate axis
+	MGL_MOUSE_Y, // Y mouse coordinate axis
+	MGL_MOUSE_WHEEL, // Mouse wheel delta axis
+
+	MGL_MOUSE_AXES_COUNT
+};
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

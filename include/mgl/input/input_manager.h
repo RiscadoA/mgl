@@ -41,6 +41,8 @@ void MGL_API mgl_feed_axis(mgl_input_manager_t* manager, mgl_u32_t id, mgl_f32_t
 
 void MGL_API mgl_feed_axis_instant(mgl_input_manager_t* manager, mgl_u32_t id, mgl_f32_t instant_value, mgl_f32_t desired_value);
 
+void MGL_API mgl_fire_action(mgl_input_manager_t* manager, mgl_u32_t id, mgl_enum_t state);
+
 mgl_error_t MGL_API mgl_add_action_callback(mgl_input_manager_t* manager, mgl_u32_t id, mgl_action_callback_t callback);
 
 void MGL_API mgl_remove_action_callback(mgl_input_manager_t* manager, mgl_u32_t id, mgl_action_callback_t callback);

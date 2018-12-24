@@ -63,6 +63,7 @@ mgl_error_t MGL_API mgl_add_action(mgl_input_manager_t* manager, mgl_action_t** 
             continue;
         switch (type)
         {
+			case MGL_ACTION_EMPTY: break;
             case MGL_ACTION_BUTTON:
             {
                 manager->actions[i].button.id = MGL_NULL_BUTTON;
@@ -295,6 +296,14 @@ void MGL_API mgl_feed_axis_instant(mgl_input_manager_t* manager, mgl_u32_t id, m
     manager->axes[id].value = instant_value;
     manager->axes[id].desired_value = desired_value;
     mgl_check_axis_events(manager, id, old_value);
+}
+
+void MGL_API mgl_fire_action(mgl_input_manager_t * manager, mgl_u32_t id, mgl_enum_t state)
+{
+	MGL_DEBUG_ASSERT(manager != NULL && id < MGL_INPUT_MANAGER_MAX_ACTION_COUNT);
+	for (mgl_u32_t i = 0; i < MGL_MAX_ACTION_CALLBACKS; ++i)
+		if (manager->actions[id].callbacks[i] != NULL)
+			manager->actions[id].callbacks[i](&manager->actions[id], state);
 }
 
 mgl_error_t MGL_API mgl_add_action_callback(mgl_input_manager_t* manager, mgl_u32_t id, mgl_action_callback_t callback)

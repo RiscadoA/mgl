@@ -2,11 +2,10 @@
 #include <mgl/input/keyboard.h>
 #include <mgl/input/mouse.h>
 #include <mgl/string/manipulation.h>
+
+#ifdef __unix__
 #include <X11/keysymdef.h>
 #include <X11/XKBlib.h>
-
-#define __unix__
-#ifdef __unix__
 
 static const mgl_chr8_t* mgl_x_window_get_type(void* window)
 {
@@ -140,6 +139,36 @@ static mgl_u32_t mgl_x_window_get_mouse_button(void* window, mgl_enum_t mouse_bu
         return x_window->mouse_buttons[4]->id;
     else
         return MGL_NULL_BUTTON;
+}
+
+static mgl_u32_t mgl_x_window_get_mouse_axis(void* window, mgl_enum_t mouse_axis)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_x_window_t* x_window = (mgl_x_window_t*)window;
+
+	if (mouse_axis == MGL_MOUSE_X)
+		return x_window->mouse_x_axis->id;
+	else  if (mouse_axis == MGL_MOUSE_Y)
+		return x_window->mouse_y_axis->id;
+	else  if (mouse_axis == MGL_MOUSE_WHEEL)
+		return x_window->mouse_wheel_axis->id;
+	else
+		return MGL_NULL_BUTTON;
+}
+
+static mgl_u32_t mgl_x_window_get_action(void* window, mgl_enum_t window_action)
+{
+	MGL_DEBUG_ASSERT(window != NULL);
+	mgl_x_window_t* x_window = (mgl_x_window_t*)window;
+
+	if (window_action == MGL_WINDOW_CLOSE)
+		return x_window->close->id;
+	else  if (window_action == MGL_WINDOW_MOUSE_ENTER)
+		return x_window->mouse_enter->id;
+	else  if (window_action == MGL_WINDOW_MOUSE_LEAVE)
+		return x_window->mouse_leave->id;
+	else
+		return MGL_NULL_BUTTON;
 }
 
 static void mgl_x_window_handle_event(mgl_x_window_t* window, const XEvent* e)
@@ -301,41 +330,54 @@ mgl_error_t MGL_API mgl_open_x_window(mgl_x_window_t * window, const mgl_x_windo
             return e;
     }
 
-    mgl_error_t e = mgl_add_button(im, &window->mouse_buttons[0], u8"Mouse Left");
+    mgl_error_t e = mgl_add_button(im, &window->mouse_buttons[0], u8"mouse_l");
     if (e != MGL_ERROR_NONE)
         return e;
-    e = mgl_add_button(im, &window->mouse_buttons[1], u8"Mouse Middle");
+    e = mgl_add_button(im, &window->mouse_buttons[1], u8"mouse_m");
     if (e != MGL_ERROR_NONE)
         return e;
-    e = mgl_add_button(im, &window->mouse_buttons[2], u8"Mouse Right");
+    e = mgl_add_button(im, &window->mouse_buttons[2], u8"mouse_r");
     if (e != MGL_ERROR_NONE)
         return e;
-    e = mgl_add_button(im, &window->mouse_buttons[3], u8"Mouse Extra 1");
+    e = mgl_add_button(im, &window->mouse_buttons[3], u8"mouse_x1");
     if (e != MGL_ERROR_NONE)
         return e;
-    e = mgl_add_button(im, &window->mouse_buttons[4], u8"Mouse Extra 2");
+    e = mgl_add_button(im, &window->mouse_buttons[4], u8"mouse_x2");
     if (e != MGL_ERROR_NONE)
         return e;
 
     // Init mouse axes
-    e = mgl_add_axis(im, &window->mouse_x_axis, u8"Mouse X");
+    e = mgl_add_axis(im, &window->mouse_x_axis, u8"mouse_x");
     if (e != MGL_ERROR_NONE)
         return e;
     window->mouse_x_axis->min_value = 0.0f;
     window->mouse_x_axis->max_value = 1.0f;
     window->mouse_x_axis->speed = INFINITY;
-    e = mgl_add_axis(im, &window->mouse_y_axis, u8"Mouse Y");
+    e = mgl_add_axis(im, &window->mouse_y_axis, u8"mouse_y");
     if (e != MGL_ERROR_NONE)
         return e;
     window->mouse_y_axis->min_value = 0.0f;
     window->mouse_y_axis->max_value = 1.0f;
     window->mouse_y_axis->speed = INFINITY;
-    e = mgl_add_axis(im, &window->mouse_wheel_axis, u8"Mouse Wheel");
+    e = mgl_add_axis(im, &window->mouse_wheel_axis, u8"mouse_w");
     if (e != MGL_ERROR_NONE)
         return e;
     window->mouse_wheel_axis->min_value = -1.0f;
     window->mouse_wheel_axis->max_value = 1.0f;
     window->mouse_wheel_axis->speed = 0.1f;
+
+	e = mgl_add_action(im, &window->close, MGL_ACTION_EMPTY, u8"window_close");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->close->data = window;
+	e = mgl_add_action(im, &window->mouse_enter, MGL_ACTION_EMPTY, u8"mouse_enter");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_enter->data = window;
+	e = mgl_add_action(im, &window->mouse_leave, MGL_ACTION_EMPTY, u8"mouse_leave");
+	if (e != MGL_ERROR_NONE)
+		return e;
+	window->mouse_leave->data = window;
 
 	return MGL_ERROR_NONE;
 }
@@ -351,6 +393,10 @@ void MGL_API mgl_close_x_window(mgl_x_window_t * window)
         mgl_remove_button(im, window->mouse_buttons[i]->id);
     mgl_remove_axis(im, window->mouse_x_axis->id);
     mgl_remove_axis(im, window->mouse_y_axis->id);
+	mgl_remove_axis(im, window->mouse_wheel_axis->id);
+	mgl_remove_action(im, window->close->id);
+	mgl_remove_action(im, window->mouse_enter->id);
+	mgl_remove_action(im, window->mouse_leave->id);
 
 	XFreeGC(window->display, window->gc);
 	XDestroyWindow(window->display, window->window);
