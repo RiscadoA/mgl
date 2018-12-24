@@ -5,6 +5,7 @@
 #include <X11/keysymdef.h>
 #include <X11/XKBlib.h>
 
+#define __unix__
 #ifdef __unix__
 
 static const mgl_chr8_t* mgl_x_window_get_type(void* window)
@@ -267,21 +268,6 @@ mgl_error_t MGL_API mgl_open_x_window(mgl_x_window_t * window, const mgl_x_windo
 	window->mode = settings->mode;
 
 	window->base.functions = &mgl_x_window_functions;
-	window->base.close_callback = NULL;
-	window->base.key_down_callback = NULL;
-	window->base.key_up_callback = NULL;
-	window->base.mouse_down_callback = NULL;
-	window->base.mouse_up_callback = NULL;
-	window->base.mouse_enter_callback = NULL;
-	window->base.mouse_leave_callback = NULL;
-	window->base.mouse_move_callback = NULL;
-	window->base.mouse_scroll_callback = NULL;
-
-	window->tracking = MGL_FALSE;
-	window->alt = MGL_FALSE;
-	window->control = MGL_FALSE;
-	window->system = MGL_FALSE;
-	window->shift = MGL_FALSE;
 
 	window->display = XOpenDisplay(NULL);
 	if (window->display == NULL)

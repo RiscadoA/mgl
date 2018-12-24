@@ -18,7 +18,6 @@ extern "C" {
 		mgl_window_base_t base;
 		mgl_u32_t width, height;
 		mgl_enum_t mode;
-		mgl_bool_t tracking, alt, control, system, shift;
         mgl_input_manager_t* input_manager;
         mgl_button_t* keyboard_buttons[256];
         mgl_button_t* mouse_buttons[5];
