@@ -54,6 +54,7 @@ static mgl_allocator_functions_t mgl_linear_allocator_functions =
 	&mgl_linear_allocator_deallocate,
 	NULL,
 	NULL,
+	NULL,
 };
 
 void MGL_API mgl_init_linear_allocator(mgl_linear_allocator_t * allocator, void * memory, mgl_u64_t memory_size)

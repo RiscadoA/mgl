@@ -81,6 +81,29 @@ mgl_error_t MGL_API mgl_allocate_aligned(void * allocator, mgl_u64_t size, mgl_u
 	else return ((mgl_allocator_t*)allocator)->functions->allocate_aligned(((mgl_allocator_t*)allocator), size, alignment, out_ptr);
 }
 
+mgl_error_t MGL_API mgl_reallocate_aligned(void * allocator, void * ptr, mgl_u64_t prev_size, mgl_u64_t new_size, mgl_u64_t alignment, void ** out_ptr)
+{
+	MGL_DEBUG_ASSERT(allocator != NULL);
+	if (((mgl_allocator_t*)allocator)->functions->reallocate_aligned == NULL)
+	{
+		MGL_DEBUG_ASSERT((alignment & (alignment - 1)) == 0);
+		mgl_u64_t needed_size = new_size + alignment;
+		void* raw_ptr = (void*)((mgl_uptr_t)ptr - ((mgl_u8_t*)ptr)[-1]);
+		mgl_error_t err = ((mgl_allocator_t*)allocator)->functions->reallocate(((mgl_allocator_t*)allocator), raw_ptr, prev_size + alignment, needed_size, &raw_ptr);
+		if (err != MGL_ERROR_NONE)
+			return err;
+		mgl_uptr_t adjustment = alignment - ((mgl_uptr_t)raw_ptr & (alignment - 1));
+		mgl_uptr_t aligned_address = (mgl_uptr_t)raw_ptr + adjustment;
+
+		MGL_DEBUG_ASSERT(adjustment <= MGL_U8_MAX);
+		mgl_u8_t* aligned_mem = (mgl_u8_t*)aligned_address;
+		aligned_mem[-1] = (mgl_u8_t)adjustment;
+		*out_ptr = aligned_mem;
+		return MGL_ERROR_NONE;
+	}
+	else return ((mgl_allocator_t*)allocator)->functions->reallocate_aligned(((mgl_allocator_t*)allocator), ptr, prev_size, new_size, alignment, out_ptr);
+}
+
 mgl_error_t MGL_API mgl_deallocate_aligned(void * allocator, void * ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && ptr != NULL);

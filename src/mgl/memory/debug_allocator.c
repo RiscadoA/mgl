@@ -96,6 +96,33 @@ static mgl_error_t mgl_debug_allocator_allocate_aligned(mgl_allocator_t* allocat
 	return e;
 }
 
+static mgl_error_t mgl_debug_allocator_reallocate_aligned(mgl_allocator_t* allocator, void* ptr, mgl_u64_t prev_size, mgl_u64_t new_size, mgl_u64_t alignment, void** out_ptr)
+{
+	MGL_DEBUG_ASSERT(allocator != NULL);
+	mgl_error_t e = mgl_reallocate_aligned(((mgl_debug_allocator_t*)allocator)->wrapped, ptr, prev_size, new_size, alignment, out_ptr);
+	if (e != MGL_ERROR_NONE)
+		return e;
+
+	((mgl_debug_allocator_t*)allocator)->allocated_memory -= prev_size;
+	((mgl_debug_allocator_t*)allocator)->allocated_memory += new_size;
+
+	mgl_iterator_t it;
+	mgl_get_singly_linked_list_begin_it(&((mgl_debug_allocator_t*)allocator)->list, &it);
+	while (!mgl_iterator_is_null(&it))
+	{
+		mgl_debug_allocator_info_node_t* node = (mgl_debug_allocator_info_node_t*)mgl_iterator_get(&it);
+		if (node->ptr == ptr)
+		{
+			node->ptr = *out_ptr;
+			node->size = new_size;
+			break;
+		}
+		mgl_iterator_next(&it, &it);
+	}
+
+	return e;
+}
+
 static mgl_error_t mgl_debug_allocator_deallocate_aligned(mgl_allocator_t* allocator, void* ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
@@ -128,6 +155,7 @@ static mgl_allocator_functions_t mgl_debug_allocator_functions =
 	&mgl_debug_allocator_reallocate,
 	&mgl_debug_allocator_deallocate,
 	&mgl_debug_allocator_allocate_aligned,
+	&mgl_debug_allocator_reallocate_aligned,
 	&mgl_debug_allocator_deallocate_aligned,
 };
 
