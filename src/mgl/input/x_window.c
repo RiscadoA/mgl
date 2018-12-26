@@ -175,6 +175,25 @@ static void mgl_x_window_handle_event(mgl_x_window_t* window, const XEvent* e)
 {
     switch (e->type)
     {
+        case ClientMessage:
+        {
+            if (e->xclient.data.l[0] == window->wm_delete_message)
+                mgl_fire_action(window->input_manager, window->close->id, MGL_ACTION_FIRED);
+            break;
+        }
+
+        case EnterNotify:
+        {
+            mgl_fire_action(window->input_manager, window->mouse_enter->id, MGL_ACTION_FIRED);
+            break;
+        }
+
+        case LeaveNotify:
+        {
+            mgl_fire_action(window->input_manager, window->mouse_leave->id, MGL_ACTION_FIRED);
+            break;
+        }
+
         case KeyPress:
         {
             mgl_button_t* button;
@@ -320,13 +339,22 @@ mgl_error_t MGL_API mgl_open_x_window(mgl_x_window_t * window, const mgl_x_windo
     unsigned long white = WhitePixel(window->display, window->screen);
     window->window = XCreateSimpleWindow(window->display, DefaultRootWindow(window->display), 0, 0, window->width, window->height, 5, white, black);
     XSetStandardProperties(window->display, window->window, settings->title, settings->title, None, NULL, 0, NULL);
-    XSelectInput(window->display, window->window, ButtonReleaseMask | ButtonPressMask | KeyPressMask | KeyReleaseMask | PointerMotionMask);
+    XSelectInput(window->display, window->window,
+        ButtonReleaseMask |
+        ButtonPressMask |
+        KeyPressMask |
+        KeyReleaseMask |
+        PointerMotionMask |
+        EnterWindowMask |
+        LeaveWindowMask);
     window->gc = XCreateGC(window->display, window->window, 0, NULL);
     XSetBackground(window->display, window->gc, white);
     XSetForeground(window->display, window->gc, black);
     XClearWindow(window->display, window->window);
     XMapRaised(window->display, window->window);
     XAutoRepeatOff(window->display);
+    window->wm_delete_message = XInternAtom(window->display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(window->display, window, &window->wm_delete_message, 1);
 
      // Init buttons of the input manager
     mgl_input_manager_t* im = window->input_manager;

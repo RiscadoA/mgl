@@ -30,6 +30,7 @@ extern "C" {
         int screen;
         Window window;
         GC gc;
+        Atom wm_delete_message;
 #endif // __unix__
 	} mgl_x_window_t;
 
