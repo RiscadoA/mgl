@@ -51,6 +51,7 @@ static mgl_allocator_functions_t mgl_pool_allocator_functions =
 	&mgl_pool_allocator_deallocate,
 	NULL,
 	NULL,
+	NULL,
 };
 
 void MGL_API mgl_init_pool_allocator(mgl_pool_allocator_t * allocator, mgl_u64_t slot_count, mgl_u64_t slot_size, void * memory, mgl_u64_t memory_size)
