@@ -164,11 +164,6 @@ int main(int argc, char** argv)
     {
         mgl_poll_window_events(&window);
         mgl_update_input_manager(&input_manager, 1.0f / 1000.0f);
-
-        /*mgl_print_f32(mgl_stdout_stream, input_manager.axes[window.mouse_x_axis->id].value, 10, 4);
-        mgl_put_char(mgl_stdout_stream, ' ');*/
-        //mgl_print_f32(mgl_stdout_stream, input_manager.axes[window.mouse_wheel_axis->id].value, 10, 2);
-        //mgl_put_char(mgl_stdout_stream, '\n');
     }
 
 #ifdef __unix__
