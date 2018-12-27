@@ -142,21 +142,21 @@ int main(int argc, char** argv)
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON, u8"mouse middle") == MGL_ERROR_NONE);
-        action->button.id = mgl_get_button(&input_manager, u8"Mouse Middle");
+        action->button.id = mgl_get_window_mouse_button(&window, MGL_MOUSE_MIDDLE);
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &mouse_action_callback) == MGL_ERROR_NONE);
     }
 
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON, u8"mouse extra 1") == MGL_ERROR_NONE);
-        action->button.id = mgl_get_button(&input_manager, u8"Mouse Extra 1");
+        action->button.id = mgl_get_window_mouse_button(&window, MGL_MOUSE_EXTRA_1);
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &mouse_action_callback) == MGL_ERROR_NONE);
     }
 
     {
         mgl_action_t* action;
         MGL_ASSERT(mgl_add_action(&input_manager, &action, MGL_ACTION_BUTTON, u8"mouse extra 2") == MGL_ERROR_NONE);
-        action->button.id = mgl_get_button(&input_manager, u8"Mouse Extra 2");
+        action->button.id = mgl_get_window_mouse_button(&window, MGL_MOUSE_EXTRA_2);
         MGL_ASSERT(mgl_add_action_callback(&input_manager, action->id, &mouse_action_callback) == MGL_ERROR_NONE);
     }
 
