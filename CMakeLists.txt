@@ -35,8 +35,10 @@ set(MGL_SOURCE
 	"src/mgl/container/doubly_linked_list.c"
 	"src/mgl/file/archive.c"
 	"src/mgl/file/windows_standard_archive.c"
+	"src/mgl/input/input_manager.c"
 	"src/mgl/input/window.c"
 	"src/mgl/input/windows_window.c"
+	"src/mgl/input/x_window.c"
 )
 
 set(MGL_INCLUDE
@@ -75,8 +77,13 @@ set(MGL_INCLUDE
 	"include/mgl/file/windows_standard_archive.h"
 	"include/mgl/input/keyboard.h"
 	"include/mgl/input/mouse.h"
+	"include/mgl/input/axis.h"
+	"include/mgl/input/button.h"
+	"include/mgl/input/action.h"
+	"include/mgl/input/input_manager.h"
 	"include/mgl/input/window.h"
 	"include/mgl/input/windows_window.h"
+	"include/mgl/input/x_window.h"
 )
 
 #####################################################
@@ -108,10 +115,11 @@ target_include_directories(mgl
 )
 if(UNIX)
     target_link_libraries(mgl INTERFACE m dl pthread) # Link math lib
+    find_package(X11 REQUIRED)
+    target_include_directories(mgl PUBLIC ${X11_INCLUDE_DIR})
+    target_link_libraries(mgl PUBLIC ${X11_LIBRARIES})
 endif()
-if(MSVC)
-    target_compile_options(mgl INTERFACE /arch:SSE4.1)
-else()
+if(!MSVC)
     target_compile_options(mgl INTERFACE -msse4.1)
 endif()
 
@@ -208,4 +216,21 @@ export(PACKAGE MGL)
 
 ##############################################
 # Build tests
-add_subdirectory(tests/)
+option(MGL_BUILD_TESTS OFF)
+if(MGL_BUILD_TESTS)
+    add_subdirectory(tests/)
+endif()
+
+##############################################
+# Build examples
+option(MGL_BUILD_EXAMPLES ON)
+if(MGL_BUILD_EXAMPLES)
+    file(GLOB_RECURSE files "src/examples/*.c")
+    foreach(file ${files})
+	string(REGEX REPLACE "(^.*\\/|\\.[^.]*$)" "" file_without_ext ${file})
+	set(file_without_ext example_${file_without_ext})
+	add_executable(${file_without_ext} ${file})
+	target_link_libraries(${file_without_ext} mgl)
+	set_target_properties(${file_without_ext} PROPERTIES FOLDER Examples)
+endforeach()
+endif()

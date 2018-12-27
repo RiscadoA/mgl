@@ -54,6 +54,7 @@ static mgl_allocator_functions_t mgl_stack_allocator_functions =
 	&mgl_stack_allocator_deallocate,
 	NULL,
 	NULL,
+	NULL,
 };
 
 void MGL_API mgl_init_stack_allocator(mgl_stack_allocator_t * allocator, void * memory, mgl_u64_t memory_size)

@@ -1,6 +1,6 @@
 #include <mgl/thread/atomic.h>
 
-#if defined(_WIN32) && defined(__STDC_NO_ATOMICS__)
+#if defined(_WIN32) && (defined(__STDC_NO_ATOMICS__) || !defined(__STDC_VERSION__))
 #include <Windows.h>
 #include <process.h>
 

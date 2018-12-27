@@ -10,10 +10,19 @@ enum
 	MGL_MOUSE_LEFT,
 	MGL_MOUSE_RIGHT,
 	MGL_MOUSE_MIDDLE,
-	MGL_MOUSE_EXTRA_0,
 	MGL_MOUSE_EXTRA_1,
+	MGL_MOUSE_EXTRA_2,
 
 	MGL_MOUSE_BUTTON_COUNT
+};
+
+enum
+{
+	MGL_MOUSE_X, // X mouse coordinate axis
+	MGL_MOUSE_Y, // Y mouse coordinate axis
+	MGL_MOUSE_WHEEL, // Mouse wheel delta axis
+
+	MGL_MOUSE_AXES_COUNT
 };
 
 #ifdef __cplusplus
