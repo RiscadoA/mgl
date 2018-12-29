@@ -43,6 +43,8 @@ set(MGL_SOURCE
 	"src/mgl/network/windows_network.c"
 	"src/mgl/network/windows_tcp_socket.c"
 	"src/mgl/network/windows_tcp_listener.c"
+	"src/mgl/network/posix_ipv4_address.c"
+	"src/mgl/network/posix_network.c"
 )
 
 set(MGL_INCLUDE

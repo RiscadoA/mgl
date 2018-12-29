@@ -3,6 +3,7 @@
 #include <mgl/input/mouse.h>
 #include <mgl/string/manipulation.h>
 
+#define __unix__
 #ifdef __unix__
 #include <X11/keysymdef.h>
 #include <X11/XKBlib.h>
