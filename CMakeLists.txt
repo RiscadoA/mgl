@@ -39,6 +39,10 @@ set(MGL_SOURCE
 	"src/mgl/input/window.c"
 	"src/mgl/input/windows_window.c"
 	"src/mgl/input/x_window.c"
+	"src/mgl/network/windows_ipv4_address.c"
+	"src/mgl/network/windows_network.c"
+	"src/mgl/network/windows_tcp_socket.c"
+	"src/mgl/network/windows_tcp_listener.c"
 )
 
 set(MGL_INCLUDE
@@ -84,6 +88,10 @@ set(MGL_INCLUDE
 	"include/mgl/input/window.h"
 	"include/mgl/input/windows_window.h"
 	"include/mgl/input/x_window.h"
+	"include/mgl/network/network.h"
+	"include/mgl/network/ipv4_address.h"
+	"include/mgl/network/tcp_socket.h"
+	"include/mgl/network/tcp_listener.h"
 )
 
 #####################################################
