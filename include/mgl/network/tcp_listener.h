@@ -19,9 +19,8 @@ extern "C" {
 	///		Creates a new TCP listener.
 	/// </summary>
 	/// <param name="listener">Listener pointer</param>
-	/// <param name="port">Port to listen on</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_create_tcp_listener(mgl_tcp_listener_t* listener, mgl_u16_t port);
+	mgl_error_t MGL_API mgl_create_tcp_listener(mgl_tcp_listener_t* listener);
 
 	/// <summary>
 	///		Destroys a TCP listener.
@@ -33,9 +32,10 @@ extern "C" {
 	///		Makes a TCP listener listen to incoming connections.
 	/// </summary>
 	/// <param name="listener">Listener pointer</param>
-	/// <param name="queue_max_size">Max incoming connections queue size</param>
+	/// <param name="port">Port to listen on</param>
+	/// <param name="address">Address to listen on (NULL = any)</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_tcp_listen(mgl_tcp_listener_t* listener, mgl_u64_t queue_max_size);
+	mgl_error_t MGL_API mgl_tcp_listen_ipv4(mgl_tcp_listener_t* listener, mgl_u16_t port, const mgl_ipv4_address_t* address);
 
 	/// <summary>
 	///		Accepts an incoming connection.

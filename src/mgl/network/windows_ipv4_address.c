@@ -33,12 +33,12 @@ mgl_error_t MGL_API mgl_create_ipv4_address(mgl_ipv4_address_t * address, const 
 
 	if (mgl_str_equal(ip, u8"255.255.255.255"))
 	{
-		address->ip = INADDR_BROADCAST;
+		address->ip = htonl(INADDR_BROADCAST);
 		address->valid = MGL_TRUE;
 	}
 	else if (mgl_str_equal(ip, u8"0.0.0.0"))
 	{
-		address->ip = INADDR_ANY;
+		address->ip = htonl(INADDR_ANY);
 		address->valid = MGL_FALSE;
 	}
 	else
@@ -51,6 +51,7 @@ mgl_error_t MGL_API mgl_create_ipv4_address(mgl_ipv4_address_t * address, const 
 			struct addrinfo hints;
 			mgl_mem_set(&hints, sizeof(hints), 0);
 			hints.ai_family = AF_INET;
+
 			struct addrinfo* result = NULL;
 			if (getaddrinfo(ip, NULL, &hints, &result) == 0)
 				if (result)
@@ -58,10 +59,13 @@ mgl_error_t MGL_API mgl_create_ipv4_address(mgl_ipv4_address_t * address, const 
 					address->ip = ((struct sockaddr_in*)result->ai_addr)->sin_addr.s_addr;
 					address->valid = MGL_TRUE;
 					freeaddrinfo(result);
-					return MGL_ERROR_//NOT FOUND;
+					return MGL_ERROR_NONE;
 				}
 		}
 	}
+
+	if (!address->valid)
+		return MGL_ERROR_INVALID_ADDRESS;
 	return MGL_ERROR_NONE;
 }
 

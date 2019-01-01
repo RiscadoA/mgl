@@ -33,8 +33,9 @@ extern "C" {
 	/// </summary>
 	/// <param name="socket">Socket pointer</param>
 	/// <param name="address">Address pointer</param>
+	/// <param name="port">Port</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_tcp_connect_ipv4(mgl_tcp_socket_t* socket, const mgl_ipv4_address_t* address);
+	mgl_error_t MGL_API mgl_tcp_connect_ipv4(mgl_tcp_socket_t* socket, const mgl_ipv4_address_t* address, mgl_u16_t port);
 
 	/// <summary>
 	///		Sends data to a TCP connection.
