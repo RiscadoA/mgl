@@ -13,6 +13,7 @@ extern "C" {
 	typedef struct 
 	{
 		mgl_u8_t data[MGL_TCP_SOCKET_MAX_DATA_SIZE];
+		mgl_bool_t is_blocking;
 	} mgl_tcp_socket_t;
 	
 	/// <summary>
@@ -35,7 +36,7 @@ extern "C" {
 	/// <param name="address">Address pointer</param>
 	/// <param name="port">Port</param>
 	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_tcp_connect_ipv4(mgl_tcp_socket_t* socket, const mgl_ipv4_address_t* address, mgl_u16_t port);
+	mgl_error_t MGL_API mgl_tcp_connect_ipv4(mgl_tcp_socket_t* socket, const mgl_ipv4_address_t* address, mgl_u16_t port, mgl_u64_t timeout_microseconds);
 
 	/// <summary>
 	///		Sends data to a TCP connection.
@@ -56,6 +57,20 @@ extern "C" {
 	/// <param name="received_size">Received size</param>
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_tcp_receive(mgl_tcp_socket_t* socket, void* data, mgl_u64_t size, mgl_u64_t* received_size);
+
+	/// <summary>
+	///		Sets a TCP socket as blocking or non-blocking.
+	/// </summary>
+	/// <param name="socket">Socket</param>
+	/// <param name="blocking">Sets to blocking if MGL_TRUE, otherwise to non-blocking</param>
+	void MGL_API mgl_tcp_socket_set_blocking(mgl_tcp_socket_t* socket, mgl_bool_t blocking);
+
+	/// <summary>
+	///		Checks if a TCP socket is blocking or non-blocking.
+	/// </summary>
+	/// <param name="socket">Socket</param>
+	/// <returns>MGL_TRUE if blocking otherwise MGL_FALSE</returns>
+	mgl_bool_t MGL_API mgl_tcp_socket_is_blocking(mgl_tcp_socket_t* socket);
 
 #ifdef __cplusplus
 }

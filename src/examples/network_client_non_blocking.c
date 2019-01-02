@@ -1,4 +1,5 @@
 #include <mgl/network/tcp_socket.h>
+#include <mgl/network/selector.h>
 #include <mgl/stream/stream.h>
 #include <mgl/entry.h>
 
@@ -34,14 +35,41 @@ int main(int argc, char** argv)
 		mgl_read_chars_until(mgl_stdin_stream, NULL, 0, NULL, u8"\n");
 		return 3;
 	}
+	mgl_tcp_socket_set_blocking(&socket, MGL_FALSE);
 
-	if (mgl_tcp_connect_ipv4(&socket, &ip, SERVER_PORT, 0) != MGL_ERROR_NONE)
+	mgl_error_t err = mgl_tcp_connect_ipv4(&socket, &ip, SERVER_PORT, 0);
+	if (err == MGL_ERROR_NOT_READY)
+	{
+		mgl_selector_t selector;
+		if (mgl_create_selector(&selector) != MGL_ERROR_NONE)
+		{
+			mgl_print(mgl_stdout_stream, u8"Failed to create selector");
+			mgl_read_chars_until(mgl_stdin_stream, NULL, 0, NULL, u8"\n");
+			return 4;
+		}
+
+		if (mgl_selector_add_tcp_socket(&selector, &socket) != MGL_ERROR_NONE)
+		{
+			mgl_print(mgl_stdout_stream, u8"Failed to add socket to selector");
+			mgl_read_chars_until(mgl_stdin_stream, NULL, 0, NULL, u8"\n");
+			return 5;
+		}
+
+		if (!mgl_selector_wait(&selector, 5000))
+		{
+			mgl_print(mgl_stdout_stream, u8"Connection timed out");
+			mgl_read_chars_until(mgl_stdin_stream, NULL, 0, NULL, u8"\n");
+			return 6;
+		}
+	}
+	else if (err != MGL_ERROR_NONE)
 	{
 		mgl_print(mgl_stdout_stream, u8"Couldn't connect to server");
 		mgl_read_chars_until(mgl_stdin_stream, NULL, 0, NULL, u8"\n");
-		return 4;
+		return 7;
 	}
-	else mgl_print(mgl_stdout_stream, u8"Connected to server\n");
+	
+	mgl_print(mgl_stdout_stream, u8"Connected to server\n");
 
 	mgl_chr8_t msg[256];
 	mgl_u64_t rsize;

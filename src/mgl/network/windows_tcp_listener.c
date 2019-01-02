@@ -7,6 +7,8 @@
 #include <ws2tcpip.h>
 #pragma comment (lib, "Ws2_32.lib")
 
+MGL_STATIC_ASSERT(sizeof(SOCKET) <= MGL_TCP_LISTENER_MAX_DATA_SIZE, "TCP listener struct too big");
+
 mgl_error_t MGL_API mgl_create_tcp_listener(mgl_tcp_listener_t * l)
 {
 	MGL_DEBUG_ASSERT(l != NULL);
@@ -101,6 +103,20 @@ mgl_error_t MGL_API mgl_tcp_accept(mgl_tcp_listener_t * l, mgl_tcp_socket_t * s)
 		return MGL_ERROR_EXTERNAL;*/
 
 	return MGL_ERROR_NONE;
+}
+
+void MGL_API mgl_tcp_listener_set_blocking(mgl_tcp_listener_t * l, mgl_bool_t blocking)
+{
+	MGL_DEBUG_ASSERT(l != NULL);
+	l->is_blocking = blocking;
+	u_long b = blocking ? 0 : 1;
+	ioctlsocket(*(SOCKET*)l->data, FIONBIO, &b);
+}
+
+mgl_bool_t MGL_API mgl_tcp_listener_is_blocking(mgl_tcp_listener_t * l)
+{
+	MGL_DEBUG_ASSERT(l != NULL);
+	return l->is_blocking;
 }
 
 #endif

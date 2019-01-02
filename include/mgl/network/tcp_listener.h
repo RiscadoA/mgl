@@ -13,6 +13,7 @@ extern "C" {
 	typedef struct
 	{
 		mgl_u8_t data[MGL_TCP_LISTENER_MAX_DATA_SIZE];
+		mgl_bool_t is_blocking;
 	} mgl_tcp_listener_t;
 	
 	/// <summary>
@@ -44,6 +45,20 @@ extern "C" {
 	/// <param name="socket">Out socket</param>
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_tcp_accept(mgl_tcp_listener_t* listener, mgl_tcp_socket_t* socket);
+
+	/// <summary>
+	///		Sets a TCP listener as blocking or non-blocking.
+	/// </summary>
+	/// <param name="listener">Listener</param>
+	/// <param name="blocking">Sets to blocking if MGL_TRUE, otherwise to non-blocking</param>
+	void MGL_API mgl_tcp_listener_set_blocking(mgl_tcp_listener_t* listener, mgl_bool_t blocking);
+
+	/// <summary>
+	///		Checks if a TCP listener is blocking or non-blocking.
+	/// </summary>
+	/// <param name="listener">Listener</param>
+	/// <returns>MGL_TRUE if blocking otherwise MGL_FALSE</returns>
+	mgl_bool_t MGL_API mgl_tcp_listener_is_blocking(mgl_tcp_listener_t* listener);
 
 #ifdef __cplusplus
 }
