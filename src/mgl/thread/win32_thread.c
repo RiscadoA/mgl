@@ -15,7 +15,7 @@ typedef struct
 
 MGL_STATIC_ASSERT(sizeof(mgl_win32_thread_t) <= MGL_THREAD_SIZE, "MGL thread type too big");
 
-static unsigned int mgl_win32_thread_func(void* arg)
+static unsigned int __stdcall mgl_win32_thread_func(void* arg)
 {
 	mgl_win32_thread_t* thread = (mgl_win32_thread_t*)arg;
 	thread->running = MGL_TRUE;

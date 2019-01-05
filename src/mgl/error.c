@@ -26,6 +26,10 @@ MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 		case MGL_ERROR_ARCHIVE_NOT_FOUND: return u8"MGL_ERROR_ARCHIVE_NOT_FOUND: Couldn't find an archive";
 		case MGL_ERROR_FILE_ALREADY_EXISTS: return u8"MGL_ERROR_FILE_ALREADY_EXISTS: The file already exists"; 
 		case MGL_ERROR_UNSUPPORTED_PARENT_ATTRIBUTES: return u8"MGL_ERROR_UNSUPPORTED_PARENT_ATTRIBUTES: The parent file has unsupported attributes";
+		case MGL_ERROR_INVALID_ADDRESS: return u8"MGL_ERROR_INVALID_ADDRESS: Invalid IP address";
+		case MGL_ERROR_DISCONNECTED: return u8"MGL_ERROR_DISCONNECTED: Socket disconnected";
+		case MGL_ERROR_NOT_READY: return u8"MGL_ERROR_NOT_READY: Non-blocking operation not completed";
+		case MGL_ERROR_NOT_LISTENING: return u8"MGL_ERROR_NOT_LISTENING: Listener is not listening";
 		default: return u8"???: Unknown error";
 	}
 }
