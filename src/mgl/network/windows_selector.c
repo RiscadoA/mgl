@@ -23,6 +23,7 @@ mgl_error_t MGL_API mgl_create_selector(mgl_selector_t * sl)
 	FD_ZERO(&wsl->all_sockets);
 	FD_ZERO(&wsl->socket_ready);
 	wsl->socket_count = 0;
+	return MGL_ERROR_NONE;
 }
 
 void MGL_API mgl_destroy_selector(mgl_selector_t * sl)
@@ -106,12 +107,15 @@ mgl_bool_t MGL_API mgl_selector_wait(mgl_selector_t * sl, mgl_u64_t timeout_micr
 	MGL_DEBUG_ASSERT(sl != NULL);
 	mgl_windows_selector_t* wsl = (mgl_windows_selector_t*)sl;
 
+	wsl->socket_ready = wsl->all_sockets;
+
+	if (timeout_microseconds == 0)
+		return select(0, &wsl->socket_ready, NULL, NULL, NULL) > 0;
+
 	TIMEVAL time;
 	time.tv_sec = timeout_microseconds / 1000000;
 	time.tv_usec = timeout_microseconds % 1000000;
-
-	wsl->socket_ready = wsl->socket_ready;
-	return select(0, &wsl->socket_ready, NULL, NULL, timeout_microseconds != 0 ? &time : NULL) > 0;
+	return select(0, &wsl->socket_ready, NULL, NULL, &time) > 0;
 }
 
 mgl_bool_t MGL_API mgl_selector_is_tcp_socket_ready(mgl_selector_t * sl, mgl_tcp_socket_t * s)
