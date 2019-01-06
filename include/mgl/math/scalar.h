@@ -247,6 +247,18 @@ extern "C" {
 		return exp2f(x);
 	}
 
+	/// <summary>
+	///		Linearly interpolates between two values.
+	/// </summary>
+	/// <param name="x">Starting value</param>
+	/// <param name="y">Ending value</param>
+	/// <param name="t">Interpolation value from 0 to 1</param>
+	/// <returns>Interpolated value</returns>
+	static inline mgl_f32_t mgl_f32_lerp(mgl_f32_t x, mgl_f32_t y, mgl_f32_t t)
+	{
+		return (1 - t) * x + t * y;
+	}
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
