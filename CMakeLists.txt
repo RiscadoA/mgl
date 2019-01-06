@@ -39,6 +39,13 @@ set(MGL_SOURCE
 	"src/mgl/input/window.c"
 	"src/mgl/input/windows_window.c"
 	"src/mgl/input/x_window.c"
+	"src/mgl/network/windows_ipv4_address.c"
+	"src/mgl/network/windows_network.c"
+	"src/mgl/network/windows_tcp_socket.c"
+	"src/mgl/network/windows_tcp_listener.c"
+	"src/mgl/network/windows_selector.c"
+	"src/mgl/network/posix_ipv4_address.c"
+	"src/mgl/network/posix_network.c"
 )
 
 set(MGL_INCLUDE
@@ -84,6 +91,11 @@ set(MGL_INCLUDE
 	"include/mgl/input/window.h"
 	"include/mgl/input/windows_window.h"
 	"include/mgl/input/x_window.h"
+	"include/mgl/network/network.h"
+	"include/mgl/network/ipv4_address.h"
+	"include/mgl/network/tcp_socket.h"
+	"include/mgl/network/tcp_listener.h"
+	"include/mgl/network/selector.h"
 )
 
 #####################################################
@@ -232,5 +244,8 @@ if(MGL_BUILD_EXAMPLES)
 	add_executable(${file_without_ext} ${file})
 	target_link_libraries(${file_without_ext} mgl)
 	set_target_properties(${file_without_ext} PROPERTIES FOLDER Examples)
+	install(TARGETS ${file_without_ext}
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/examples
+	)
 endforeach()
 endif()
