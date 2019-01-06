@@ -47,6 +47,8 @@ set(MGL_SOURCE
 	"src/mgl/network/windows_selector.c"
 	"src/mgl/network/posix_ipv4_address.c"
 	"src/mgl/network/posix_network.c"
+	"src/mgl/time/windows_clock.c"
+	"src/mgl/time/windows_sleep.c"
 )
 
 set(MGL_INCLUDE
@@ -98,6 +100,9 @@ set(MGL_INCLUDE
 	"include/mgl/network/tcp_socket.h"
 	"include/mgl/network/tcp_listener.h"
 	"include/mgl/network/selector.h"
+	"include/mgl/time/time.h"
+	"include/mgl/time/clock.h"
+	"include/mgl/time/sleep.h"
 )
 
 #####################################################

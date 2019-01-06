@@ -37,7 +37,7 @@ mgl_f64_t MGL_API mgl_perlin_noise_2d(mgl_f64_t x, mgl_f64_t y, mgl_i64_t seed)
 	mgl_i64_t xi = (mgl_i64_t)x;
 	mgl_i64_t yi = (mgl_i64_t)y;
 	mgl_f64_t xf = x - xi;
-	mgl_f64_t yf = y - yf;
+	mgl_f64_t yf = y - yi;
 	mgl_i64_t s = noise_2(xi, yi, seed);
 	mgl_i64_t t = noise_2(xi + 1, yi, seed);
 	mgl_i64_t u = noise_2(xi, yi + 1, seed);
