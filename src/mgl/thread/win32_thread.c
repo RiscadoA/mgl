@@ -1,6 +1,6 @@
 #include <mgl/thread/thread.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 #include <Windows.h>
 #include <process.h>
 
@@ -65,5 +65,5 @@ mgl_error_t MGL_API mgl_wait_for_thread(mgl_thread_t * thread, mgl_u32_t timeout
 
 }
 
-#endif // _WIN32
+#endif // MGL_SYSTEM_WINDOWS
 

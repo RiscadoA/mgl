@@ -18,6 +18,22 @@ extern "C" {
 #	else
 #		define MGL_API
 #	endif
+#endif 
+
+#ifdef _WIN32
+#	define MGL_SYSTEM_WINDOWS
+#	undef MGL_SYSTEM_POSIX_COMPATIBLE
+#endif
+
+#ifdef __unix__
+#	define MGL_SYSTEM_POSIX_COMPATIBLE
+#	define MGL_SYSTEM_UNIX
+#endif
+
+#ifdef NDEBUG
+#define MGL_BUILD_RELEASE
+#else
+#define MGL_BUILD_DEBUG
 #endif
 
 #ifdef __cplusplus

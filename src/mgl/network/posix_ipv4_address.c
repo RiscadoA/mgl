@@ -1,4 +1,6 @@
-#ifdef __unix__
+#include <mgl/api_utils.h>
+
+#ifdef MGL_SYSTEM_POSIX_COMPATIBLE
 
 #include <mgl/network/ipv4_address.h>
 #include <mgl/string/manipulation.h>

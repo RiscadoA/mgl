@@ -4,9 +4,9 @@
 #include <mgl/input/keyboard.h>
 #include <mgl/input/mouse.h>
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
 #include <mgl/input/x_window.h>
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
 #include <mgl/input/windows_window.h>
 #else
 #error Unsupported platform
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     mgl_input_manager_t input_manager;
     mgl_init_input_manager(&input_manager);
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
     mgl_x_window_settings_t settings;
     settings.width = 800;
     settings.height = 600;
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
     mgl_x_window_t window;
     MGL_ASSERT(mgl_open_x_window(&window, &settings) == MGL_ERROR_NONE);
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
     mgl_windows_window_settings_t settings;
     settings.width = 800;
     settings.height = 600;
@@ -166,9 +166,9 @@ int main(int argc, char** argv)
         mgl_update_input_manager(&input_manager, 1.0f / 1000.0f);
     }
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
     mgl_close_x_window(&window);
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
     mgl_close_windows_window(&window);
 #else
 #error Unsupported platform

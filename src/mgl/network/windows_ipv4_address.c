@@ -1,4 +1,6 @@
-#ifdef _WIN32
+#include <mgl/api_utils.h>
+
+#ifdef MGL_SYSTEM_WINDOWS
 
 #include <mgl/network/ipv4_address.h>
 #include <mgl/string/manipulation.h>

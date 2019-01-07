@@ -1,6 +1,6 @@
 #include <mgl/thread/mutex.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 #include <Windows.h>
 #include <process.h>
 
@@ -52,4 +52,4 @@ mgl_error_t MGL_API mgl_unlock_mutex(mgl_mutex_t * mutex)
 	return MGL_ERROR_NONE;
 }
 
-#endif // _WIN32
+#endif // MGL_SYSTEM_WINDOWS

@@ -1,4 +1,6 @@
-#ifdef _WIN32
+#include <mgl/api_utils.h>
+
+#ifdef MGL_SYSTEM_WINDOWS
 #include <mgl/network/tcp_listener.h>
 #include <mgl/memory/manipulation.h>
 #include <mgl/string/conversion.h>

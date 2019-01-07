@@ -1,6 +1,6 @@
 #include <mgl/thread/thread.h>
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_POSIX_COMPATIBLE
 #include <errno.h>
 #include <pthread.h>
 
@@ -71,4 +71,4 @@ mgl_error_t MGL_API mgl_wait_for_thread(mgl_thread_t * thread, mgl_u32_t timeout
 	return MGL_ERROR_NONE;
 }
 
-#endif // __unix__
+#endif // MGL_SYSTEM_POSIX_COMPATIBLE
