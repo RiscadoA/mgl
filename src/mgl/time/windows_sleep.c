@@ -1,6 +1,6 @@
 #include <mgl/time/sleep.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 #include <Windows.h>
 
 void MGL_API mgl_sleep(mgl_time_t time)

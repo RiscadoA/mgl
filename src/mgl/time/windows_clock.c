@@ -1,7 +1,7 @@
 #include <mgl/time/clock.h>
 #include <mgl/error.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 
 #include <Windows.h>
 
