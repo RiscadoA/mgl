@@ -1,6 +1,6 @@
 #include <mgl/thread/atomic.h>
 
-#if defined(_WIN32) && (defined(__STDC_NO_ATOMICS__) || !defined(__STDC_VERSION__))
+#if defined(MGL_SYSTEM_WINDOWS) && (defined(__STDC_NO_ATOMICS__) || !defined(__STDC_VERSION__))
 #include <Windows.h>
 #include <process.h>
 
@@ -149,4 +149,4 @@ void MGL_API mgl_xor_atomic_i32(mgl_atomic_i32_t * dst, mgl_i32_t value)
 	InterlockedXor(r_dst, value);
 }
 
-#endif // _WIN32
+#endif // MGL_SYSTEM_WINDOWS

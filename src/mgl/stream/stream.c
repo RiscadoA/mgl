@@ -124,7 +124,7 @@ mgl_error_t MGL_API mgl_put_byte(void * stream, mgl_u8_t x)
 mgl_error_t MGL_API mgl_put_char(void * stream, mgl_u8_t x)
 {
 	MGL_DEBUG_ASSERT(stream != NULL);
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 	if (x == '\n')
 	{
 		static const mgl_u8_t crlf[] = { '\r', '\n' };

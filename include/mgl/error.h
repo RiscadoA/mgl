@@ -55,20 +55,20 @@ extern "C" {
 	/// </summary>
 #define MGL_ASSERT(condition) do { if (!(condition)) mgl_abort(); } while (MGL_FALSE)
 
-#ifdef NDEBUG
-	/// <summary>
-	///		Makes sure an expression evaluates to true.
-	///		If the expression does not evaluate to true, mgl_abort() is called. 
-	///		Only checks if NDEBUG is not defined.
-	/// </summary>
-#define MGL_DEBUG_ASSERT(condition) do {} while (MGL_FALSE)
-#else
+#ifdef MGL_BUILD_DEBUG
 	/// <summary>
 	///		Makes sure an expression evaluates to true.
 	///		If the expression does not evaluate to true, mgl_abort() is called. 
 	///		Only checks if NDEBUG is not defined.
 	/// </summary>
 #	define MGL_DEBUG_ASSERT(condition) MGL_ASSERT(condition)
+#else
+	/// <summary>
+	///		Makes sure an expression evaluates to true.
+	///		If the expression does not evaluate to true, mgl_abort() is called. 
+	///		Only checks if NDEBUG is not defined.
+	/// </summary>
+#	define MGL_DEBUG_ASSERT(condition) do {} while (MGL_FALSE)
 #endif
 
 #define MGL_STATIC_ASSERT(check, msg) static_assert(check, msg)

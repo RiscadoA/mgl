@@ -3,7 +3,7 @@
 #include <mgl/input/mouse.h>
 #include <mgl/string/manipulation.h>
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
 #include <X11/keysymdef.h>
 #include <X11/XKBlib.h>
 
@@ -440,4 +440,4 @@ void MGL_API mgl_close_x_window(mgl_x_window_t * window)
 	XCloseDisplay(window->display);
 }
 
-#endif // __unix__
+#endif // MGL_SYSTEM_UNIX

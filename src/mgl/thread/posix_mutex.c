@@ -1,6 +1,6 @@
 #include <mgl/thread/mutex.h>
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_POSIX_COMPATIBLE
 #include <pthread.h>
 #include <errno.h>
 
@@ -60,4 +60,4 @@ mgl_error_t MGL_API mgl_unlock_mutex(mgl_mutex_t * mutex)
 	return ret ? MGL_ERROR_EXTERNAL : MGL_ERROR_NONE;
 }
 
-#endif // __unix__
+#endif // MGL_SYSTEM_POSIX_COMPATIBLE

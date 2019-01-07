@@ -2,7 +2,7 @@
 #include <mgl/input/keyboard.h>
 #include <mgl/input/mouse.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 #include <Windows.h>
 #include <windowsx.h>
 
@@ -233,7 +233,7 @@ mgl_error_t MGL_API mgl_open_windows_window(mgl_windows_window_t * window, const
 		WNDCLASSEX wc;
 		ZeroMemory(&wc, sizeof(wc));
 		wc.cbSize = sizeof(WNDCLASSEX);
-		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = WindowProc;
 		wc.hInstance = instance;
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -246,7 +246,7 @@ mgl_error_t MGL_API mgl_open_windows_window(mgl_windows_window_t * window, const
 		WNDCLASSEX wc;
 		ZeroMemory(&wc, sizeof(WNDCLASSEX));
 		wc.cbSize = sizeof(WNDCLASSEX);
-		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 		wc.lpfnWndProc = WindowProc;
 		wc.hInstance = instance;
 		wc.hCursor = LoadCursor(NULL, IDC_ARROW);

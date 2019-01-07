@@ -3,9 +3,9 @@
 #include <mgl/input/input_manager.h>
 #include <mgl/input/keyboard.h>
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
 #include <mgl/input/x_window.h>
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
 #include <mgl/input/windows_window.h>
 #else
 #error Unsupported platform
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     mgl_input_manager_t input_manager;
     mgl_init_input_manager(&input_manager);
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
     mgl_x_window_settings_t settings;
     settings.width = 400;
     settings.height = 300;
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     MGL_ASSERT(mgl_open_x_window(&window_1, &settings) == MGL_ERROR_NONE);
     settings.title = u8"MGL Test Window 2 (Xlib)";
     MGL_ASSERT(mgl_open_x_window(&window_2, &settings) == MGL_ERROR_NONE);
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
     mgl_windows_window_settings_t settings;
     settings.width = 400;
     settings.height = 300;
@@ -104,10 +104,10 @@ int main(int argc, char** argv)
         mgl_update_input_manager(&input_manager, 1.0f);
     }
 
-#ifdef __unix__
+#ifdef MGL_SYSTEM_UNIX
     mgl_close_x_window(&window_1);
     mgl_close_x_window(&window_2);
-#elif defined(_WIN32)
+#elif defined(MGL_SYSTEM_WINDOWS)
     mgl_close_windows_window(&window_1);
     mgl_close_windows_window(&window_2);
 #else

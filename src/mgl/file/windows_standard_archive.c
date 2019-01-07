@@ -3,7 +3,7 @@
 #include <mgl/stream/buffer_stream.h>
 #include <mgl/memory/manipulation.h>
 
-#ifdef _WIN32
+#ifdef MGL_SYSTEM_WINDOWS
 #include <Windows.h>
 
 typedef struct mgl_windows_standard_archive_file_t mgl_windows_standard_archive_file_t;
