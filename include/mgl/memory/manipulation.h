@@ -122,6 +122,79 @@ extern "C" {
 	}
 
 	/// <summary>
+	///		Converts a 2 byte value from big-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_big_endian_2(const void* in, void* out)
+	{
+		const mgl_u16_t* i = (const mgl_u16_t*)in;
+		mgl_u16_t* o = (mgl_u16_t*)out;
+		if (mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_ushort(*i);
+#else
+			*o = ((*i & 0x00FF) << 8) | ((*i & 0xFF00) >> 8);
+#endif
+		}
+	}
+
+	/// <summary>
+	///		Converts a 4 byte value from big-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_big_endian_4(const void* in, void* out)
+	{
+		const mgl_u32_t* i = (const mgl_u32_t*)in;
+		mgl_u32_t* o = (mgl_u32_t*)out;
+		if (mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_ulong(*i);
+#else
+			*o = ((*i & 0x000000FF) << 24) |
+				((*i & 0x0000FF00) << 8) |
+				((*i & 0x00FF0000) >> 8) |
+				((*i & 0xFF000000) >> 24);
+#endif
+		}
+	}
+
+	/// <summary>
+	///		Converts a 8 byte value from big-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_big_endian_8(const void* in, void* out)
+	{
+		const mgl_u64_t* i = (const mgl_u64_t*)in;
+		mgl_u64_t* o = (mgl_u64_t*)out;
+		if (mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_uint64(*i);
+#else
+			*o = ((*i & 0x00000000000000FFULL) << 56) |
+				((*i & 0x000000000000FF00ULL) << 40) |
+				((*i & 0x0000000000FF0000ULL) << 24) |
+				((*i & 0x00000000FF000000ULL) << 8) |
+				((*i & 0x000000FF00000000ULL) >> 8) |
+				((*i & 0x0000FF0000000000ULL) >> 24) |
+				((*i & 0x00FF000000000000ULL) >> 40) |
+				((*i & 0xFF00000000000000ULL) >> 56);
+#endif
+		}
+	}
+
+	/// <summary>
 	///		Converts a 2 byte value to little-endian.
 	/// </summary>
 	/// <param name="in">Input value</param>
@@ -190,6 +263,79 @@ extern "C" {
 				 ((*i & 0x0000FF0000000000ULL) >> 24) |
 				 ((*i & 0x00FF000000000000ULL) >> 40) |
 				 ((*i & 0xFF00000000000000ULL) >> 56);
+#endif
+		}
+	}
+
+	/// <summary>
+	///		Converts a 2 byte value to little-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_little_endian_2(const void* in, void* out)
+	{
+		const mgl_u16_t* i = (const mgl_u16_t*)in;
+		mgl_u16_t* o = (mgl_u16_t*)out;
+		if (!mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_ushort(*i);
+#else
+			*o = ((*i & 0x00FF) << 8) | ((*i & 0xFF00) >> 8);
+#endif
+		}
+	}
+
+	/// <summary>
+	///		Converts a 4 byte value from little-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_little_endian_4(const void* in, void* out)
+	{
+		const mgl_u32_t* i = (const mgl_u32_t*)in;
+		mgl_u32_t* o = (mgl_u32_t*)out;
+		if (!mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_ulong(*i);
+#else
+			*o = ((*i & 0x000000FF) << 24) |
+				((*i & 0x0000FF00) << 8) |
+				((*i & 0x00FF0000) >> 8) |
+				((*i & 0xFF000000) >> 24);
+#endif
+		}
+	}
+
+	/// <summary>
+	///		Converts a 8 byte value from little-endian.
+	/// </summary>
+	/// <param name="in">Input value</param>
+	/// <param name="out">Output value</param>
+	inline void mgl_from_little_endian_8(const void* in, void* out)
+	{
+		const mgl_u64_t* i = (const mgl_u64_t*)in;
+		mgl_u64_t* o = (mgl_u64_t*)out;
+		if (!mgl_is_big_endian())
+			*o = *i;
+		else
+		{
+#ifdef _MSC_VER
+			*o = _byteswap_uint64(*i);
+#else
+			*o = ((*i & 0x00000000000000FFULL) << 56) |
+				((*i & 0x000000000000FF00ULL) << 40) |
+				((*i & 0x0000000000FF0000ULL) << 24) |
+				((*i & 0x00000000FF000000ULL) << 8) |
+				((*i & 0x000000FF00000000ULL) >> 8) |
+				((*i & 0x0000FF0000000000ULL) >> 24) |
+				((*i & 0x00FF000000000000ULL) >> 40) |
+				((*i & 0xFF00000000000000ULL) >> 56);
 #endif
 		}
 	}
