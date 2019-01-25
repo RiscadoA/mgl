@@ -14,8 +14,9 @@ extern "C" {
 	///		Opens a logger.
 	/// </summary>
 	/// <param name="allocator">Allocator pointer</param>
+	/// <param name="name">Log file name</param>
 	/// <returns>Pointer to logger</returns>
-	mgl_logger_t* MGL_API mgl_logger_open(void* allocator);
+	mgl_logger_t* MGL_API mgl_logger_open(void* allocator, const mgl_chr8_t* name);
 
 	/// <summary>
 	///		Outputs the log file.

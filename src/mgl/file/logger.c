@@ -7,6 +7,10 @@
 
 #define MGL_LOGGER_BUFFER_SIZE 4096
 
+#ifdef MGL_SYSTEM_WINDOWS
+#include <Windows.h>
+#endif
+
 struct mgl_logger_t
 {
 	void* allocator;
@@ -15,7 +19,7 @@ struct mgl_logger_t
 	FILE* file;
 };
 
-mgl_logger_t *MGL_API mgl_logger_open(void * allocator)
+mgl_logger_t *MGL_API mgl_logger_open(void * allocator, const mgl_chr8_t* name)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL);
 	mgl_logger_t* logger;
@@ -28,7 +32,13 @@ mgl_logger_t *MGL_API mgl_logger_open(void * allocator)
 
 		time_t tm;
 		time(&tm);
-		mgl_print(&stream, u8"log_");
+
+#ifdef MGL_SYSTEM_WINDOWS
+		CreateDirectory(u8"log/", NULL);
+#endif
+		mgl_print(&stream, u8"log/");
+		mgl_print(&stream, name);
+		mgl_print(&stream, u8"_");
 		mgl_print_u64(&stream, tm, 10);
 		mgl_print(&stream, u8".txt");
 	}

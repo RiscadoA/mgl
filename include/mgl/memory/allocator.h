@@ -84,17 +84,6 @@ extern "C" {
 	/// <returns>Error code</returns>
 	mgl_error_t MGL_API mgl_deallocate_aligned(void* allocator, void* ptr);
 
-	/// <summary>
-	///		Initializes the MGL allocators library.
-	/// </summary>
-	/// <returns>Error code</returns>
-	mgl_error_t MGL_API mgl_allocators_init(void);
-
-	/// <summary>
-	///		Terminates the MGL allocators library.
-	/// </summary>
-	void MGL_API mgl_allocators_terminate(void);
-
 #ifdef __cplusplus
 }
 #endif // __cplusplus

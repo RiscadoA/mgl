@@ -1,9 +1,6 @@
 #include <mgl/memory/allocator.h>
 #include <malloc.h>
 
-MGL_API mgl_allocator_t* mgl_standard_allocator = NULL;
-static mgl_allocator_t mgl_standard_allocator_s;
-
 static mgl_error_t mgl_standard_allocator_allocate(mgl_allocator_t* allocator, mgl_u64_t size, void** out_ptr)
 {
 	MGL_DEBUG_ASSERT(allocator != NULL && out_ptr != NULL);
@@ -35,8 +32,12 @@ mgl_allocator_functions_t mgl_standard_allocator_functions =
 	&mgl_standard_allocator_reallocate,
 	&mgl_standard_allocator_deallocate,
 	NULL,
-	NULL
+	NULL,
+	NULL,
 };
+
+static mgl_allocator_t mgl_standard_allocator_s = { &mgl_standard_allocator_functions };
+MGL_API mgl_allocator_t* mgl_standard_allocator = &mgl_standard_allocator_s;
 
 mgl_error_t MGL_API mgl_allocate(void * allocator, mgl_u64_t size, void ** out_ptr)
 {
@@ -115,15 +116,3 @@ mgl_error_t MGL_API mgl_deallocate_aligned(void * allocator, void * ptr)
 	else return ((mgl_allocator_t*)allocator)->functions->deallocate_aligned(((mgl_allocator_t*)allocator), ptr);
 }
 
-mgl_error_t MGL_API mgl_allocators_init(void)
-{
-	mgl_standard_allocator_s.functions = &mgl_standard_allocator_functions;
-	mgl_standard_allocator = &mgl_standard_allocator_s;
-	return MGL_ERROR_NONE;
-}
-
-void MGL_API mgl_allocators_terminate(void)
-{
-	mgl_standard_allocator_s.functions = NULL;
-	mgl_standard_allocator = NULL;
-}
