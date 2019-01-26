@@ -18,6 +18,7 @@ MGL_API const mgl_chr8_t* mgl_get_error_string(mgl_error_t error)
 		case MGL_ERROR_OUT_OF_BOUNDS: return u8"MGL_ERROR_TOO_BIG: Out of bounds";
 		case MGL_ERROR_UNSUPPORTED: return u8"MGL_ERROR_UNSUPPORTED: Unsupported feature";
 		case MGL_ERROR_INVALID_PARAMS: return u8"MGL_ERROR_INVALID_PARAMS: Invalid parameters";
+		case MGL_ERROR_EOF: return u8"MGL_ERROR_EOF: End of file reached";
 		case MGL_ERROR_FAILED_TO_PARSE: return u8"MGL_ERROR_FAILED_TO_PARSE: Failed to parse";
 		case MGL_ERROR_TIMEOUT: return u8"MGL_ERROR_TIMEOUT: Time out";
 		case MGL_ERROR_THREAD_STILL_RUNNING: return u8"MGL_ERROR_THREAD_STILL_RUNNING: Thread is still running";
